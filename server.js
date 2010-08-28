@@ -25,8 +25,9 @@ io.on('connection', function(client){
 				var user = {name: message.name, email: message.email };
 				var sketch = { id: message.sketch_id };
 				app.addUser(user, sketch, function(userObj) {
-					client.send(action: "add_user", user: userObj );
+					client.send({action: "add_user", user: userObj });
 				});
+				break;
 			default:
 				console.log(message);
 				

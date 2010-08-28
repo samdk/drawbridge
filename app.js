@@ -60,7 +60,8 @@ exports.addUser = function(user,sketch,runFunction) {
 			if (err){
 				throw err;
 			}
-			runFunction({id: userId, name: user.name, email: user.emai});
+			var userObj = {id: userId, name: user.name, email: user.emai};
+			runFunction(userObj);
 		});
 	});
 }
