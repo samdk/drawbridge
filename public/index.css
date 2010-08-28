@@ -5,15 +5,42 @@ html,body {height: 100%;}
 }
 	#page {
 		overflow: auto;
-		padding-bottom: 340px;
+		padding-bottom: 320px;
 		width: 900px;
 		margin: 0 auto;
 	}	
 		h1 {
 			font-size: 48px;
-			margin: 30px 0;
+			margin: 30px 0 10px;
 			text-shadow: 0 1px 3px #eee;
 			text-align: center;
+		}
+		#features {
+			margin-left: -12px;
+			margin-right: -3px;
+		}
+		.block {
+			width: 248px;
+			padding: 20px;
+			margin-left: 15px;
+			background: white;
+			-webkit-box-shadow: 0 1px 5px #555;
+			-moz-box-shadow: 0 1px 5px #555;
+			box-shadow: 0 1px 5px #555;
+			float: left;
+		}
+			.block h2 {
+				text-align: center;
+				font-family: Museo300, Arial, Helvetica, 'Helvetica Neue', sans-serif;
+				font-size: 21px;
+			}
+				.block strong {
+					font-family: Museo700, Arial, Helvetica, 'Helvetica Neue', sans-serif;
+					font-weight: normal;
+				}
+		#call {
+			clear: both;
+			padding: 40px 0;
 		}
 	#footer {
 		clear: both;
