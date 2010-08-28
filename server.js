@@ -6,4 +6,4 @@ server.get('/', function(req,res) {
 	res.send('Test');
 });
 
-server.listen();
+server.listen(80);
