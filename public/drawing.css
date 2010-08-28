@@ -100,34 +100,41 @@ body {
 			}
 			#controls a {
 				display: block;
-				background: #ccc;
 				float: right;
-				margin-bottom: 10px;
+				margin-bottom: 6px;
 				width: 50px;
-				border: 1px solid #aaa;
 				text-align: center;
 			}
-				#controls a:hover {
-					background: #bbb;
-				}
-				#controls a:active {
-					background: #666;
-					color: white;
-				}
 			#controls .button {
 				border-width: 0;
 				height: 50px;
-				background: url('images/button_sm.png') no-repeat center center;
 			}
-				#controls .button:hover {
-					background: url('images/button_hover_sm.png') no-repeat center center;
+			#controls .button#eraser {
+				background: url('images/eraser_button.png') no-repeat center center;
+			}
+				#controls .button#eraser:hover {
+					background: url('images/eraser_hover.png') no-repeat center center;
 				}
-				#controls .button:active {
-					background: url('images/button_active_sm.png') no-repeat center center;
+				#controls .button#eraser:active {
+					background: url('images/eraser_active.png') no-repeat center center;
+				}
+			#controls .button#pen {
+				background: url('images/pen_button.png') no-repeat center center;
+			}
+				#controls .button#pen:hover {
+					background: url('images/pen_hover.png') no-repeat center center;
+				}
+				#controls .button#pen:active {
+					background: url('images/pen_active.png') no-repeat center center;
 				}
 			#controls .control {
-				padding: 5px 0;
+				background: transparent;
+				color: black;
+				margin-bottom: 2px;
 			}
+				#controls .control:hover {
+					text-decoration: none;
+				}
 		#page canvas {
 			width: 640px;
 			float: left;
