@@ -19,6 +19,7 @@ $(function(){
     
     $("#canvas").mousedown(function(e){
         currentTool().down(e);
+		fadeInShadow();
     }).mousemove(function(e){
         currentTool().moved(e);
     }).mouseout(function(e){
@@ -218,16 +219,36 @@ $(function(){
     function ycr(y) { return yc(y) / canvasHeight; }
 
 	var doFade = false;
-	function fadeInShadow(e){
+	function fadeInShadow(){
 		doFade = true;
 		setTimeout(function(){
 			if (doFade){
-				$("#shadow").fadeIn(300);
+				$("#shadow").fadeIn(200);
 			}
-		},300);
+		},200);
 	}
 	function fadeOutShadow(){
 		doFade = false;
-		$("#shadow").fadeOut(100);
+		$("#shadow").fadeOut(150);
 	}
+
+	$("#share").click(function(){
+		if ($("#share-box").css("display") === "none") {
+			$("#share-box").show();
+		} else {
+			$("#share-box").hide();
+		}
+		return false;
+	});
+	$("#share-box .close").click(function(){ $("#share-box").hide(); return false; });
+	$("#invite").click(function(){
+		if ($("#invite-box").css("display") === "none") {
+			$("#invite-box").css("top",$("#invite").position().top + 48)
+			$("#invite-box").show();
+		} else {
+			$("#invite-box").hide();
+		}
+		return false;
+	});
+	$("#invite-box .close").click(function(){ $("#invite-box").hide(); return false; });
 });
