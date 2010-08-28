@@ -14,6 +14,7 @@ client.database = database.name;
 
 
 client.connect();
+
 exports.getSketch = function (id, runFunction){
 		client.query("select * from sketch where id = " + id, 
 			function selectCb(err, results, fields){
@@ -29,7 +30,7 @@ exports.getSketch = function (id, runFunction){
 };
 
 exports.addSketch = function (runFunction){
-	client.query ("INSERT INTO sketch values (NULL, '', NULL, NULL)",function selectCb(err, results, fields){
+	client.query ("INSERT INTO sketch (hash,created_at,modified_at) values ('', NULL, NULL)",function selectCb(err, results, fields){
 		if (err){
 			throw err;
 		}
@@ -46,4 +47,20 @@ exports.addSketch = function (runFunction){
 		);
 
 });
+}
+
+
+exports.addUser = function(user,sketch,runFunction) {
+	client.query("INSERT INTO user(name,email) values (?, ?)", [user.name, user.email], function selectCb(err, results, fields) {
+		if (err){
+			throw err;
+		}
+		var userId = results.insertId;
+		client.query("INSERT INTO user_to_sketch (user_id, sketch_id) values (?, ?)", [userId, sketch.id], function (err,results, fields){
+			if (err){
+				throw err;
+			}
+			runFunction(userId);
+		});
+	});
 }
