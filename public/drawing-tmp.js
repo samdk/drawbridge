@@ -12,13 +12,16 @@ $(function(){
 			var id = getNewId();
 			return '<li><a href="#" id="link'+id+'">'+'<canvas id="var'+id+'" width="120" height="90"></canvas></a></li>'
 		});
+		$("#variations canvas").draggable({opacity: 0.7,
+										   revert: true,
+										   revertDuration: 200});
 		return false;
 	});
 
 	$("#variations canvas").draggable({opacity: 0.7,
 									   revert: true,
-									   revertDuration: 100});
-	$("#canvas").droppable({
+									   revertDuration: 200});
+	$("#canvas-wrap").droppable({
 		drop: function(e,ui){ console.log("dropped #"+ui.draggable.attr("id"))}
 	});
 });

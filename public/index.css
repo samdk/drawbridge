@@ -1,0 +1,14 @@
+#header {
+	
+}
+#page {
+	min-height: 100%;
+	position: relative;
+}
+#footer {
+	height: 200px;
+	background: black;
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+}

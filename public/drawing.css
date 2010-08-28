@@ -1,198 +1,163 @@
-/* reset */
-body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,p,blockquote { margin:0; padding:0; }
-fieldset,img { border:0; }
-address,caption,cite,code,em,strong, { font-style:normal; font-weight:normal; }
-ul { list-style:none; }
-h1,h2,h3,h4,h5,h6 {	font-size:100%;	font-weight:normal; }
-
-/* @font-face fonts */
-/* all fonts by Jos Buivenga (exljbris) -> www.exljbris.com */
-@font-face {
-	font-family: 'Museo700';
-	src: url('resources/museo700-regular-webfont.eot');
-	src: local('☺'), url('resources/museo700-regular-webfont.woff') format('woff'), url('resources/museo700-regular-webfont.ttf') format('truetype'), url('resources/museo700-regular-webfont.svg#webfontFUOX9lfo') format('svg');
-	font-weight: normal;
-	font-style: normal;
-}
-
-@font-face {
-	font-family: 'Museo500';
-	src: url('resources/museo500-regular-webfont.eot');
-	src: local('☺'), url('resources/museo500-regular-webfont.woff') format('woff'), url('resources/museo500-regular-webfont.ttf') format('truetype'), url('resources/museo500-regular-webfont.svg#webfontPpLrsT7t') format('svg');
-	font-weight: normal;
-	font-style: normal;
-}
-@font-face {
-	font-family: 'Museo300';
-	src: url('resources/museo300-regular-webfont.eot');
-	src: local('☺'), url('resources/museo300-regular-webfont.woff') format('woff'), url('resources/museo300-regular-webfont.ttf') format('truetype'), url('resources/museo300-regular-webfont.svg#webfontOfTHu6WR') format('svg');
-	font-weight: normal;
-	font-style: normal;
-}
-
-h1,h2,h3,h4,h5,h6 { font-family: Museo700, Arial, Helvetica, 'Helvetica Neue', sans-serif; }
-.clear { clear: both; }
-
-body {
-	background: #ccc;
-	color: black;
-	font-size: 16px;
-	font-family: Arial, Helvetica, 'Helvetica Neue', sans-serif;
-}
-	#header {
-		width: 642px;
-		margin: 0 auto 6px;
-		padding: 20px 0 0;
-		position: relative;
-	}	
-		h1 {
-			font-size: 30px;
-			line-height: 30px;
-			float: left;
-		}
-			h1 a {
-				text-shadow: 0 1px 2px #eee;
-				color: black;
-				text-decoration: none;
-			}
-				h1 a:hover {
-					text-shadow: 0 1px 2px #ecc;
-				}
-		#header ul {
-			float: right;
-			margin-top: 4px;
-		}
-			#header li {
-				display: inline;
-				float: left;
-				margin-left: 7px;
-				font-size: 16px;
-				line-height: 18px;
-			}
-				#header li a {
-					color: black;
-					text-decoration: none;
-					display: block;
-					background: #ddd;
-					padding: 4px 10px;
-					margin: -3px 0;
-					-webkit-border-radius: 5px;
-					-moz-border-radius: 5px;
-					border-radius: 5px;
-				}
-					#header li a:hover {
-						border: 3px solid #888;
-						margin: -6px -3px;
-					}
-					#header li a:active {
-						padding: 5px 10px 3px;
-					}
-		.popup-box {
-			background: black;
-			opacity: 0.9;
-			width: 300px;
-			padding: 10px;
-			color: white;
-			position: absolute;
-			z-index: 15;
-			font-size: 14px;
-			font-weight: bold;
-			-webkit-border-radius: 5px;
-			-moz-border-radius: 5px;
-			border-radius: 5px;
-			-webkit-box-shadow: 0 1px 5px #555;
-			-moz-box-shadow: 0 1px 5px #555;
-			box-shadow: 0 1px 5px #555;
-			right: 30px;
-			top: 57px;
-			display: none;
-		}
-			.popup-box .arrow {
-				position: absolute;
-				right: 100px;
-				top: -20px;
-				border: 10px solid black;
-				border-color: transparent transparent black;
-			}
-			.popup-box input {
-				width: 294px;
-				border: 1px solid white;
-				padding: 2px;
-				margin-top: 3px;
-			}
-			.popup-box .close {
-				position: absolute;
-				right: 3px;
-				top: 3px;
-				padding: 0 3px 1px;
-				font-size: 14px;
-				line-height: 14px;
-				color: white;
-				text-decoration: none;
-			}
-				.popup-box .close:hover {
-					background: #666;
-				}
-	#page {
-		width: 900px;
-		height: 482px;
-		margin: 0 auto;
-		position: relative;
-		z-index: 1;
+#header {
+	width: 642px;
+	margin: 0 auto 6px;
+	padding: 20px 0 0;
+	position: relative;
+}	
+	h1 {
+		font-size: 30px;
+		line-height: 30px;
+		float: left;
 	}
-		#controls {
-			position: absolute;
-			left: 0;
-			top: 0;
-			width: 120px;
+		h1 a {
+			text-shadow: 0 1px 2px #eee;
+			color: black;
+			text-decoration: none;
 		}
-			#controls li {
-				display: block;
-				clear: both;
+			h1 a:hover {
+				text-shadow: 0 1px 2px #ecc;
 			}
-			#controls a {
-				display: block;
-				float: right;
-				margin-bottom: 6px;
-				width: 50px;
-				text-align: center;
-			}
-			#controls .button {
-				border-width: 0;
-				height: 50px;
-			}
-			#controls .button#eraser {
-				background: url('images/eraser_button.png') no-repeat center center;
-			}
-				#controls .button#eraser:hover {
-					background: url('images/eraser_hover.png') no-repeat center center;
-				}
-				#controls .button#eraser:active, #controls .button.selected#eraser {
-					background: url('images/eraser_active.png') no-repeat center center;
-				}
-			#controls .button#pen {
-				background: url('images/pen_button.png') no-repeat center center;
-			}
-				#controls .button#pen:hover {
-					background: url('images/pen_hover.png') no-repeat center center;
-				}
-				#controls .button#pen:active, #controls .button.selected#pen {
-					background: url('images/pen_active.png') no-repeat center center;
-				}
-			#controls .control {
-				background: transparent;
+	#header ul {
+		float: right;
+		margin-top: 4px;
+	}
+		#header li {
+			display: inline;
+			float: left;
+			margin-left: 7px;
+			font-size: 16px;
+			line-height: 18px;
+		}
+			#header li a {
 				color: black;
-				margin-bottom: 2px;
+				text-decoration: none;
+				display: block;
+				background: #ddd;
+				padding: 4px 10px;
+				margin: -3px 0;
+				-webkit-border-radius: 5px;
+				-moz-border-radius: 5px;
+				border-radius: 5px;
 			}
-				#controls .control:hover {
-					text-decoration: none;
+				#header li a:hover {
+					border: 3px solid #888;
+					margin: -6px -3px;
 				}
-		#page canvas {
+				#header li a:active {
+					padding: 5px 10px 3px;
+				}
+	.popup-box {
+		background: black;
+		opacity: 0.9;
+		width: 300px;
+		padding: 10px;
+		color: white;
+		position: absolute;
+		z-index: 15;
+		font-size: 14px;
+		font-weight: bold;
+		-webkit-border-radius: 5px;
+		-moz-border-radius: 5px;
+		border-radius: 5px;
+		-webkit-box-shadow: 0 1px 5px #555;
+		-moz-box-shadow: 0 1px 5px #555;
+		box-shadow: 0 1px 5px #555;
+		right: 30px;
+		top: 57px;
+		display: none;
+	}
+		.popup-box .arrow {
+			position: absolute;
+			right: 100px;
+			top: -20px;
+			border: 10px solid black;
+			border-color: transparent transparent black;
+		}
+		.popup-box input {
+			width: 294px;
+			border: 1px solid white;
+			padding: 2px;
+			margin-top: 3px;
+		}
+		.popup-box .close {
+			position: absolute;
+			right: 3px;
+			top: 3px;
+			padding: 0 3px 1px;
+			font-size: 14px;
+			line-height: 14px;
+			color: white;
+			text-decoration: none;
+		}
+			.popup-box .close:hover {
+				background: #666;
+			}
+#page {
+	width: 900px;
+	height: 482px;
+	margin: 0 auto;
+	position: relative;
+	z-index: 1;
+}
+	#controls {
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 120px;
+	}
+		#controls li {
+			display: block;
+			clear: both;
+		}
+		#controls a {
+			display: block;
+			float: right;
+			margin-bottom: 6px;
+			width: 50px;
+			text-align: center;
+		}
+		#controls .button {
+			border-width: 0;
+			height: 50px;
+		}
+		#controls .button#eraser {
+			background: url('images/eraser_button.png') no-repeat center center;
+		}
+			#controls .button#eraser:hover {
+				background: url('images/eraser_hover.png') no-repeat center center;
+			}
+			#controls .button#eraser:active, #controls .button.selected#eraser {
+				background: url('images/eraser_active.png') no-repeat center center;
+			}
+		#controls .button#pen {
+			background: url('images/pen_button.png') no-repeat center center;
+		}
+			#controls .button#pen:hover {
+				background: url('images/pen_hover.png') no-repeat center center;
+			}
+			#controls .button#pen:active, #controls .button.selected#pen {
+				background: url('images/pen_active.png') no-repeat center center;
+			}
+		#controls .control {
+			background: transparent;
+			color: black;
+			margin-bottom: 2px;
+		}
+			#controls .control:hover {
+				text-decoration: none;
+			}
+	#canvas-wrap {
+		position: absolute;
+		left: 129px;
+		right: 129px;
+		top: 0;
+		width: 642px;
+		height: 482px;
+	}
+		#canvas {
 			width: 640px;
 			position: absolute;
-			top: 0;
-			left: 129px;
-			right: 129px;
+			top: 0; left: 0; right: 0;
 			display: block;
 			background: white;
 			cursor: crosshair;
@@ -201,203 +166,206 @@ body {
 			-moz-box-shadow: 0 1px 5px #555;
 			box-shadow: 0 1px 5px #555;
 		}
-			#page canvas:hover {
+			#canvas:hover {
 				cursor: crosshair;
 			}
-			#page canvas:active {
+			#canvas:active {
 				cursor: crosshair;
 			}
-		#shadow {
-			display: none;
-			position: fixed;
-			width: 9999px;
-			height: 9999px;
-			margin: -500px 0 0 -4500px;
-			z-index: 5;
-			background: rgba(204,204,204,0.6);
-		}
-		#people {
-			position: absolute;
-			right: -40px;
-			top: 0;
-			width: 160px;
-		}
-			#people h2 {
-				font-size: 16px;
-				margin-bottom: 8px;
-			}
-			#people ul {
-				max-height: 450px;
-				overflow: auto;
-			}
-				#people #you {
-					margin-bottom: 10px;
-					margin-top: 2px;
-				}
-					#people #you a {
-						color: black;
-					}
-					#people #you a span.tiny{
-					    font-size: 0.74em;
-					}
-					#people #you form {
-						display: none;
-						overflow: visible;
-					}
-						#people input {
-							width: 120px;
-							border: 1px solid #aaa;
-							padding: 2px;
-							margin: -2px 0;
-						}
-				#people ul li.offline {
-					color: #777;
-				}
-			#people #invite {
-				color: black;
-				text-decoration: none;
-				display: inline-block;
-				margin: 10px 0;
-				padding: 4px 10px;
-				background: #ddd;
-				-webkit-border-radius: 5px;
-				-moz-border-radius: 5px;
-				border-radius: 5px;
-			}
-				#people #invite:hover {
-					border: 3px solid #888;
-					margin: 7px -3px;
-				}
-				#people #invite:active {
-					padding: 5px 10px 3px;
-				}
-				#people #invite-box {
-					top: 200px;
-				}
-					#invite-box .arrow {
-						right: 67px;
-					}
-
-	#variations {
-		width: 640px;
-		margin: 20px auto 40px;
+	#shadow {
+		display: none;
+		position: fixed;
+		width: 9999px;
+		height: 9999px;
+		margin: -500px 0 0 -4500px;
+		z-index: 5;
+		background: rgba(204,204,204,0.6);
 	}
-		#variations-header {
+	#people {
+		position: absolute;
+		right: -40px;
+		top: 0;
+		width: 160px;
+	}
+		#people h2 {
+			font-size: 16px;
+			margin-bottom: 8px;
+		}
+		#people ul {
+			max-height: 450px;
+			overflow: auto;
+		}
+			#people #you {
+				margin-bottom: 10px;
+				margin-top: 2px;
+			}
+				#people #you a {
+					color: black;
+				}
+				#people #you a span.tiny{
+					font-size: 0.74em;
+				}
+				#people #you form {
+					display: none;
+					overflow: visible;
+				}
+					#people input {
+						width: 120px;
+						border: 1px solid #aaa;
+						padding: 2px;
+						margin: -2px 0;
+					}
+			#people ul li.offline {
+				color: #777;
+			}
+		#people #invite {
+			color: black;
+			text-decoration: none;
+			display: inline-block;
 			margin: 10px 0;
-			position: relative;
+			padding: 4px 10px;
+			background: #ddd;
+			-webkit-border-radius: 5px;
+			-moz-border-radius: 5px;
+			border-radius: 5px;
 		}
-			#variations h2 {
-				font-size: 24px;
-				float: left;
+			#people #invite:hover {
+				border: 3px solid #888;
+				margin: 7px -3px;
 			}
-			#variations-help {
-				font-size: 11px;
-				text-decoration: underline;
-				font-style: italic;
-				float: left;
-				margin: 12px 7px 8px;
+			#people #invite:active {
+				padding: 5px 10px 3px;
 			}
-			#full {
-				display: none;
-				font-size: 13px;
-				position: absolute;
-				background: white;
-				border: 1px solid #aaa;
-				opacity: 0.9;
-				padding: 10px;
-				width: 400px;
-				top: -10px;
-				right: 10px;
-				-webkit-border-radius: 5px;
-				-moz-border-radius: 5px;
-				border-radius: 5px;
-				-webkit-box-shadow: 0 1px 5px #555;
-				-moz-box-shadow: 0 1px 5px #555;
-				box-shadow: 0 1px 5px #555;
+			#people #invite-box {
+				top: 200px;
 			}
-				#variations-help:hover + #full {
-					display: block;
+				#invite-box .arrow {
+					right: 67px;
 				}
-				#full #arrow {
-					position: absolute;
-					z-index: 3;
-					left: -20px;
-					top: 18px;
-					border: 10px solid black;
-					border-color: transparent white transparent transparent;
+				#invite-box input {
+					width: 300px;
+					margin-top: 4px;
 				}
-				#full #arrow2 {
-					position: absolute;
-					z-index: 2;
-					left: -22px;
-					top: 17px;
-					border: 11px solid black;
-					border-color: transparent #aaa transparent transparent;
-				}
-			#variations #add {
+
+#variations {
+	width: 640px;
+	margin: 20px auto 40px;
+}
+	#variations-header {
+		margin: 10px 0;
+		position: relative;
+	}
+		#variations h2 {
+			font-size: 24px;
+			float: left;
+		}
+		#variations-help {
+			font-size: 11px;
+			text-decoration: underline;
+			font-style: italic;
+			float: left;
+			margin: 12px 7px 8px;
+		}
+		#full {
+			display: none;
+			font-size: 13px;
+			position: absolute;
+			background: white;
+			border: 1px solid #aaa;
+			opacity: 0.9;
+			padding: 10px;
+			width: 400px;
+			top: -10px;
+			right: 10px;
+			-webkit-border-radius: 5px;
+			-moz-border-radius: 5px;
+			border-radius: 5px;
+			-webkit-box-shadow: 0 1px 5px #555;
+			-moz-box-shadow: 0 1px 5px #555;
+			box-shadow: 0 1px 5px #555;
+		}
+			#variations-help:hover + #full {
 				display: block;
-				float: right;
-				margin: 2px 0;
-				color: black;
-				text-decoration: none;
-				padding: 4px 10px;
-				background: #ddd;
-				-webkit-border-radius: 5px;
-				-moz-border-radius: 5px;
-				border-radius: 5px;
 			}
-				#variations #add:hover {
-					border: 3px solid #888;
-					margin: -1px -3px;
-				}
-				#variations #add:active {
-					padding: 5px 10px 3px;
-				}
-		#variations ul {
-			padding: 2px 0;
-			margin: 0 -5px;
-			clear: both;
+			#full #arrow {
+				position: absolute;
+				z-index: 3;
+				left: -20px;
+				top: 18px;
+				border: 10px solid black;
+				border-color: transparent white transparent transparent;
+			}
+			#full #arrow2 {
+				position: absolute;
+				z-index: 2;
+				left: -22px;
+				top: 17px;
+				border: 11px solid black;
+				border-color: transparent #aaa transparent transparent;
+			}
+		#variations #add {
+			display: block;
+			float: right;
+			margin: 2px 0;
+			color: black;
+			text-decoration: none;
+			padding: 4px 10px;
+			background: #ddd;
+			-webkit-border-radius: 5px;
+			-moz-border-radius: 5px;
+			border-radius: 5px;
 		}
-			#variations li {
-				float: left;
-				width: 120px;
-				height: 90px;
-				margin: 0 5px 10px;
+			#variations #add:hover {
+				border: 3px solid #888;
+				margin: -1px -3px;
 			}
-				#variations canvas {
-					background: white;
-					-webkit-box-shadow: 0 0 3px #555;
-					-moz-box-shadow: 0 0 3px #555;
-					box-shadow: 0 0 3px #555;
-				}
+			#variations #add:active {
+				padding: 5px 10px 3px;
+			}
+	#variations ul {
+		padding: 2px 0;
+		margin: 0 -5px;
+		clear: both;
+	}
+		#variations li {
+			float: left;
+			width: 120px;
+			margin: 0 5px 5px;
+		}
+			#variations canvas {
+				background: white;
+				-webkit-box-shadow: 0 0 3px #555;
+				-moz-box-shadow: 0 0 3px #555;
+				box-shadow: 0 0 3px #555;
+			}
 				#variations canvas.ui-draggable-dragging {
 					position: absolute;
 					z-index: 30;
 				}
-	#footer {
-		padding: 30px 0;
-		position: relative;
+#footer {
+	padding: 30px 0;
+	position: relative;
+}
+	#footer-top {
+		position: absolute;
+		height: 10px;
+		top: 0;
+		width: 600px;
+		margin-left: -300px;
+		left: 50%;
+		border-bottom: 1px solid #aaa;
 	}
-		#footer-top {
-			position: absolute;
-			height: 10px;
-			top: 0;
-			width: 600px;
-			margin-left: -300px;
-			left: 50%;
-			border-bottom: 1px solid #aaa;
+	#footer p {
+		width: 640px;
+		margin: 0 auto;
+		text-align: center;
+	}
+		#footer p a {
+			color: black;
 		}
-		#footer p {
-			width: 640px;
-			margin: 0 auto;
-			text-align: center;
-		}
-			#footer p a {
-				color: black;
-			}
-		#node-badge {
-			display: block;
-			clear: both;
-			margin: 0 auto;
-		}
+	#node-badge {
+		display: block;
+		clear: both;
+		margin: 0 auto;
+	}
 

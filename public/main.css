@@ -1,0 +1,44 @@
+/* general CSS to be used sitewide */
+
+/* reset */
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,p,blockquote { margin:0; padding:0; }
+fieldset,img { border:0; }
+address,caption,cite,code,em,strong, { font-style:normal; font-weight:normal; }
+ul { list-style:none; }
+h1,h2,h3,h4,h5,h6 {	font-size:100%;	font-weight:normal; }
+
+/* @font-face fonts */
+/* all fonts by Jos Buivenga (exljbris) -> www.exljbris.com */
+@font-face {
+	font-family: 'Museo700';
+	src: url('resources/museo700-regular-webfont.eot');
+	src: local('☺'), url('resources/museo700-regular-webfont.woff') format('woff'), url('resources/museo700-regular-webfont.ttf') format('truetype'), url('resources/museo700-regular-webfont.svg#webfontFUOX9lfo') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Museo500';
+	src: url('resources/museo500-regular-webfont.eot');
+	src: local('☺'), url('resources/museo500-regular-webfont.woff') format('woff'), url('resources/museo500-regular-webfont.ttf') format('truetype'), url('resources/museo500-regular-webfont.svg#webfontPpLrsT7t') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'Museo300';
+	src: url('resources/museo300-regular-webfont.eot');
+	src: local('☺'), url('resources/museo300-regular-webfont.woff') format('woff'), url('resources/museo300-regular-webfont.ttf') format('truetype'), url('resources/museo300-regular-webfont.svg#webfontOfTHu6WR') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+h1,h2,h3,h4,h5,h6 { font-family: Museo700, Arial, Helvetica, 'Helvetica Neue', sans-serif; }
+.clear { clear: both; }
+
+body {
+	background: #ccc;
+	color: black;
+	font-size: 16px;
+	font-family: Arial, Helvetica, 'Helvetica Neue', sans-serif;
+}
+
