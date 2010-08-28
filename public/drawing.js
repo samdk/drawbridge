@@ -264,6 +264,13 @@ $(function(){
     function xcr(x) { return xc(x) / canvasWidth;  }
     function ycr(y) { return yc(y) / canvasHeight; }
 
+	function getSketchId(){
+		var path = window.location.pathname,
+			usefulPart = path.substring(8),
+			end = usefulPart.search(/[/#?]/);
+		return usefulPart.substring(0,end);
+	};
+
 	var doFade = false;
 	function fadeInShadow(){
 		doFade = true;
