@@ -1,3 +1,5 @@
 var app = require("./app");
-var sketch = new app.Sketch(1);
-console.log(sketch);
+console.log(app.getSketch(1, console.log));
+app.addSketch(function(hash){
+	console.log(hash);
+});
