@@ -38,9 +38,9 @@ body {
 				}
 	#page {
 		width: 900px;
+		height: 482px;
 		margin: 0 auto;
 		position: relative;
-		overflow: auto;
 	}
 		#controls {
 			position: absolute;
@@ -83,9 +83,9 @@ body {
 		}
 		#people {
 			position: absolute;
-			right: 0;
+			right: -40px;
 			top: 0;
-			width: 120px;
+			width: 160px;
 		}
 			#people h2 {
 				font-size: 16px;
@@ -98,7 +98,7 @@ body {
 				overflow: auto;
 			}
 	#footer {
-		margin: 40px 0 0;
+		margin: 20px 0 0;
 		padding: 30px 0 90px;
 		background: #444;
 		color: white;
