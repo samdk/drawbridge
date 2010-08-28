@@ -6,6 +6,8 @@
 		<link rel="stylesheet" href="/drawing.css" type="text/css" media="screen" />
 		
 		<script src="http://code.jquery.com/jquery-1.4.2.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/jquery-ui-1.8.4.custom.min.js" type="text/javascript" charset="utf-8"></script>
+		
 		<script src="/socket-io.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript" charset="utf-8">
 		  io.setPath("/socket.io/");
@@ -14,7 +16,7 @@
 		<script src="/canvas.js" type="text/javascript" charset="utf-8"></script>
 		<script src="/ui.js" type="text/javascript" charset="utf-8"></script>
 		<script src="/drawing.js" type="text/javascript" charset="utf-8"></script>
-		
+		<script src="/drawing-tmp.js" type="text/javascript" charset="utf-8"></script>
 	</head>
 	<body>
 		<div id="header">
@@ -57,15 +59,9 @@
 				<a id="add" href="#">New Variation</a>
 			</div>
 			<ul>
-				<li><canvas width="120" height="90"></canvas></li>
-				<li><canvas width="120" height="90"></canvas></li>
-				<li><canvas width="120" height="90"></canvas></li>
-				<li><canvas width="120" height="90"></canvas></li>
-				<li><canvas width="120" height="90"></canvas></li>
-				<li><canvas width="120" height="90"></canvas></li>
-				<li><canvas width="120" height="90"></canvas></li>
-				<li><canvas width="120" height="90"></canvas></li>
+				<li><a href="#"><canvas id="var522" width="120" height="90"></canvas></a></li>
 			</ul>
+			<div class="clear"></div>
 		</div>
 		<div id="footer">
 			<div id="footer-top"></div>
