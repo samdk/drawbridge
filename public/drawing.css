@@ -48,6 +48,31 @@ body {
 			top: 0;
 			width: 120px;
 		}
+			#controls a {
+				display: block;
+				background: #ccc;
+				float: right;
+				margin-bottom: 10px;
+				width: 80px;
+				-webkit-border-radius: 10px;
+				-moz-border-radius: 10px;
+				border-radius: 10px;
+				border: 1px solid #aaa;
+				text-align: center;
+			}
+				#controls a:hover {
+					background: #bbb;
+				}
+				#controls a:active {
+					background: #666;
+					color: white;
+				}
+			#controls .button {
+				height: 80px;
+			}
+			#controls .control {
+				padding: 5px 0;
+			}
 		#page canvas {
 			width: 640px;
 			float: left;
@@ -67,6 +92,10 @@ body {
 				letter-spacing: -1px;
 				font-weight: bold;
 				margin-bottom: 10px;
+			}
+			#people ul {
+				height: 450px;
+				overflow: auto;
 			}
 	#footer {
 		margin: 40px 0 0;
