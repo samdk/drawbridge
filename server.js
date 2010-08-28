@@ -28,11 +28,24 @@ io.on('connection', function(client){
 					client.send({action: "add_user", user: userObj });
 				});
 				break;
+			case "user_left":
+				var user = {id: message.user_id};
+				var sketch = {id: message.sketch_id};
+				app.leaveSketch(user, sketch, function(userObj) {
+					client.send({action: "leave_user", user: userObj});
+				});
+
+			case "segment_added":
+				var segment = message.segment;
+				var sketch = {id: message.sketch_id};
+				app.addSegment(sketch, segment, function(segmentObj) {
+					client.send({action: "add_segment", segment: segmentObj});
+				});
 			default:
 				console.log(message);
 				
 		}
-		//console.log(message);
+		console.log(message);
 		//client.broadcast(message);
 		//client.send(message);
 	});

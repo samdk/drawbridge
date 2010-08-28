@@ -60,7 +60,7 @@ exports.addUser = function(user,sketch,runFunction) {
 			if (err){
 				throw err;
 			}
-			var userObj = {id: userId, name: user.name, email: user.emai};
+			var userObj = {id: userId, name: user.name, email: user.email};
 			runFunction(userObj);
 		});
 	});
@@ -72,6 +72,27 @@ exports.leaveSketch = function(user, sketch, runFunction) {
 		if (err){
 			throw err;
 		}
-		runFunction(user.id);
+		runFunction(user);
 	});
 }
+
+
+exports.addSegment = function(sketch, segment, runFunction) {
+	client.query ("INSERT INTO segment (color, points) values(?)", [segment.color, segment.points], 
+		function(err, result, fields){
+			if (err){
+				throw err;
+			}
+			var segmentId = result.insertId;
+			client.query("INSERT INTO sketch_to_segment (sketch_id, segment_id) values(?, ?)", [sketch.id, segmentId], 
+			function (err, result, fields){
+			if (err) {
+				throw err;
+				}
+				segmentObj = {id: segmentId, color: segment.color, points: segment.points};
+				runFunction(segmentObj);
+			}
+			);
+		});
+}
+
