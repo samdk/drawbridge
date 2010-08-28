@@ -224,15 +224,32 @@ body {
 		}
 			#people h2 {
 				font-size: 16px;
-				margin-bottom: 10px;
+				margin-bottom: 8px;
 			}
 			#people ul {
 				max-height: 450px;
 				overflow: auto;
 			}
-			#people ul li.offline {
-			    color: #777;
-			}
+				#people #you {
+					margin-bottom: 10px;
+					margin-top: 2px;
+				}
+					#people #you a {
+						color: black;
+					}
+					#people #you form {
+						display: none;
+						overflow: visible;
+					}
+						#people input {
+							width: 120px;
+							border: 1px solid #aaa;
+							padding: 2px;
+							margin: -2px 0;
+						}
+				#people ul li.offline {
+					color: #777;
+				}
 			#people #invite {
 				color: black;
 				text-decoration: none;
