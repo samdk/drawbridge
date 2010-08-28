@@ -146,26 +146,34 @@
 			#controls .control:hover {
 				text-decoration: none;
 			}
-	#page canvas {
-		width: 640px;
+	#canvas-wrap {
 		position: absolute;
-		top: 0;
 		left: 129px;
 		right: 129px;
-		display: block;
-		background: white;
-		cursor: crosshair;
-		z-index: 10;
-		-webkit-box-shadow: 0 1px 5px #555;
-		-moz-box-shadow: 0 1px 5px #555;
-		box-shadow: 0 1px 5px #555;
+		top: 0;
+		width: 642px;
+		height: 482px;
 	}
-		#page canvas:hover {
+		#canvas {
+			width: 640px;
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			display: block;
+			background: white;
 			cursor: crosshair;
+			z-index: 10;
+			-webkit-box-shadow: 0 1px 5px #555;
+			-moz-box-shadow: 0 1px 5px #555;
+			box-shadow: 0 1px 5px #555;
 		}
-		#page canvas:active {
-			cursor: crosshair;
-		}
+			#canvas:hover {
+				cursor: crosshair;
+			}
+			#canvas:active {
+				cursor: crosshair;
+			}
 	#shadow {
 		display: none;
 		position: fixed;
