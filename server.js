@@ -10,6 +10,10 @@ server.get('/', function(req,res) {
 	res.sendfile('/home/node/views/test.html');
 });
 
+server.get('/public/:path', function(req,res) {
+	res.sendfile(__dirname+'/public/'+path);
+};
+
 server.get('/drawing', function(req,res){
 	res.sendfile(__dirname+'/public/drawing.html');
 });
