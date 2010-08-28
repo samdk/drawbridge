@@ -157,10 +157,14 @@
 		#canvas {
 			width: 640px;
 			position: absolute;
-			top: 0;
-			left: 0;
-			right: 0;
+			top: 0; left: 0; right: 0;
 			display: block;
+			background: white;
+			cursor: crosshair;
+			z-index: 10;
+			-webkit-box-shadow: 0 1px 5px #555;
+			-moz-box-shadow: 0 1px 5px #555;
+			box-shadow: 0 1px 5px #555;
 		}
 			#canvas:hover {
 				cursor: crosshair;
@@ -237,6 +241,10 @@
 			}
 				#invite-box .arrow {
 					right: 67px;
+				}
+				#invite-box input {
+					width: 300px;
+					margin-top: 4px;
 				}
 
 #variations {
