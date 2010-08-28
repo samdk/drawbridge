@@ -166,7 +166,7 @@ $(function(){
 			if (doFade){
 				$("#shadow").fadeIn(300);
 			}
-		},400);
+		},300);
 	}
 	function fadeOutShadow(){
 		doFade = false;
