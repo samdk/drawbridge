@@ -23,15 +23,24 @@ var CommLink = {
     },
     
     reportSegmentDeleted : function(seg_id, sketchId){
-        this.send({action: 'segment_deleted', segment_id: seg_id, sketch_id: sketchId});
+        this.send({action             : 'segment_deleted',
+                   segment_id         : seg_id,
+                   sketch_base_id     : getBaseId(),
+                   sketch_revision_id : getRevisionId()});
     },
     
     reportSegmentDrawn : function(seg, sketchId){
-        this.send({action: 'segment_added', segment: seg, sketch_id: sketchId});
+        this.send({action             : 'segment_added',
+                   segment            : seg,
+                   sketch_base_id     : getBaseId(),
+                   sketch_revision_id : getRevisionId()});
     },
     
     reportSignOn : function(uname){
-        this.send({action: 'user_added', name: uname, sketch_id: getBaseId()});
+        this.send({action            : 'user_added',
+                  name               : uname,
+                  sketch_base_id     : getBaseId(),
+                  sketch_revision_id : getRevisionId()});
     },
     
     send : function(data){

@@ -14,6 +14,8 @@ $(function(){
     UI.canvas.context.lineWidth = 4;
     UI.canvas.context.lineJoin  = "round";
     UI.canvas.context.lineCap   = "round";
+    
+    CommLink.reportSignOn("Guest");
         
     var currentTool = UI.canvas.pen;
         
@@ -36,11 +38,13 @@ $(function(){
         currentTool = UI.canvas.eraser;
         $("#pen").removeClass("selected");
         $(this).addClass("selected");
+        return false;
     });
     $("#pen").click(function(){
         currentTool = UI.canvas.pen;
         $("#eraser").removeClass("selected");
         $(this).addClass("selected");
+        return false;
     });
     
 
