@@ -1,17 +1,20 @@
+var database = require('./config').database;
 var sys = require('sys');
 var gently = new (require('gently'));
 var mysql= require('./lib/mysql');
 var client = new mysql.Client();
 
-client.host = 'localhost';
-client.user = 'sketch-salad';
-client.port = 3306;
-client.password = 'tri44x';
-client.database = 'sketch_salad';
+client.host = database.host;
+client.user = database.username;
+client.port = database.port;
+client.password = database.password;
+client.database = database.name;
 
 //var conn = new mysql.Connection('localhost', 'sketch-salad', 'tri44x', 'sketch_salad');
 
 client.connect();
+
+
 
 client.query('select * from sketch', 
 	gently.expect(function selectCb(err, results, fields){
