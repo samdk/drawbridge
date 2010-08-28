@@ -11,7 +11,7 @@ server.get('/', function(req,res) {
 });
 
 server.get('/drawing', function(req,res){
-	res.render('./public/drawing.html');
+	res.render(__dirname+'/public/drawing.html');
 });
 
 server.get('/boo', function(req,res){
