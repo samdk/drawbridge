@@ -219,4 +219,6 @@ $(function(){
 		doFade = false;
 		$("#shadow").fadeOut(150);
 	}
+
+	new Dragdealer(document.getElementById('variations'), {vertical: true});
 });
