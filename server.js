@@ -7,7 +7,7 @@ var express = require('express'),
     app = require('./app');
 
 server.get('/', function(req,res) {
-	res.render('./public/index.html');
+	res.render('test.html');
 });
 
 server.get('/drawing', function(req,res){
