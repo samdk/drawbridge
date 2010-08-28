@@ -6,20 +6,14 @@ var express = require('express'),
     ),
     app = require('./app');
 
+server.use(express.staticProvider(__dirname+'/public'));
+
 server.get('/', function(req,res) {
 	res.sendfile('/home/node/views/test.html');
 });
 
-server.get('/public/:path', function(req,res) {
-	res.sendfile(__dirname+'/public/'+req.params.path);
-});
 
 server.get('/drawing', function(req,res){
 	res.sendfile(__dirname+'/public/drawing.html');
 });
-
-server.get('/boo/(.+)', function(req,res){
-	res.send(req.params);
-});
-
 server.listen(80);
