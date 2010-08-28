@@ -167,13 +167,14 @@ $(function(){
     }
     
     var CommLink = {
-        socket : new io.Socket(),
+        socket : new io.Socket(null, {port: 8008, rememberTransport: false}),
         
         establish : function(){
             this.socket.connect();
 
             this.socket.on('message', function(msg){
-                msg = eval(msg);
+                msg = JSON.parse(msg);
+                console.log(msg);
                 if(msg.action == 'add_segment'){
                     segmentAdded(msg.segment);
                 }else if(msg.action == 'delete_segment'){
@@ -187,11 +188,15 @@ $(function(){
         },
         
         reportSegmentDeleted : function(seg_id){
-            this.socket.send({'action': 'delete_segment', 'segment_id': seg_id});
+            this.send({'action': 'delete_segment', 'segment_id': seg_id});
         },
         
         reportSegmentDrawn : function(seg){
-            this.socket.send({'action': 'segment_added', 'segment':seg });
+            this.send({'action': 'segment_added', 'segment':seg });
+        },
+        
+        send : function(data){
+            this.socket.send(JSON.stringify(data));
         }
     };
     
