@@ -158,20 +158,15 @@ body {
 			#page canvas:active {
 				cursor: crosshair;
 			}
-		#page #shadow {
+		#shadow {
 			display: none;
 			position: fixed;
 			width: 9999px;
 			height: 9999px;
-			margin-left: -4000px;
-			margin-top: -500px;
+			margin: -500px 0 0 -4500px;
+			z-index: 5;
+			background: rgba(0,0,0,0.6);
 		}
-			#page canvas:hover + #shadow {
-				display: block;
-				z-index: 5;
-				background: black;
-				opacity: 0.3;
-			}
 		#people {
 			position: absolute;
 			right: -40px;
