@@ -28,14 +28,21 @@ $(function(){
         currentTool().up(e);
     });
     
-    $("#eraser").click(function(){selectedTool = "eraser";});
-    $("#pen").click(function(){selectedTool = "pen";});
+    $("#eraser").click(function(){
+        selectedTool = "eraser";
+        $("#pen").removeClass("selected");
+        $(this).addClass("selected");
+    });
+    $("#pen").click(function(){
+        selectedTool = "pen";
+        $("#eraser").removeClass("selected");
+        $(this).addClass("selected");
+    });
     
     function currentTool(){
-        if(selectedTool == 'pen') return Pencil;
+        if(selectedTool == 'pen')    return Pencil;
         if(selectedTool == 'eraser') return Eraser;
-    }
-    
+    }    
     
     var Pencil = {
         saved : false,
@@ -55,8 +62,7 @@ $(function(){
                 canvas.stroke();
                 currentSegment.points.push([xcr(e.pageX), ycr(e.pageY)]);
             }
-            //canvas.save();
-            //canvas.restore();
+            canvas.save(); canvas.restore();
         },
     
         up : function(e){
@@ -69,8 +75,10 @@ $(function(){
     
     var Eraser = {
         saved: false,
+        i: false,
         down: function(e){},
         moved: function(e){
+            this.i = false;
             var closest = false, dist = 10000000;
             for(var i in displayedSegments){
                 if(displayedSegments[i]){
@@ -84,14 +92,17 @@ $(function(){
                         if(dist > curDist){                            
                             dist = curDist;
                             closest = displayedSegments[i];
+                            this.i = i;
                         }
                     }
                 }
             }
             
-            if(!closest || dist > 100){
+            if(!closest || dist > 170){
                 if(this.saved)
                     unsnap(this.saved);
+                this.i = false;
+                this.saved = false;
                 return;
             }
             
@@ -104,8 +115,12 @@ $(function(){
             closest.color = oldColor;
         },
         up: function(e){
-
-            
+            if(this.i){
+                reportSegmentDeleted(displayedSegments.splice(this.i, 1));
+                this.i = false;
+                this.saved = false;
+                refresh();
+            }
         }
     };
     
@@ -116,6 +131,12 @@ $(function(){
         canvas.putImageData(img, 0, 0);
     }
     
+    function refresh(){
+        unsnap(canvas.createImageData(canvasWidth, canvasHeight));
+        for(var i in displayedSegments)
+            displaySegment(displayedSegments[i]);
+    }
+    
     function segmentWasDrawn(seg){
         reportSegment(seg);
         displaySegment(seg);
@@ -123,6 +144,10 @@ $(function(){
     
     function reportSegment(seg){
         displayedSegments.push(seg);
+    }
+    
+    function reportSegmentDeleted(seg){
+        
     }
     
     function segmentPoll(){
