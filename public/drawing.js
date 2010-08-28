@@ -52,8 +52,8 @@ $(function(){
         currentSegment : false,
         down : function(e){
             mouseIsDown = true;
-            this.currentSegment = {color: selectedColor, points:[]};
-            this.saved = snap();       
+            this.currentSegment = {color: selectedColor, points:[[xcr(e.pageX), ycr(e.pageY)]]};
+            this.saved = snap();    
         
             canvas.moveTo(xc(e.pageX), yc(e.pageY));
             canvas.beginPath();
@@ -77,6 +77,17 @@ $(function(){
             }
             if(this.currentSegment){
                 segmentWasDrawn(this.currentSegment);
+                if(this.currentSegment.points.length == 1){
+                    canvas.save();
+                    console.log(this.currentSegment);
+                    canvas.beginPath();
+                    canvas.arc(this.currentSegment.points[0][0] * canvasWidth,
+                               this.currentSegment.points[0][1] * canvasHeight,
+                               4, 0, Math.PI * 2, true);
+                    canvas.closePath();
+                    canvas.fill();
+                    canvas.restore();
+                }
                 this.currentSegment = false;
             }
         }
