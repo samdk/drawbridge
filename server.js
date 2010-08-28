@@ -13,7 +13,7 @@ server.get('/', function(req,res) {
 });
 
 
-server.get('/drawing', function(req,res){
+server.get('/sketch/:id', function(req,res){
 	res.sendfile(__dirname+'/public/drawing.html');
 });
 server.listen(80);
