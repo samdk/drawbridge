@@ -76,7 +76,7 @@ body {
 					text-shadow: 0 1px 0 #ddd;
 				}
 					#header li a:hover {
-						border: 4px solid #aaa;
+						border: 4px solid #888;
 						margin: -9px -4px;
 					}
 					#header li a:active {
@@ -114,8 +114,16 @@ body {
 					color: white;
 				}
 			#controls .button {
+				border-width: 0;
 				height: 80px;
+				background: url('images/button.png') no-repeat center center;
 			}
+				#controls .button:hover {
+					background: url('images/button_hover.png') no-repeat center center;
+				}
+				#controls .button:active {
+					background: url('images/button_active.png') no-repeat center center;
+				}
 			#controls .control {
 				padding: 5px 0;
 			}
@@ -125,7 +133,7 @@ body {
 			margin: 0 129px;
 			display: block;
 			background: white;
-			border: 1px solid #aaa;
+			border: 1px solid #777;
 			cursor: crosshair;
 		}
 			#page canvas:hover {
@@ -162,7 +170,7 @@ body {
 				border: 1px solid #aaa;
 			}
 				#people #invite:hover {
-					border: 3px solid #aaa;
+					border: 3px solid #888;
 					margin: 8px -2px;
 				}
 				#people #invite:active {
