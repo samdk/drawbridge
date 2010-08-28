@@ -14,4 +14,8 @@ server.get('/drawing', function(req,res){
 	res.render('./public/drawing.html');
 });
 
+server.get('/boo', function(req,res){
+	res.send(__dirname);
+});
+
 server.listen(80);
