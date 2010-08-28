@@ -35,13 +35,15 @@ exports.addSketch = function (runFunction){
 			throw err;
 		}
 		var insertId = results.insertId;
-		var hash = crypto.createHash("sha1").update(insertId+secret_key).digest("hex");
-		client.query("UPDATE sketch SET hash=? WHERE id=?", [hash, insertId], 
+		var sha1hash = crypto.createHash("sha1").update(insertId+secret_key).digest("hex");
+		client.query("UPDATE sketch SET hash=? WHERE id=?", [sha1hash, insertId], 
 		function selectCb(err, results, fields){
 			if (err){
 				throw err;
 			}
-			runFunction(hash);
+			console.log(results);
+			var sketch = {hash:sha1hash};
+			runFunction(sketch);
 			//console.log(results);
 		}
 		);

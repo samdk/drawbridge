@@ -34,18 +34,18 @@ io.on('connection', function(client){
 				app.leaveSketch(user, sketch, function(userObj) {
 					client.send({action: "leave_user", user: userObj});
 				});
-
+				break;
 			case "segment_added":
 				var segment = message.segment;
 				var sketch = {id: message.sketch_id};
 				app.addSegment(sketch, segment, function(segmentObj) {
 					client.send({action: "add_segment", segment: segmentObj});
 				});
+				break;
 			default:
 				console.log(message);
 				
 		}
-		console.log(message);
 		//client.broadcast(message);
 		//client.send(message);
 	});
@@ -62,8 +62,15 @@ server.get('/', function(req,res) {
 
 
 
-server.get('/sketch/:id', function(req,res){
-	res.sendfile(__dirname+'/public/drawing.html');
+server.get('/sketch/:hash?', function(req,res){
+	var hash = req.params.hash;
+	if (hash){
+		res.sendfile(__dirname+'/public/drawing.html');
+	}else {
+		app.addSketch(function (sketch) {
+			res.redirect('/sketch/'+sketch.hash, 302);
+		});
+	}
 });
 
 
