@@ -3,6 +3,7 @@ var CommLink = {
                                   rememberTransport : false}),
 
     establish : function(){
+        io.setPath("/socket.io/");
         this.socket.connect();
 
         this.socket.on('message', function(msg){

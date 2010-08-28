@@ -10,6 +10,12 @@ var UI = {
         });
         if(!found && username != $("#you form input").val())
             $("#people").append("<li>"+username+"</li>");
+            
+        $("#people h2").text(
+            $("#people li").length +
+            ($("#people li").length == 1 ? ' person ' : ' people ') +
+            'drawing'
+        );
     },
     
     sign_off_user : function(username){
