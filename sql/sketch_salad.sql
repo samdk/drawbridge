@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Aug 28, 2010 at 11:40 AM
+-- Generation Time: Aug 28, 2010 at 03:20 PM
 -- Server version: 5.1.41
 -- PHP Version: 5.3.2-1ubuntu4.2
 
@@ -28,16 +28,11 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 DROP TABLE IF EXISTS `segment`;
 CREATE TABLE `segment` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `sketch_id` bigint(20) NOT NULL,
+  `color` varchar(7) NOT NULL DEFAULT '#000000',
   `points` longtext NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `segment`
---
-
 
 -- --------------------------------------------------------
 
@@ -55,11 +50,6 @@ CREATE TABLE `sketch` (
   KEY `hash` (`hash`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `sketch`
---
-
-
 -- --------------------------------------------------------
 
 --
@@ -71,11 +61,6 @@ CREATE TABLE `sketch_to_segment` (
   `sketch_id` bigint(20) NOT NULL,
   `segment_id` bigint(20) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `sketch_to_segment`
---
-
 
 -- --------------------------------------------------------
 
@@ -91,13 +76,6 @@ CREATE TABLE `user` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `user`
---
-
-INSERT INTO `user` (`id`, `name`, `email`) VALUES
-(1, 'test322', '');
-
 -- --------------------------------------------------------
 
 --
@@ -110,10 +88,3 @@ CREATE TABLE `user_to_sketch` (
   `sketch_id` bigint(20) NOT NULL,
   `is_active` tinyint(1) NOT NULL DEFAULT '1'
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `user_to_sketch`
---
-
-INSERT INTO `user_to_sketch` (`user_id`, `sketch_id`, `is_active`) VALUES
-(0, 1, 0);
