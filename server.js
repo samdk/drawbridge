@@ -1,6 +1,6 @@
 var express = require('express'),
     app = express.createServer(),
-    db = require('db')
+    db = require('./app')
 ;
 
 app.get('/', function(req,res) {
