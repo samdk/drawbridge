@@ -31,7 +31,7 @@ var CommLink = {
     },
     
     reportSignOn : function(uname){
-        this.send({action: 'user_added', name: uname, sketch_id: getSketchId()});
+        this.send({action: 'user_added', name: uname, sketch_id: getBaseId()});
     },
     
     send : function(data){

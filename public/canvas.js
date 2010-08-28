@@ -8,7 +8,7 @@ function Canvas(ref){
     this.pen      = new Pen(this);
     this.eraser   = new Eraser(this);
     this.ptRadius = 4;
-    this.sketchId = getSketchId();
+    this.sketchId = getRevisionId();
     
     this.snap   = function(){ return this.context.getImageData(0, 0, this.width, this.height); };
     this.unsnap = function(img){     this.context.putImageData(img, 0, 0); };

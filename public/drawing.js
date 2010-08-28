@@ -1,4 +1,13 @@
-function getSketchId(){ return window.location.hash.substring(1); }
+function getRevisionId(){
+    if(window.location.hash.substring(1).length > 0)
+        return window.location.hash.substring(1);
+    else
+        return getBaseId();
+}
+
+function getBaseId(){
+    return window.location.pathname.split("/").pop();
+}
 
 $(function(){
 	UI.canvas = new Canvas($("#canvas").get(0));
