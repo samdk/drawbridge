@@ -47,6 +47,7 @@ $(function(){
 	$("#share").click(function(){
 		if ($("#share-box").css("display") === "none") {
 			$("#share-box").show();
+			$("#share-box input").val("http://" + document.location.host + "/view/" + UI.canvas.realId);
 		} else {
 			$("#share-box").hide();
 		}
@@ -55,8 +56,9 @@ $(function(){
 	$("#share-box .close").click(function(){ $("#share-box").hide(); return false; });
 	$("#invite").click(function(){
 		if ($("#invite-box").css("display") === "none") {
-			$("#invite-box").css("top",$("#invite").position().top + 48)
+			$("#invite-box").css("top",$("#invite").position().top + 48);
 			$("#invite-box").show();
+			$("#invite-box input").val(document.location.href);
 		} else {
 			$("#invite-box").hide();
 		}
