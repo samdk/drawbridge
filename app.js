@@ -60,7 +60,7 @@ exports.addUser = function(user,sketch,runFunction) {
 			if (err){
 				throw err;
 			}
-			runFunction(userId);
+			runFunction({id: userId, name: user.name, email: user.emai});
 		});
 	});
 }

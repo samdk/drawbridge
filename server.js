@@ -6,7 +6,7 @@ var sys = require('sys'),
     	express.logger(),
 	express.bodyDecoder()
     ),
-    //app = require('./app'),
+    app = require('./app'),
     io = require('socket.io');
 
 server.use(express.staticProvider(__dirname+'/public'));
@@ -20,9 +20,20 @@ var io = io.listen(server);
 io.on('connection', function(client){
 	console.log('Client Connected');
 	client.on('message', function(message){
-		console.log(message);
-		client.broadcast(message);
-		client.send(message);
+		switch(message.action){
+			case "user_added":
+				var user = {name: message.name, email: message.email };
+				var sketch = { id: message.sketch_id };
+				app.addUser(user, sketch, function(userObj) {
+					client.send(action: "add_user", user: userObj );
+				});
+			default:
+				console.log(message);
+				
+		}
+		//console.log(message);
+		//client.broadcast(message);
+		//client.send(message);
 	});
 		client.on('disconnect', function(){
 		console.log('Client Disconnected.');
