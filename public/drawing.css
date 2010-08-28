@@ -237,6 +237,9 @@ body {
 					#people #you a {
 						color: black;
 					}
+					#people #you a span.tiny{
+					    font-size: 0.74em;
+					}
 					#people #you form {
 						display: none;
 						overflow: visible;

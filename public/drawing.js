@@ -219,7 +219,7 @@ $(function(){
                 $(this).removeClass("offline");
             }
         });
-        if(!found)
+        if(!found && username != $("#you form input").val())
             $("#people").append("<li>"+username+"</li>");
     }
     
@@ -308,8 +308,13 @@ $(function(){
 		$("#you form input").focus();
 	});
 	$("#you form input").focusout(function(){
-		$("#you a").text($("#you form input").val());
+		$("#you a").html($("#you form input").val()  + " <span class='tiny'>(click to change)</span>");
 		$("#you a").show();
 		$("#you form").hide();
+	});
+	$("#you form").submit(function(){
+        CommLink.reportSignOn($("#you form input").val());
+        $("#you form input").focusout();
+        return false;
 	});
 });
