@@ -18,8 +18,8 @@ server.get('/drawing', function(req,res){
 	res.sendfile(__dirname+'/public/drawing.html');
 });
 
-server.get('/boo', function(req,res){
-	res.send(__dirname);
+server.get('/boo/:path', function(req,res){
+	res.send(req.params.path);
 });
 
 server.listen(80);
