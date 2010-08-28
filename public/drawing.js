@@ -220,5 +220,5 @@ $(function(){
 		$("#shadow").fadeOut(150);
 	}
 
-	new Dragdealer(document.getElementById('variations'));
+	new Dragdealer(document.getElementById('history'));
 });
