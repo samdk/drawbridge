@@ -14,8 +14,7 @@ $(function(){
     var canvasHeight = $("#canvas").innerHeight();
     
     $("#canvas").get(0).onselectstart = function(){return false;}
-        
-    var currentSegment;
+
     var displayedSegments = [];
     
     $("#canvas").mousedown(function(e){
@@ -50,9 +49,10 @@ $(function(){
     
     var Pencil = {
         saved : false,
+        currentSegment : false,
         down : function(e){
             mouseIsDown = true;
-            currentSegment = {color: selectedColor, points:[]};
+            this.currentSegment = {color: selectedColor, points:[]};
             this.saved = snap();       
         
             canvas.moveTo(xc(e.pageX), yc(e.pageY));
@@ -64,16 +64,21 @@ $(function(){
             if(mouseIsDown){
                 canvas.lineTo(xc(e.pageX), yc(e.pageY));
                 canvas.stroke();
-                currentSegment.points.push([xcr(e.pageX), ycr(e.pageY)]);
+                this.currentSegment.points.push([xcr(e.pageX), ycr(e.pageY)]);
+                canvas.save(); canvas.restore();
             }
-            canvas.save(); canvas.restore();
         },
     
         up : function(e){
             mouseIsDown = false;
-            if(this.saved)
+            if(this.saved){
                 unsnap(this.saved);
-            segmentWasDrawn(currentSegment);
+                this.saved = false;
+            }
+            if(this.currentSegment){
+                segmentWasDrawn(this.currentSegment);
+                this.currentSegment = false;
+            }
         }
     };
     
@@ -83,30 +88,47 @@ $(function(){
         down: function(e){},
         moved: function(e){
             this.i = false;
-            var closest = false, dist = 10000000;
+            var closest = false, dist = 10000000, lastPt = false;
             for(var i in displayedSegments){
                 if(displayedSegments[i]){
                     for(var j in displayedSegments[i].points){
-                        var pt = displayedSegments[i].points[j];
+                        var a = displayedSegments[i].points[j];
+                        var b = lastPt || [a[0]+0.0001, a[1]+0.0001];
                         
-                        var dx = xc(e.pageX) - pt[0]*canvasWidth,
-                            dy = yc(e.pageY) - pt[1]*canvasHeight;
-                            
+                        var px = b[0] - a[0],
+                            py = b[1] - a[1];
+                                                    
+                        var u = ((xcr(e.pageX) - a[0]) * px +
+                                 (ycr(e.pageY) - a[1]) * py) / (px*px + py*py);
+
+                        if(u > 1)       u = 1;
+                        else if(u < 0)  u = 0;
+
+                        var x = a[0] + u * px,
+                            y = a[1] + u * py;
+
+                        var dx = x - xcr(e.pageX),
+                            dy = y - ycr(e.pageY);
+
                         var curDist = dx*dx + dy*dy;
-                        if(dist > curDist){                            
+                        
+                        if(dist > curDist){           
                             dist = curDist;
                             closest = displayedSegments[i];
                             this.i = i;
                         }
+                                                
+                        lastPt = a;
                     }
                 }
             }
             
-            if(!closest || dist > 170){
-                if(this.saved)
-                    unsnap(this.saved);
+            if(this.saved){
+                unsnap(this.saved);
+            }
+            
+            if(!closest || dist > 0.0005){
                 this.i = false;
-                this.saved = false;
                 return;
             }
             
