@@ -22,10 +22,7 @@ server.get('/sketch/:id', function(req,res){
 	res.sendfile(__dirname+'/public/drawing.html');
 });
 
-exec ("hostname", function (error, stdout, stderr) {
-	if (stdout === "team-hyphen"){
-		server.listen(80);
-	}else {
-		server.listen(8000);
-	}
-});
+
+port = (process.argv[2]=== undefined)?80:parseInt(process.argv[2]);
+console.log(port);
+server.listen(port);
