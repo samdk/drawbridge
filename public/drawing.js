@@ -14,8 +14,7 @@ $(function(){
     var canvasHeight = $("#canvas").innerHeight();
     
     $("#canvas").get(0).onselectstart = function(){return false;}
-        
-    var currentSegment;
+
     var displayedSegments = [];
     
     $("#canvas").mousedown(function(e){
@@ -50,9 +49,10 @@ $(function(){
     
     var Pencil = {
         saved : false,
+        currentSegment : false,
         down : function(e){
             mouseIsDown = true;
-            currentSegment = {color: selectedColor, points:[]};
+            this.currentSegment = {color: selectedColor, points:[]};
             this.saved = snap();       
         
             canvas.moveTo(xc(e.pageX), yc(e.pageY));
@@ -64,16 +64,21 @@ $(function(){
             if(mouseIsDown){
                 canvas.lineTo(xc(e.pageX), yc(e.pageY));
                 canvas.stroke();
-                currentSegment.points.push([xcr(e.pageX), ycr(e.pageY)]);
+                this.currentSegment.points.push([xcr(e.pageX), ycr(e.pageY)]);
+                canvas.save(); canvas.restore();
             }
-            canvas.save(); canvas.restore();
         },
     
         up : function(e){
             mouseIsDown = false;
-            if(this.saved)
+            if(this.saved){
                 unsnap(this.saved);
-            segmentWasDrawn(currentSegment);
+                this.saved = false;
+            }
+            if(this.currentSegment){
+                segmentWasDrawn(this.currentSegment);
+                this.currentSegment = false;
+            }
         }
     };
     
@@ -108,7 +113,6 @@ $(function(){
                         var curDist = dx*dx + dy*dy;
                         
                         if(dist > curDist){           
-                            console.log(a, b, [x, y], u);
                             dist = curDist;
                             closest = displayedSegments[i];
                             this.i = i;
@@ -121,7 +125,6 @@ $(function(){
             
             if(this.saved){
                 unsnap(this.saved);
-                this.saved = false;
             }
             
             if(!closest || dist > 0.0005){
