@@ -12,7 +12,7 @@ server.get('/', function(req,res) {
 
 server.get('/public/:path', function(req,res) {
 	res.sendfile(__dirname+'/public/'+path);
-};
+});
 
 server.get('/drawing', function(req,res){
 	res.sendfile(__dirname+'/public/drawing.html');
