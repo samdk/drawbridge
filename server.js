@@ -7,7 +7,7 @@ var sys = require('sys'),
 	express.bodyDecoder()
     ),
     app = require('./app'),
-    io = require('./lib/socket.io-node/lib/socket.io')
+    io = require('socket.io')
     ;
 
 server.use(express.staticProvider(__dirname+'/public'));
