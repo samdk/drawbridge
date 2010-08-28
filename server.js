@@ -11,6 +11,26 @@ var sys = require('sys'),
 
 server.use(express.staticProvider(__dirname+'/public'));
 
+port = (process.argv[2]=== undefined)?80:parseInt(process.argv[2]);
+console.log("listening on port "+port);
+server.listen(port);
+
+//Setup Socket.IO
+var io = io.listen(server);
+io.on('connection', function(client){
+	console.log('Client Connected');
+	client.on('message', function(message){
+		console.log(message);
+		client.broadcast(message);
+		client.send(message);
+	});
+		client.on('disconnect', function(){
+		console.log('Client Disconnected.');
+	});
+});
+
+
+// Routes //
 server.get('/', function(req,res) {
 	res.sendfile(__dirname+'/public/index.html');
 });
@@ -22,20 +42,4 @@ server.get('/sketch/:id', function(req,res){
 });
 
 
-port = (process.argv[2]=== undefined)?80:parseInt(process.argv[2]);
-console.log("listening on port "+port);
-server.listen(port);
 
-//Setup Socket.IO
-var io = io.listen(server);
-io.on('connection', function(client){
-console.log('Client Connected');
-client.on('message', function(message){
-        console.log(message);
-	client.broadcast(message);
-	client.send(message);
-});
-	client.on('disconnect', function(){
-	console.log('Client Disconnected.');
-});
-});
