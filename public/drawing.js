@@ -19,6 +19,7 @@ $(function(){
     
     $("#canvas").mousedown(function(e){
         currentTool().down(e);
+		fadeInShadow();
     }).mousemove(function(e){
         currentTool().moved(e);
     }).mouseout(function(e){
@@ -207,13 +208,13 @@ $(function(){
     function ycr(y) { return yc(y) / canvasHeight; }
 
 	var doFade = false;
-	function fadeInShadow(e){
+	function fadeInShadow(){
 		doFade = true;
 		setTimeout(function(){
 			if (doFade){
 				$("#shadow").fadeIn(400);
 			}
-		},400);
+		},600);
 	}
 	function fadeOutShadow(){
 		doFade = false;
