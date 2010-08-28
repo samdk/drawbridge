@@ -6,7 +6,7 @@ var sys = require('sys'),
     	express.logger(),
 	express.bodyDecoder()
     ),
-    app = require('./app'),
+    //app = require('./app'),
     io = require('socket.io')
     ;
 
