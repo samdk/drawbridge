@@ -1,15 +1,70 @@
-#header {
-	
-}
-#page {
+html,body {height: 100%;}
+#container {
 	min-height: 100%;
 	position: relative;
 }
-#footer {
-	height: 200px;
-	background: black;
-	color: white;
-	position: absolute;
-	bottom: 0;
-	width: 100%;
-}
+	#page {
+		overflow: auto;
+		padding-bottom: 340px;
+		width: 900px;
+		margin: 0 auto;
+	}	
+		h1 {
+			font-size: 48px;
+			margin: 30px 0;
+			text-shadow: 0 1px 3px #eee;
+			text-align: center;
+		}
+	#footer {
+		clear: both;
+		margin-top: -320px;
+		height: 240px;
+		padding: 40px 0;
+		position: relative;
+		z-index: 2;
+		background: black;
+		color: white;
+		width: 100%;
+	}
+		#footer-container {
+			text-align: center;
+			width: 600px;
+			margin: 0 auto;
+		}
+			#footer h3 {
+				font-size: 16px;
+				font-weight: normal;
+				font-family: Museo500, Arial, Helvetica, 'Helvetica Neue', sans-serif;
+			}
+				#footer a {
+					color: white;
+				}
+					#footer a:hover {
+						text-decoration: none;
+					}
+			#footer ul {
+				height: 100px;
+				width: 303px;
+				margin-left: -1px;
+				margin: 20px auto;
+			}
+			#footer li {
+				width: 100px;
+				margin-left: 1px;
+				float: left;
+				height: 150px;
+			}
+				#eli {
+					background: url('/images/people/eli_sm.jpg') no-repeat center center;
+				}
+				#pras {
+					background: url('/images/people/prasanna_sm.jpg') no-repeat center center;
+				}
+				#sam {
+					background: url('/images/people/sam_sm.jpg') no-repeat center center;
+				}
+			#footer p {
+				clear: both;
+				display: block;
+				padding: 20px 0;
+			}
