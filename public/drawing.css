@@ -357,6 +357,7 @@ body {
 			padding: 2px 0;
 			margin: 0 -5px;
 			overflow: auto;
+			clear: both;
 		}
 			#variations li {
 				float: left;
