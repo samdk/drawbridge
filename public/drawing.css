@@ -1,13 +1,52 @@
+/* reset */
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,p,blockquote { margin:0; padding:0; }
+fieldset,img { border:0; }
+address,caption,cite,code,em,strong, { font-style:normal; font-weight:normal; }
+ul { list-style:none; }
+h1,h2,h3,h4,h5,h6 {	font-size:100%;	font-weight:normal; }
+
 body {
-	background: #eee;
+	background: #ddd;
 	color: black;
 	font-size: 16px;
+	font-family: Arial, Helvetica, 'Helvetica Neue', sans-serif;
 }
-#page {
-	width: 640px;
-	margin: 50px auto;
-}
-	#page canvas {
-		background: white;
-	}
+	#header {
+		width: 640px;
+		margin: 0 auto;
+		padding: 20px 0 15px;
+		overflow: auto;
+	}	
+		h1 {
+			font-weight: bold;
+			font-size: 21px;
+			letter-spacing: -1px;
+			float: left;
+		}
+		#header ul {
+			float: right;
+		}
+			#header li {
+				display: inline;
+				float: left;
+				margin-left: 30px;
+				font-size: 21px;
+			}
+				#header li a {
+					color: black;
 
+				}
+	#page {
+		width: 900px;
+		margin: 0 auto;
+	}
+		#page canvas {
+			width: 640px;
+			margin: 0 auto;
+			display: block;
+			background: white;
+			border: 1px solid #aaa;
+		}
+	#footer {
+
+	}
