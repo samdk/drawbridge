@@ -89,6 +89,7 @@ body {
 		height: 482px;
 		margin: 0 auto;
 		position: relative;
+		z-index: 1;
 	}
 		#controls {
 			position: absolute;
@@ -155,6 +156,20 @@ body {
 			#page canvas:active {
 				cursor: crosshair;
 			}
+		#page #shadow {
+			display: none;
+			position: fixed;
+			width: 9999px;
+			height: 9999px;
+			margin-left: -4000px;
+			margin-top: -500px;
+		}
+			#page canvas:hover + #shadow {
+				display: block;
+				z-index: 5;
+				background: black;
+				opacity: 0.3;
+			}
 		#people {
 			position: absolute;
 			right: -40px;
@@ -188,7 +203,7 @@ body {
 					padding: 6px 10px 4px;
 				}
 	#footer {
-		margin: 20px 0 0;
+		margin: 400px 0 0;
 		padding: 30px 0 90px;
 		background: #444;
 		color: white;
