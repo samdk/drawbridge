@@ -7,7 +7,7 @@ var express = require('express'),
     app = require('./app');
 
 server.get('/', function(req,res) {
-	res.sendfile('test.html');
+	res.sendfile('/home/node/views/test.html');
 });
 
 server.get('/drawing', function(req,res){
