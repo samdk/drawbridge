@@ -270,9 +270,14 @@ $(function(){
 
 	function getSketchId(){
 		var path = window.location.pathname,
-			usefulPart = path.substring(8),
+			start = path.substring(1).search(/\//),
+			usefulPart = path.substring(start+2),
 			end = usefulPart.search(/[/#?]/);
-		return usefulPart.substring(0,end);
+		if (end > 0) {
+			return usefulPart.substring(0,end);
+		}else {
+			return usefulPart;
+		}
 	};
 
 	var doFade = false;
