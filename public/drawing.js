@@ -301,4 +301,15 @@ $(function(){
 		return false;
 	});
 	$("#invite-box .close").click(function(){ $("#invite-box").hide(); return false; });
+
+	$("#you a").click(function(){
+		$("#you form").show();
+		$("#you a").hide();
+		$("#you form input").focus();
+	});
+	$("#you form input").focusout(function(){
+		$("#you a").text($("#you form input").val());
+		$("#you a").show();
+		$("#you form").hide();
+	});
 });
