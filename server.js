@@ -11,7 +11,7 @@ server.get('/', function(req,res) {
 });
 
 server.get('/public/:path', function(req,res) {
-	res.sendfile(__dirname+'/public/'+path);
+	res.sendfile(__dirname+'/public/'+req.params.path);
 });
 
 server.get('/drawing', function(req,res){
