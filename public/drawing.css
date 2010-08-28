@@ -120,7 +120,7 @@ body {
 				#controls .button#eraser:hover {
 					background: url('images/eraser_hover.png') no-repeat center center;
 				}
-				#controls .button#eraser:active {
+				#controls .button#eraser:active, #controls .button.selected#eraser {
 					background: url('images/eraser_active.png') no-repeat center center;
 				}
 			#controls .button#pen {
@@ -129,7 +129,7 @@ body {
 				#controls .button#pen:hover {
 					background: url('images/pen_hover.png') no-repeat center center;
 				}
-				#controls .button#pen:active {
+				#controls .button#pen:active, #controls .button.selected#pen {
 					background: url('images/pen_active.png') no-repeat center center;
 				}
 			#controls .control {
@@ -151,6 +151,8 @@ body {
 			cursor: crosshair;
 			z-index: 10;
 			-webkit-box-shadow: 0 1px 5px #555;
+			-moz-box-shadow: 0 1px 5px #555;
+			box-shadow: 0 1px 5px #555;
 		}
 			#page canvas:hover {
 				cursor: crosshair;
@@ -198,6 +200,25 @@ body {
 				}
 				#people #invite:active {
 					padding: 6px 10px 4px;
+				}
+	#variations {
+		padding: 20px 0;
+		overflow: hidden;
+	}
+		#variations ul {
+			padding: 10px 0;
+			width: 99999px;
+		}
+			#variations li {
+				float: left;
+				width: 200px;
+				padding-left: 50px;
+			}
+				#variations canvas {
+					background: white;
+					-webkit-box-shadow: 0 0 3px #555;
+					-moz-box-shadow: 0 0 3px #555;
+					box-shadow: 0 0 3px #555;
 				}
 	#footer {
 		margin: 400px 0 0;
