@@ -53,6 +53,9 @@ body {
 				color: black;
 				text-decoration: none;
 			}
+				h1 a:hover {
+					text-shadow: 0 1px 2px #ecc;
+				}
 		#header ul {
 			float: right;
 		}
@@ -86,6 +89,7 @@ body {
 		height: 482px;
 		margin: 0 auto;
 		position: relative;
+		z-index: 1;
 	}
 		#controls {
 			position: absolute;
@@ -142,16 +146,29 @@ body {
 			right: 129px;
 			display: block;
 			background: white;
-			border: 1px solid #333;
 			cursor: crosshair;
 			z-index: 10;
-			-webkit-box-shadow: 0 1px 4px #555;
+			-webkit-box-shadow: 0 1px 5px #555;
 		}
 			#page canvas:hover {
 				cursor: crosshair;
 			}
 			#page canvas:active {
 				cursor: crosshair;
+			}
+		#page #shadow {
+			display: none;
+			position: fixed;
+			width: 9999px;
+			height: 9999px;
+			margin-left: -4000px;
+			margin-top: -500px;
+		}
+			#page canvas:hover + #shadow {
+				display: block;
+				z-index: 5;
+				background: black;
+				opacity: 0.3;
 			}
 		#people {
 			position: absolute;
@@ -186,7 +203,7 @@ body {
 					padding: 6px 10px 4px;
 				}
 	#footer {
-		margin: 20px 0 0;
+		margin: 400px 0 0;
 		padding: 30px 0 90px;
 		background: #444;
 		color: white;
