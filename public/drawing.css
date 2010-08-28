@@ -94,15 +94,16 @@ body {
 			top: 0;
 			width: 120px;
 		}
+			#controls li {
+				display: block;
+				clear: both;
+			}
 			#controls a {
 				display: block;
 				background: #ccc;
 				float: right;
 				margin-bottom: 10px;
-				width: 80px;
-				-webkit-border-radius: 10px;
-				-moz-border-radius: 10px;
-				border-radius: 10px;
+				width: 50px;
 				border: 1px solid #aaa;
 				text-align: center;
 			}
@@ -115,14 +116,14 @@ body {
 				}
 			#controls .button {
 				border-width: 0;
-				height: 80px;
-				background: url('images/button.png') no-repeat center center;
+				height: 50px;
+				background: url('images/button_sm.png') no-repeat center center;
 			}
 				#controls .button:hover {
-					background: url('images/button_hover.png') no-repeat center center;
+					background: url('images/button_hover_sm.png') no-repeat center center;
 				}
 				#controls .button:active {
-					background: url('images/button_active.png') no-repeat center center;
+					background: url('images/button_active_sm.png') no-repeat center center;
 				}
 			#controls .control {
 				padding: 5px 0;
