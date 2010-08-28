@@ -7,13 +7,12 @@ var sys = require('sys'),
 	express.bodyDecoder()
     ),
     //app = require('./app'),
-    io = require('socket.io')
-    ;
+    io = require('socket.io');
 
 server.use(express.staticProvider(__dirname+'/public'));
 
 server.get('/', function(req,res) {
-	res.sendfile('/home/node/views/test.html');
+	res.sendfile(__dirname+'/public/index.html');
 });
 
 
