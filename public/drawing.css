@@ -230,6 +230,9 @@ body {
 				max-height: 450px;
 				overflow: auto;
 			}
+			#people ul li.offline {
+			    color: #777;
+			}
 			#people #invite {
 				color: black;
 				text-decoration: none;
@@ -254,6 +257,7 @@ body {
 					#invite-box .arrow {
 						right: 67px;
 					}
+
 	#variations {
 		width: 640px;
 		margin: 20px auto 40px;

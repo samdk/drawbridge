@@ -16,7 +16,7 @@ $(function(){
     $("#canvas").get(0).onselectstart = function(){return false;}
 
     var displayedSegments = [];
-    
+        
     $("#canvas").mousedown(function(e){
         currentTool().down(e);
 		fadeInShadow();
@@ -58,6 +58,8 @@ $(function(){
         
             canvas.moveTo(xc(e.pageX), yc(e.pageY));
             canvas.beginPath();
+            canvas.lineTo(xc(e.pageX), yc(e.pageY));
+            canvas.stroke();
             canvas.strokeStyle = canvas.fillStyle = "#cccccc";
         },
     
@@ -77,18 +79,7 @@ $(function(){
                 this.saved = false;
             }
             if(this.currentSegment){
-                segmentWasDrawn(this.currentSegment);
-                if(this.currentSegment.points.length == 1){
-                    canvas.save();
-                    console.log(this.currentSegment);
-                    canvas.beginPath();
-                    canvas.arc(this.currentSegment.points[0][0] * canvasWidth,
-                               this.currentSegment.points[0][1] * canvasHeight,
-                               4, 0, Math.PI * 2, true);
-                    canvas.closePath();
-                    canvas.fill();
-                    canvas.restore();
-                }
+                CommLink.reportSegmentDrawn(this.currentSegment);
                 this.currentSegment = false;
             }
         }
@@ -96,11 +87,11 @@ $(function(){
     
     var Eraser = {
         saved: false,
-        i: false,
+        id: false,
         down: function(e){},
         moved: function(e){
-            this.i = false;
-            var closest = false, dist = 10000000, lastPt = false;
+            this.closest = false;
+            var dist = 10000000, lastPt = false;
             for(var i in displayedSegments){
                 if(displayedSegments[i]){
                     for(var j in displayedSegments[i].points){
@@ -126,36 +117,36 @@ $(function(){
                         
                         if(dist > curDist){           
                             dist = curDist;
-                            closest = displayedSegments[i];
-                            this.i = i;
+                            this.closest = displayedSegments[i];
                         }
                                                 
                         lastPt = a;
                     }
                 }
-            }
+            }            
             
             if(this.saved){
                 unsnap(this.saved);
             }
             
-            if(!closest || dist > 0.0005){
-                this.i = false;
+            if(!this.closest || dist > 0.0005){
+                this.closest = false;
                 return;
             }
+            
             
             if(!this.saved)
                 this.saved = snap();
             
-            var oldColor = closest.color;
-            closest.color = "#ff0000";
-            displaySegment(closest);
-            closest.color = oldColor;
+            var oldColor = this.closest.color;
+            this.closest.color = "#ff0000";
+            displaySegment(this.closest);
+            this.closest.color = oldColor;
         },
         up: function(e){
-            if(this.i){
-                reportSegmentDeleted(displayedSegments.splice(this.i, 1));
-                this.i = false;
+            if(this.closest){
+                CommLink.reportSegmentDeleted(deleteSegment(this.closest.id));
+                this.closest = false;
                 this.saved = false;
                 refresh();
             }
@@ -175,42 +166,92 @@ $(function(){
             displaySegment(displayedSegments[i]);
     }
     
-    function segmentWasDrawn(seg){
-        reportSegment(seg);
-        displaySegment(seg);
-    }
+    var CommLink = {
+        socket : new io.Socket(),
+        
+        establish : function(){
+            this.socket.connect();
+
+            this.socket.on('message', function(msg){
+                msg = eval(msg);
+                if(msg.action == 'add_segment'){
+                    segmentAdded(msg.segment);
+                }else if(msg.action == 'delete_segment'){
+                    deleteSegment(msg.segment_id);
+                }else if(msg.action == 'add_user'){
+                    sign_on_user(msg.name);
+                }else if(msg.action == 'sign_off_user'){
+                    sign_off_user(msg.name);
+                }
+            });
+        },
+        
+        reportSegmentDeleted : function(seg_id){
+            this.socket.send({'action': 'delete_segment', 'segment_id': seg_id});
+        },
+        
+        reportSegmentDrawn : function(seg){
+            this.socket.send({'action': 'segment_added', 'segment':seg });
+        }
+    };
     
-    function reportSegment(seg){
+    CommLink.establish();
+    
+    function segmentAdded(seg){
+        displaySegment(seg);
         displayedSegments.push(seg);
     }
     
-    function reportSegmentDeleted(seg){
-        
+    function sign_on_user(username){
+        var found = false;
+        $("#people li").each(function(){
+            if($(this).html() == username){
+                found = true;
+                $(this).removeClass("offline");
+            }
+        });
+        if(!found)
+            $("#people").append("<li>"+username+"</li>");
     }
     
-    function segmentPoll(){
-        socket = new io.Socket('localhost');
-        socket.connect();
-        
-        socket.on('message', function(msg){
-            msg = eval(msg);
-            if(msg.type == 'draw'){
-                displaySegment(msg.segment);
-                displayedSegments.push(seg);
-            }else if(msg.type == 'delete')
-                deleteSegment(msg.segment_id);
+    function sign_off_user(username){
+        $("#people li").each(function(){
+            if($(this).html() == username){
+                $(this).addClass("offline");
+            }
         });
     }
     
     function displaySegment(seg){
-        if(!seg || !seg.points || seg.points.length == 0) return;
-        canvas.moveTo(seg.points[0][0] * canvasWidth, seg.points[0][1] * canvasHeight);
-        canvas.beginPath();
-        for(x in seg.points){
-            canvas.lineTo(seg.points[x][0] * canvasWidth, seg.points[x][1] * canvasHeight);
+        if(!seg || !seg.points || seg.points.length == 0){
+            return;
+        }else if(seg.points.length == 1){
+            canvas.save();
+            canvas.beginPath();
+            canvas.arc(seg.points[0][0] * canvasWidth,
+                       seg.points[0][1] * canvasHeight,
+                       4, 0, Math.PI * 2, true);
+            canvas.closePath();
+            canvas.strokeStyle = canvas.fillStyle = seg.color;
+            canvas.fill();
+            canvas.restore();
+        }else{
+            canvas.moveTo(seg.points[0][0] * canvasWidth, seg.points[0][1] * canvasHeight);
+            canvas.beginPath();
+            for(x in seg.points){
+                canvas.lineTo(seg.points[x][0] * canvasWidth, seg.points[x][1] * canvasHeight);
+            }
+            canvas.strokeStyle = canvas.fillStyle = seg.color;
+            canvas.stroke();
         }
-        canvas.strokeStyle = canvas.fillStyle = seg.color;
-        canvas.stroke();
+    }
+    
+    function deleteSegment(seg_id){
+       for(x in displayedSegments){
+           if(displayedSegments[x].id == seg_id){
+               return displayedSegments.splice(x, 1);
+           }
+       }
     }
     
     function xc(x){ return x - canvasOffset.left; }
