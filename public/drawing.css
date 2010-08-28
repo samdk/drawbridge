@@ -165,7 +165,7 @@ body {
 			height: 9999px;
 			margin: -500px 0 0 -4500px;
 			z-index: 5;
-			background: rgba(0,0,0,0.6);
+			background: rgba(204,204,204,0.6);
 		}
 		#people {
 			position: absolute;
