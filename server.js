@@ -1,10 +1,10 @@
 var express = require('express'),
-    app = express.createServer(),
-    db = require('./app')
+    server = express.createServer(),
+    app = require('./app')
 ;
 
-app.get('/', function(req,res) {
+server.get('/', function(req,res) {
 	res.send('Test');
 });
 
-app.listen();
+server.listen();
