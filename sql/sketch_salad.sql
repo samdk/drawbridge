@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Aug 28, 2010 at 10:48 AM
+-- Generation Time: Aug 28, 2010 at 11:05 AM
 -- Server version: 5.1.41
 -- PHP Version: 5.3.2-1ubuntu4.2
 
@@ -74,5 +74,41 @@ CREATE TABLE `sketch_to_segment` (
 
 --
 -- Dumping data for table `sketch_to_segment`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user`
+--
+
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE `user` (
+  `id` bigint(20) NOT NULL,
+  `name` varchar(64) NOT NULL,
+  `email` text,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `user`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user_to_sketch`
+--
+
+DROP TABLE IF EXISTS `user_to_sketch`;
+CREATE TABLE `user_to_sketch` (
+  `user_id` bigint(20) NOT NULL,
+  `sketch_id` bigint(20) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `user_to_sketch`
 --
 
