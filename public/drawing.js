@@ -211,7 +211,7 @@ $(function(){
 		doFade = true;
 		setTimeout(function(){
 			if (doFade){
-				$("#shadow").fadeIn(300);
+				$("#shadow").fadeIn(100);
 			}
 		},300);
 	}
