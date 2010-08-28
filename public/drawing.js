@@ -26,7 +26,11 @@ $(function(){
         currentTool().up(e);
     }).mouseup(function(e){
         currentTool().up(e);
-    });
+    }).mouseover(function(e){
+		fadeInShadow(e);
+	}).mouseleave(function(){
+		fadeOutShadow();
+	});
     
     $("#eraser").click(function(){
         selectedTool = "eraser";
@@ -179,4 +183,18 @@ $(function(){
     function yc(y){ return y - canvasOffset.top;  }
     function xcr(x) { return xc(x) / canvasWidth;  }
     function ycr(y) { return yc(y) / canvasHeight; }
+
+	var doFade = false;
+	function fadeInShadow(e){
+		doFade = true;
+		setTimeout(function(){
+			if (doFade){
+				$("#shadow").fadeIn(300);
+			}
+		},300);
+	}
+	function fadeOutShadow(){
+		doFade = false;
+		$("#shadow").fadeOut(100);
+	}
 });
