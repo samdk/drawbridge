@@ -167,10 +167,11 @@ $(function(){
     }
     
     var CommLink = {
-        socket : new io.Socket(),
+        socket : new io.Socket(null, {port: 8008, rememberTransport: false}),
         
         establish : function(){
             this.socket.connect();
+            console.log(this.socket);
 
             this.socket.on('message', function(msg){
                 msg = eval(msg);
