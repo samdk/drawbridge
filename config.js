@@ -1,5 +1,5 @@
 exports.database =  {
-	host: '192.168.0.1',
+	host: 'localhost',
 	name: 'sketch_salad',
 	username: 'sketch-salad',
 	password: 'tri44x',
