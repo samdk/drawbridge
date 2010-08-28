@@ -126,7 +126,14 @@ body {
 			display: block;
 			background: white;
 			border: 1px solid #aaa;
+			cursor: crosshair;
 		}
+			#page canvas:hover {
+				cursor: crosshair;
+			}
+			#page canvas:active {
+				cursor: crosshair;
+			}
 		#people {
 			position: absolute;
 			right: -40px;
