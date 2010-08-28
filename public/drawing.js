@@ -211,12 +211,12 @@ $(function(){
 		doFade = true;
 		setTimeout(function(){
 			if (doFade){
-				$("#shadow").fadeIn(100);
+				$("#shadow").fadeIn(400);
 			}
-		},300);
+		},400);
 	}
 	function fadeOutShadow(){
 		doFade = false;
-		$("#shadow").fadeOut(100);
+		$("#shadow").fadeOut(150);
 	}
 });
