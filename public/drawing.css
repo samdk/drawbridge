@@ -39,14 +39,41 @@ body {
 	#page {
 		width: 900px;
 		margin: 0 auto;
+		overflow: auto;
 	}
+		#controls {
+			float: left;
+			width: 115px;
+			margin-right: 9px;
+			background: green;
+		}
 		#page canvas {
 			width: 640px;
-			margin: 0 auto;
+			float: left;
+			margin: 0;
 			display: block;
 			background: white;
 			border: 1px solid #aaa;
 		}
+		#people {
+			float: left;
+			width: 115px;
+			margin-left: 9px;
+			background: red;
+		}
 	#footer {
-
+		margin: 40px 0 0;
+		padding: 30px 0 90px;
+		background: #444;
+		color: white;
+		border-top: 1px solid black;
 	}
+		#footer p {
+			width: 640px;
+			margin: 0 auto;
+			text-align: center;
+		}
+			#footer a {
+				color: white;
+			}
+
