@@ -9,8 +9,37 @@
 		<script type="text/javascript" src="drawing.js"></script>
 	</head>
 	<body>
+		<div id="header">
+			<h1><a href="/">Sketch Salad</a></h1>
+			<ul>
+				<li><a href="/share">Share</a></li>
+				<li><a href="/new">New</a></li>
+			</ul>
+			<div class="clear"></div>
+		</div>
 		<div id="page">
+			<div id="controls">
+				<ul>
+					<li><a class="button" id="draw" href="#"></a></li>
+					<li><a class="button" id="delete" href="#"></a></li>
+					<li><a class="control" id="undo" href="#">Undo</a></li>
+					<li><a class="control" id="redo" href="#">Redo</a></li>
+				</ul>
+			</div>
 			<canvas id="canvas" width="640" height="480">You need a browser that supports canvas!</canvas>
+			<div id="people">
+				<h2>People Drawing (3)</h2>
+				<ul>
+					<li>Sam</li>
+					<li>Prasanna</li>
+					<li>Eli</li>
+				</ul>
+				<a id="invite" href="/invite">Invite People</a>
+			</div>
+		</div>
+		<div id="footer">
+			<p>Made by <a href="http://teamhyphen.com">Team Hyphen</a>.</p>
+			<p>Talk to us on Twitter: <a href="http://twitter.com/teamhyphennode">@teamhyphennode</a>.
 		</div>
 	</body>
 </html>
