@@ -346,17 +346,29 @@ body {
 					box-shadow: 0 0 3px #555;
 				}
 	#footer {
-		padding: 30px 0 90px;
-		background: #444;
-		color: white;
-		border-top: 1px solid black;
+		padding: 30px 0;
+		position: relative;
 	}
+		#footer-top {
+			position: absolute;
+			height: 10px;
+			top: 0;
+			width: 600px;
+			margin-left: -300px;
+			left: 50%;
+			border-bottom: 1px solid #aaa;
+		}
 		#footer p {
 			width: 640px;
 			margin: 0 auto;
 			text-align: center;
 		}
-			#footer a {
-				color: white;
+			#footer p a {
+				color: black;
 			}
+		#node-badge {
+			display: block;
+			clear: both;
+			margin: 0 auto;
+		}
 
