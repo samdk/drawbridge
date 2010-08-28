@@ -1,17 +1,17 @@
 $(function(){
     
-    var mouseIsDown = false;
-    var selectedColor = "#000000";
-    var selectedTool = "pen";
-    
+    var mouseIsDown   = false,
+        selectedColor = "#000000",
+        selectedTool  = "pen",
+        canvasOffset  = $("#canvas").offset(),
+        canvasWidth   = $("#canvas").innerWidth(),
+        canvasHeight  = $("#canvas").innerHeight();
+            
     var canvas = $("#canvas").get(0).getContext("2d");
         canvas.lineWidth = 4;
         canvas.lineJoin  = "round";
         canvas.lineCap   = "round";
-    
-    var canvasOffset = $("#canvas").offset();
-    var canvasWidth  = $("#canvas").innerWidth();
-    var canvasHeight = $("#canvas").innerHeight();
+
     
     $("#canvas").get(0).onselectstart = function(){return false;}
 
@@ -188,15 +188,15 @@ $(function(){
         },
         
         reportSegmentDeleted : function(seg_id){
-            this.send({action: 'delete_segment', segment_id: seg_id});
+            this.send({action: 'delete_segment', segment_id: seg_id, sketch_id: getSketchId()});
         },
         
         reportSegmentDrawn : function(seg){
-            this.send({action: 'segment_added', segment: seg });
+            this.send({action: 'segment_added', segment: seg, sketch_id: getSketchId()});
         },
         
         reportSignOn : function(uname){
-            this.send({action: 'user_added', name: uname});
+            this.send({action: 'user_added', name: uname, sketch_id: getSketchId()});
         },
         
         send : function(data){
@@ -269,16 +269,8 @@ $(function(){
     function ycr(y) { return yc(y) / canvasHeight; }
 
 	function getSketchId(){
-		var path = window.location.pathname,
-			start = path.substring(1).search(/\//),
-			usefulPart = path.substring(start+2),
-			end = usefulPart.search(/[/#?]/);
-		if (end > 0) {
-			return usefulPart.substring(0,end);
-		}else {
-			return usefulPart;
-		}
-	};
+	    return window.location.hash.substring(1);
+	}
 
 	var doFade = false;
 	function fadeInShadow(){
