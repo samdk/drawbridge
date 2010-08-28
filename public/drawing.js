@@ -188,11 +188,15 @@ $(function(){
         },
         
         reportSegmentDeleted : function(seg_id){
-            this.send({'action': 'delete_segment', 'segment_id': seg_id});
+            this.send({action: 'delete_segment', segment_id: seg_id});
         },
         
         reportSegmentDrawn : function(seg){
-            this.send({'action': 'segment_added', 'segment':seg });
+            this.send({action: 'segment_added', segment: seg });
+        },
+        
+        reportSignOn : function(uname){
+            this.send({action: 'user_added', name: uname});
         },
         
         send : function(data){
