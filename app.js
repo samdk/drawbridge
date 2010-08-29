@@ -15,6 +15,18 @@ client.database = database.name;
 
 client.connect();
 
+getSketchIdFromHash = function(hash, runFunction) {
+	console.log(hash);
+	client.query('select * from sketch where hash = ?', [hash],
+		function (err, results, fields){
+			if (err) {
+				throw err;
+			}
+			if (results.length ===1) {
+				runFunction(results[0].id);
+			}
+		}
+);}
 exports.sha1 = function(x){
     return crypto.createHash('sha1').update(x+secret_key).digest('hex');
 };
@@ -62,13 +74,14 @@ exports.addUser = function(user,sketch,runFunction) {
 			throw err;
 		}
 		var userId = results.insertId;
-		client.query("INSERT INTO user_to_sketch (user_id, sketch_id) values (?, ?)", [userId, sketch.id], function (err,results, fields){
-			if (err){
-				throw err;
-			}
-			var userObj = {id: userId, name: user.name, email: user.email};
-			runFunction(userObj);
-		});
+			client.query("INSERT INTO user_to_sketch (user_id, sketch_id) values (?, ?)", [userId, sketch.id], function (err,results, fields){
+				if (err){
+					throw err;
+				}
+				var userObj = {id: userId, name: user.name, email: user.email};
+				runFunction(userObj);
+			});
+		
 	});
 }
 
@@ -84,21 +97,24 @@ exports.leaveSketch = function(user_id, sketch_id, runFunction) {
 
 
 exports.addSegment = function(sketch, segment, runFunction) {
-	client.query ("INSERT INTO segment (color, points) values(?)", [segment.color, segment.points], 
+	client.query ("INSERT INTO segment (color, points) values(?,?)", [segment.color, JSON.stringify(segment.points)], 
 		function(err, result, fields){
 			if (err){
 				throw err;
 			}
 			var segmentId = result.insertId;
-			client.query("INSERT INTO sketch_to_segment (sketch_id, segment_id) values(?, ?)", [sketch.id, segmentId], 
-			function (err, result, fields){
-			if (err) {
-				throw err;
+			getSketchIdFromHash(sketch.base_id, function (sketchId){
+				console.log(sketchId);
+				client.query("INSERT INTO sketch_to_segment (sketch_id, segment_id) values(?, ?)", [sketchId, segmentId], 
+				function (err, result, fields){
+					if (err) {
+					throw err;
+					}
+					segmentObj = {id: segmentId, color: segment.color, points: segment.points};
+					runFunction(segmentObj);
 				}
-				segmentObj = {id: segmentId, color: segment.color, points: segment.points};
-				runFunction(segmentObj);
-			}
-			);
+				);
+			});
 		});
 }
 
