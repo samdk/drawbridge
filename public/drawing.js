@@ -84,4 +84,8 @@ $(function(){
         $("#you form input").focusout();
         return false;
 	});
+
+	$("#undo").click(function() {
+		draw_history.undo();
+	});
 });

@@ -18,6 +18,7 @@ var CommLink = {
                 UI.canvas.displaySegment(msg.segment);
                 UI.canvas.segments.push(msg.segment);
                 
+				draw_history.addUndoTask({action: "segment_added", segment: msg.segment, sketch_id: 0});
                 var lil = UI.variations[getRevisionId()];
                 lil.context.drawImage(UI.canvas.canvas, 0, 0, lil.width, lil.height);
 	        }else if(msg.action == 'delete_segment'){
