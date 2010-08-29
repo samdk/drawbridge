@@ -18,7 +18,7 @@ var CommLink = {
 	            if(typeof(msg.segment.points) == 'string')
 	                msg.segment.points = JSON.parse(msg.segment.points);
 	            UI.sketchCanvas(msg.sketch_revision_id).addSegment(msg.segment);
-                    draw_history.addUndoTask({action: "segment_added", segment: msg.segment, sketch_id: 0});
+                draw_history.addUndoTask({action: "segment_added", segment: msg.segment, sketch_id: 0});
 
 	            if(getRevisionId() == msg.sketch_revision_id){
                     var lil = UI.variations[getRevisionId()];
