@@ -45,8 +45,16 @@ var draw_history  = {
 				var lil = UI.variations[getRevisionId()];
                 lil.context.drawImage(UI.canvas.canvas, 0, 0, lil.width, lil.height);
 				UI.canvas.refresh();
+				CommLink.reportSegmentDrawn(task.segment, task.sketch_revision_id);
 			}else if (task.action == "segment_deleted") {
-				
+				console.log(task.segment.id);
+				UI.canvas.deleteSegment(task.segment.id);
+				var lil = UI.variations[getRevisionId()];
+                lil.context.drawImage(UI.canvas.canvas, 0, 0, lil.width, lil.height);
+
+				UI.canvas.refresh();
+				CommLink.reportSegmentDeleted(task.segment.id, task.sketch_revision_id);
+
 			}
 			this.addUndoTask(task);
 		}

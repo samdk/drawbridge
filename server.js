@@ -100,16 +100,31 @@ io.on('connection', function(client){
 			case "segment_added":
 				var segment = message.segment;
 				var sketch = {base_id: message.sketch_base_id, revision_id: message.sketch_revision_id};
-				app.addSegment(sketch, segment, function(segmentObj) {
-					c = sketches[message.sketch_base_id];
-					for (x  in c ){
-						c[x].send(JSON.stringify({
-						    action: "add_segment", 
-						    segment: segmentObj,
-						    sketch_revision_id: message.sketch_revision_id
-					    }));
-					}
-				});
+				console.log(segment);
+				if (segment.id) {
+					app.undeleteSegment(sketch.revision_id, segment, function(segmentObj) {
+						c = sketches[message.sketch_base_id];
+						for (x  in c ){
+							c[x].send(JSON.stringify({
+								action: "add_segment", 
+								segment: segmentObj,
+								sketch_revision_id: message.sketch_revision_id
+							}));
+						}
+
+					});
+				}else {
+					app.addSegment(sketch, segment, function(segmentObj) {
+						c = sketches[message.sketch_base_id];
+						for (x  in c ){
+							c[x].send(JSON.stringify({
+								action: "add_segment", 
+								segment: segmentObj,
+								sketch_revision_id: message.sketch_revision_id
+							}));
+						}
+					});
+				}
 				break;
 			case "segment_deleted":
 			    app.deleteSegment(message.sketch_revision_id, message.segment_id);

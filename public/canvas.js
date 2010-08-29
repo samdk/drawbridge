@@ -30,8 +30,10 @@ function Canvas(ref){
     };
     
     this.addSegment = function(seg){
+		console.log(seg);
         this.displaySegment(seg);
         this.segments.push(seg);
+		console.log(this.segments);
     };
 
     this.displaySegment = function(seg){
@@ -57,10 +59,11 @@ function Canvas(ref){
     }
     
     this.deleteSegment = function(segId){
-		console.log(this.segments);
-        for(x in this.segments)
-            if(this.segments[x].id == segId)
+        for(x in this.segments){
+            if(this.segments[x].id == segId){
                 return this.segments.splice(x, 1)[0];
+				}
+				}
     }
 
     this.xc  = function(x){ return x - $(this.canvas).offset().left; }
@@ -176,7 +179,9 @@ function Eraser(canvas){
     
     this.up = function(x, y){
         if(this.closest){
-            CommLink.reportSegmentDeleted(this.canvas.deleteSegment(this.closest.id).id, this.canvas.sketchId);
+			var seg = this.canvas.deleteSegment(this.closest.id);
+			
+            CommLink.reportSegmentDeleted(seg, this.canvas.sketchId);
             this.closest = false;
             this.saved = false;
             this.canvas.refresh();
