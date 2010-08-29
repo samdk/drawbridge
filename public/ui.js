@@ -91,7 +91,9 @@ var UI = {
 			$("#eraser").removeClass("selected");
 			$("#pen").addClass("selected");
 			UI.currentTool = UI.canvas.pen;
-			UI.canvas.context.clearRect(0,0,UI.canvas.width,UI.canvas.height);
+			//UI.canvas.context.clearRect(0,0,UI.canvas.width,UI.canvas.height);
+			UI.canvas.segments = [];
+            UI.variations[getRevisionId()].segments = [];
 			CommLink.requestSketchReplay();
 		} else { console.log('url: ' + getRevisionId()); console.log('rev: ' + revisionId);}
 		return false;
