@@ -128,6 +128,13 @@ exports.getPointsInSegment = function(segment, runFunction) {
 
 }
 
+exports.getFullSketch = function(id, cb){
+    client.query('SELECT * FROM segment JOIN sketch_to_segment ON segment.id = sketch_to_segment.segment_id WHERE sketch_to_segment.sketch_id = ?',
+        [id], function(e,res,f){
+            cb(res);
+        });
+}
+
 exports.eachSegmentId = function(sketch, callback){
     sql = "SELECT segment_id FROM sketch_to_segment WHERE sketch_id = ?";
     client.query(sql, [sketch.id], function(err, results, fields){
@@ -155,9 +162,10 @@ exports.createVariation = function(base_id, callback){
     exports.addSketch(function(hsh){
         exports.eachSegmentId({id:base_id}, function(sid){
             var sql = "INSERT INTO sketch_to_segment(sketch_id, segment_id) VALUES ((select id from sketch where hash=?), ?)";
-            client.query(sql, [hsh, sid], function(e,r,f){
-                callback(exports.getPointsInSegment({segment_id:sid}));
-            });
+            client.query(sql, [hsh, sid], function(e,r,f){});
+            exports.getPointsInSegment({segment_id:sid}, function(seg){
+                callback(seg);
+            })
         });
     });
 }
