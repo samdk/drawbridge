@@ -1,11 +1,16 @@
 var UI = {
     canvas : false,
     variations : {},
+	currentTool: null,
     
     sketchCanvas : function(sketchId){
         if(sketchId == getRevisionId())
             return this.canvas;
-        return this.variations[sketchId];
+		if (this.variations[sketchId] != undefined) {
+			return this.variations[sketchId];
+		}else {
+			
+		}
     },
     
     updateSharedKey : function(k){
@@ -54,6 +59,14 @@ var UI = {
 		$("#variations ul").prepend('<li><a href="#"><canvas class="mirror"' +
 									'width="120" height="90"></canvas></a></li>');
 		window.location.hash = newVariationId;
+		UI.canvas = new Canvas($("#canvas").get(0));
+		UI.canvas.context.lineWidth = 4;
+		UI.canvas.context.lineJoin  = "round";
+		UI.canvas.context.lineCap   = "round";
+		$("#eraser").removeClass("selected");
+        $("#pen").addClass("selected");
+		UI.currentTool = UI.canvas.pen;
+		console.log(UI.canvas.sketchId);
 		UI.variations[newVariationId] = littleCanvas($(".mirror")[0]);
 		$(".mirror").draggable({opacity: 0.7,revert: true,revertDuration: 200})
 					.data("rev",newVariationId);

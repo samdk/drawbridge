@@ -14,31 +14,31 @@ $(function(){
     UI.canvas.context.lineWidth = 4;
     UI.canvas.context.lineJoin  = "round";
     UI.canvas.context.lineCap   = "round";
-            
+
     UI.variations[getRevisionId()] = littleCanvas($(".mirror")[0]);
     
     CommLink.reportSignOn("Guest");
         
-    var currentTool = UI.canvas.pen;
+    UI.currentTool = UI.canvas.pen;
         
     $(UI.canvas.canvas).mousedown(function(e){
-        currentTool.down(UI.canvas.xcr(e.pageX), UI.canvas.ycr(e.pageY));
+        UI.currentTool.down(UI.canvas.xcr(e.pageX), UI.canvas.ycr(e.pageY));
     }).mousemove(function(e){        
-        currentTool.moved(UI.canvas.xcr(e.pageX), UI.canvas.ycr(e.pageY));
+        UI.currentTool.moved(UI.canvas.xcr(e.pageX), UI.canvas.ycr(e.pageY));
     }).mouseout(function(e){
-        currentTool.up(UI.canvas.xcr(e.pageX), UI.canvas.ycr(e.pageY));
+        UI.currentTool.up(UI.canvas.xcr(e.pageX), UI.canvas.ycr(e.pageY));
     }).mouseup(function(e){
-        currentTool.up(UI.canvas.xcr(e.pageX), UI.canvas.ycr(e.pageY));
+        UI.currentTool.up(UI.canvas.xcr(e.pageX), UI.canvas.ycr(e.pageY));
     });
 		  
     $("#eraser").click(function(){
-        currentTool = UI.canvas.eraser;
+        UI.currentTool = UI.canvas.eraser;
         $("#pen").removeClass("selected");
         $(this).addClass("selected");
         return false;
     });
     $("#pen").click(function(){
-        currentTool = UI.canvas.pen;
+        UI.currentTool = UI.canvas.pen;
         $("#eraser").removeClass("selected");
         $(this).addClass("selected");
         return false;

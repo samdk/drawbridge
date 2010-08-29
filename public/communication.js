@@ -56,14 +56,14 @@ var CommLink = {
         this.send({action             : 'segment_deleted',
                    segment_id         : seg_id,
                    sketch_base_id     : getBaseId(),
-                   sketch_revision_id : getRevisionId()});
+                   sketch_revision_id : sketchId});
     },
     
     reportSegmentDrawn : function(seg, sketchId){
         this.send({action             : 'segment_added',
                    segment            : seg,
                    sketch_base_id     : getBaseId(),
-                   sketch_revision_id : getRevisionId()});
+                   sketch_revision_id : sketchId});
     },
     
     reportSignOn : function(uname){
