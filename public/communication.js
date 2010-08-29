@@ -35,7 +35,9 @@ var CommLink = {
                 UI.sign_on_user(msg);
             }else if(msg.action == 'sign_off_user'){
                 UI.sign_off_user(msg);
-            }
+            }else if(msg.action == 'add_variation'){
+				UI.add_variation(msg);
+			}
         });
     },
     
@@ -59,6 +61,12 @@ var CommLink = {
                   sketch_base_id     : getBaseId(),
                   sketch_revision_id : getRevisionId()});
     },
+
+	requestNewVariation : function(){
+		this.send({action			: 'variation_added',
+				   sketch_parent_id	: getRevisionId(),
+				   sketch_base_id	: getBaseId()});
+	},
 
     send : function(data){
         this.socket.send(JSON.stringify(data));
