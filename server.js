@@ -263,7 +263,7 @@ server.get('/', function(req,res) {
 
 server.get('/sketch/:hash?', function(req,res){
 	if(req.params.hash){
-		    if (req.params.hash.length != 40){
+		    if (req.params.hash != "public" && req.params.hash.length != 40){
 				res.redirect("/view/404");
 			}else {
 
