@@ -75,7 +75,11 @@ io.on('connection', function(client){
 				var segment = message.segment;
 				var sketch = {base_id: message.sketch_base_id, revision_id: message.sketch_revision_id};
 				app.addSegment(sketch, segment, function(segmentObj) {
-					client.send({action: "add_segment", segment: segmentObj});
+					c = rooms[message.sketch_base_id];
+					for (x  in c ){
+						c[x].send(JSON.stringify({action: "add_segment", 
+									  segment: segmentObj}));
+					}
 				});
 				break;
 			case "segment_deleted":
