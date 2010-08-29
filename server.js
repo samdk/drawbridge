@@ -106,6 +106,13 @@ io.on('connection', function(client){
 				});
 				break;
 			case "segment_deleted":
+			    app.deleteSegment(message.sketch_revision_id, message.segment_id);
+			    eachInSketch(message.sketch_base_id, function(cli){
+			        cli.send(JSON.stringify({action:'delete_segment',
+			                                 sketch_revision_id:message.sketch_revision_id,
+			                                 sketch_base_id:message.sketch_base_id,
+			                                 segment_id:message.segment_id}));
+			    });
 			    break;
 			case "get_segment":
 				var seg = {segment_id: message.segment_id};
@@ -115,14 +122,25 @@ io.on('connection', function(client){
 				break;
 			case "variation_added":
 			    app.createVariation(message.sketch_parent_id, function(leaf){
+			        eachInSketch(clients[client.sessionId], function(cli){
+			            cli.send(JSON.stringify({
+			                action: 'add_variation',
+			                sketch_parent_id: message.sketch_parent_id,
+			                sketch_base_id: message.sketch_base_id,
+			                real_id: leaf.id,
+			                sketch_revision_id: leaf.hash
+			            }));
+			        });
 			        app.eachSegmentId(leaf, function(sid){
     	                app.getPointsInSegment({segment_id:sid}, function(seg){
-    	                    client.send(JSON.stringify({
-    	                        segment: seg,
-    	                        action: 'add_segment',
-    	                        sketch_revision_id: leaf.hash,
-    	                        sketch_real_id: leaf.id
-    	                    }));
+    	                    eachInSketch(clients[client.sessionId], function(cli){
+    	                        cli.send(JSON.stringify({
+        	                        segment: seg,
+        	                        action: 'add_segment',
+        	                        sketch_revision_id: leaf.hash,
+        	                        sketch_real_id: leaf.id
+        	                    }));
+    	                    });
                         });
     	            });
 			    })
