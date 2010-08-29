@@ -8,6 +8,10 @@ var UI = {
         return this.variations[sketchId];
     },
     
+    updateSharedKey : function(k){
+        $("#share-box input").val("http://" + document.location.host + "/view/" + k);  
+    },
+    
     sign_on_user : function(user){
         var found = false;
         

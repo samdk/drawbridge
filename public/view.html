@@ -5,13 +5,14 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<link rel="stylesheet" href="/main.css" type="text/css" media="screen" />
 		<link rel="stylesheet" href="/drawing.css" type="text/css" media="screen" />
-		
 		<script src="http://code.jquery.com/jquery-1.4.2.min.js" type="text/javascript" charset="utf-8"></script>
-		<script src="/jquery-ui-1.8.4.custom.min.js" type="text/javascript" charset="utf-8"></script>
-		
-		<script src="/socket-io.js" type="text/javascript" charset="utf-8"></script>
-		<script src="/canvas.js" type="text/javascript" charset="utf-8"></script>
-		<script src="/viewing.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" charset="utf-8">
+		  $(function(){
+		    $.get("/rendered/" + window.location.pathname.split("/").pop(), function(data){
+		      $("#canvas-view").attr('src', data);
+		    });
+		  });
+		</script>
 	</head>
 	<body>
 		<div id="header">

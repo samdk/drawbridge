@@ -165,9 +165,10 @@ exports.createVariation = function(rev_id, callback){
 			exports.eachSegmentId({id:base_id}, function(sid){
 				var sql = "INSERT INTO sketch_to_segment(sketch_id, segment_id) VALUES ((select id from sketch where hash=?), ?)";
 				client.query(sql, [hsh, sid], function(e,r,f){});
-				exports.getPointsInSegment({segment_id:sid}, function(seg){
-					callback(seg);
-				})
+			});
+			exports.getSketchFromHash(hsh,function(leaf){
+				leaf.hash = hsh;
+				callback(leaf);
 			});
 		});
 	});
@@ -196,3 +197,14 @@ exports.undeleteSegment = function (sketch_revision_id, segment, callback) {
 		});
 }
 
+exports.saveImage = function(data, callback){
+    client.query("INSERT INTO saved_sketch(`key`, data) VALUES(?, ?)", [exports.sha1(data), data], function(e,r,f){
+        callback(exports.sha1(data));
+    });
+}
+
+exports.getImage = function(key, callback){
+    client.query("SELECT data FROM saved_sketch WHERE `key`=?", [key], function(e,r,f){
+        callback(r[0].data); 
+    });
+}

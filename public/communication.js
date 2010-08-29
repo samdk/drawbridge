@@ -36,9 +36,18 @@ var CommLink = {
                 UI.sign_on_user(msg);
             }else if(msg.action == 'sign_off_user'){
                 UI.sign_off_user(msg);
+            }else if(msg.action == 'share_key'){
+                UI.updateSharedKey(msg.key);
             }else if(msg.action == 'add_variation'){
 				UI.add_variation(msg);
 			}
+        });
+    },
+    
+    saveImage : function(){
+        this.send({
+           action: 'save_sketch',
+           payload: UI.canvas.canvas.toDataURL() 
         });
     },
     
