@@ -24,6 +24,7 @@ io.on('connection', function(client){
 
 	client.on('message', function(message){
 	    message = JSON.parse(message);
+	    	console.log(message);
 		switch(message['action']){
 			case "user_added":
 			    if(rooms[message.sketch_base_id] == undefined)
@@ -43,7 +44,7 @@ io.on('connection', function(client){
 				break;
 			case "segment_added":
 				var segment = message.segment;
-				var sketch = {id: message.sketch_id};
+				var sketch = {base_id: message.sketch_base_id, revision_id: message.sketch_revision_id};
 				app.addSegment(sketch, segment, function(segmentObj) {
 					client.send({action: "add_segment", segment: segmentObj});
 				});
