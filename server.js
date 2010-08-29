@@ -30,12 +30,23 @@ io.on('connection', function(client){
 			        rooms[message.sketch_base_id] = [];
 			    var c = rooms[message.sketch_base_id];
 			    c.push(client);
+			    
+			    var isNew = clients[client.sessionId] == undefined;
+			        
 			    clients[client.sessionId] = message.sketch_base_id;
 			    			    			    
-			    for(x in c)
+			    for(x in c){
 			        c[x].send(JSON.stringify({action: "add_user",
 			                                  name  : message.name,
 			                                  id    : app.sha1(client.sessionId)}));
+			        if(isNew && x != c.length-1){
+			            c[c.length-1].send(JSON.stringify({
+			                action  : "add_user",
+			                name    : message.name,
+			                id      : app.sha1(c[x].sessionId)
+			            }));
+			        }
+			    }
 
                 // var user = {name: message.name, email: message.email };
                 // var sketch = { id: message.sketch_id };
