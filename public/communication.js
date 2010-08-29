@@ -14,19 +14,17 @@ var CommLink = {
         this.socket.on('message', function(msg){
             msg = JSON.parse(msg);
             console.log(msg);
-	    if(msg.action == 'add_segment'){
+	        if(msg.action == 'add_segment'){
                 UI.canvas.displaySegment(msg.segment);
                 UI.canvas.segments.push(msg.segment);
-	    }else if (msg.action == "receive_segmentIds") {
-	    	if (msg.segment_ids.length > 0) {
-			for (x in msg.segment_ids) {
-				//console.log(msg.segment_ids[x]);
-				this.requestSegment(msg.segment_ids[x]);
-			}
-		}
-	    	//console.log(msg.segment_ids);
-            }else if(msg.action == 'delete_segment'){
+                
+                var lil = UI.variations[getRevisionId()];
+                lil.context.drawImage(UI.canvas.canvas, 0, 0, lil.width, lil.height);
+	        }else if(msg.action == 'delete_segment'){
                 UI.canvas.deleteSegment(msg.segment_id);
+                
+                var lil = UI.variations[getRevisionId()];
+                lil.context.drawImage(UI.canvas.canvas, 0, 0, lil.width, lil.height);
             }else if(msg.action == 'add_user'){
                 UI.sign_on_user(msg);
             }else if(msg.action == 'sign_off_user'){

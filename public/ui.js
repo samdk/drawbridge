@@ -1,11 +1,18 @@
 var UI = {
     canvas : false,
+    variations : {},
+    
+    sketchCanvas : function(sketchId){
+        if(sketchId == getRevisionId())
+            return this.canvas;
+        return this.variations[sketchId];
+    },
+    
     sign_on_user : function(user){
         var found = false;
         
-        if(user.me){
+        if(user.me)
             return;
-        }
         
         $("#people ul li").each(function(){
             if($(this).data("uuid") == user.id){
