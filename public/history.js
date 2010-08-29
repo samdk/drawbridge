@@ -25,7 +25,7 @@ var draw_history  = {
                 lil.context.drawImage(UI.canvas.canvas, 0, 0, lil.width, lil.height);
 
 				UI.canvas.refresh();
-				CommLink.reportSegmentDeleted(task.segment, task.sketch_revision_id);
+				CommLink.reportSegmentDeleted(task.segment, task.sketch_revision_id, undo);
 			}else if (task.action == "segment_deleted") {
 				UI.sketchCanvas(task.sketch_revision_id).addSegment(task.segment);
 				var lil = UI.variations[getRevisionId()];
