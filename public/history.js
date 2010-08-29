@@ -17,14 +17,15 @@ var draw_history  = {
 	undo: function(runFunction) {
 		if (this.undoStack.length > 0) {
 			task = this.undoStack.pop();
+			console.log("undo");
+			console.log(task.segment);
 			if (task.action == "segment_added"){
-				console.log(task.segment.id);
 				UI.canvas.deleteSegment(task.segment.id);
 				var lil = UI.variations[getRevisionId()];
                 lil.context.drawImage(UI.canvas.canvas, 0, 0, lil.width, lil.height);
 
 				UI.canvas.refresh();
-				CommLink.reportSegmentDeleted(task.segment.id, task.sketch_revision_id);
+				CommLink.reportSegmentDeleted(task.segment, task.sketch_revision_id);
 			}else if (task.action == "segment_deleted") {
 				UI.sketchCanvas(task.sketch_revision_id).addSegment(task.segment);
 				var lil = UI.variations[getRevisionId()];
@@ -32,7 +33,6 @@ var draw_history  = {
 				UI.canvas.refresh();
 				CommLink.reportSegmentDrawn(task.segment, task.sketch_revision_id);
 			}
-			console.log(task);
 			this.addRedoTask(task);
 		}
 	},
@@ -53,9 +53,10 @@ var draw_history  = {
                 lil.context.drawImage(UI.canvas.canvas, 0, 0, lil.width, lil.height);
 
 				UI.canvas.refresh();
-				CommLink.reportSegmentDeleted(task.segment.id, task.sketch_revision_id);
+				CommLink.reportSegmentDeleted(task.segment, task.sketch_revision_id);
 
 			}
+			console.log("redo");
 			this.addUndoTask(task);
 		}
 	}

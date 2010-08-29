@@ -93,6 +93,7 @@ exports.leaveSketch = function(user_id, sketch_id, runFunction) {
 
 
 exports.addSegment = function(sketch, segment, runFunction) {
+	console.log(segment);
 	client.query ("INSERT INTO segment (color, points) values(?,?)", [segment.color, JSON.stringify(segment.points)], 
 		function(err, result, fields){
 			if (err) throw err;
