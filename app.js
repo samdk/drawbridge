@@ -190,12 +190,19 @@ exports.mergeVariation = function(bottom_rev_id, top_rev_id, callback){
 			exports.addSketch(function(hsh){
 				segments = [];
 				exports.eachSegmentId({id:base_bot_id}, function(sid){
-						var sql = "INSERT INTO sketch_to_segment(sketch_id, segment_id) VALUES ((select id from sketch where hash=?), ?)";
-						client.query(sql, [hsh, sid], function(e,r,f){});
+					var sql = "INSERT INTO sketch_to_segment(sketch_id, segment_id) VALUES ((select id from sketch where hash=?), ?)";
+					client.query(sql, [hsh, sid], function(e,r,f){});
+					console.log("inserting: "+sid);
 				});
 				exports.eachSegmentId({id:base_top_id}, function(sid){
-						var sql = "INSERT INTO sketch_to_segment(sketch_id, segment_id) VALUES ((select id from sketch where hash=?), ?)";
-						client.query(sql, [hsh, sid], function(e,r,f){});
+					var sql = "SELECT * FROM sketch_to_segment WHERE segment_id = ? AND sketch_id = (select id from sketch where hash=?)";
+					client.query(sql, [sid,hsh], function(e,r,f){
+						if (r.length < 1) {
+							var sql2 = "INSERT INTO sketch_to_segment(sketch_id, segment_id) VALUES ((select id from sketch where hash=?), ?)";
+							client.query(sql2, [hsh, sid], function(e,r,f){});
+							console.log("inserting: "+sid);
+						} else { console.log("nope: "+sid); }
+					});
 				});
 				// update leaf to correct root/parent ids
 				sql = "UPDATE sketch SET parent_id = ?, root_id = ? WHERE hash = ?";
