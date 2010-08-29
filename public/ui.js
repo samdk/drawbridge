@@ -94,9 +94,9 @@ var UI = {
 			//UI.canvas.context.clearRect(0,0,UI.canvas.width,UI.canvas.height);
 			UI.canvas.segments = [];
             UI.variations[getRevisionId()].segments = [];
+			UI.canvas.context.clearRect(0,0,UI.canvas.width,UI.canvas.height);
 			CommLink.requestSketchReplay();
 		} else { console.log('url: ' + getRevisionId()); console.log('rev: ' + revisionId);}
 		return false;
-
 	}
 }
