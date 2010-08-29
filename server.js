@@ -11,7 +11,7 @@ var sys = require('sys'),
 
 server.use(express.staticProvider(__dirname+'/public'));
 
-port = (process.argv[2]=== undefined)?80:parseInt(process.argv[2]);
+port = parseInt(process.argv[2] || 80);
 console.log("listening on port "+port);
 server.listen(port);
 
@@ -94,5 +94,13 @@ server.get('/sketch/:hash?', function(req,res){
 	}
 });
 
+server.get('/view/:hash?', function (req, res) {
+	var hash = req.params.hash;
+	if (hash){
+		res.sendfile(__dirname+'/public/view.html');
+	} else {
+		res.redirect('/sketch',302);
+	}
+});
 
 
