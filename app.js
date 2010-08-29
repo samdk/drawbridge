@@ -171,7 +171,12 @@ exports.createVariation = function(base_id, callback){
 }
 
 exports.deleteSegment = function(sketch_revision_id, segment_id){
-    client.query("REMOVE FROM sketch_to_segment WHERE segment_id=? AND sketch_id=?",
-                [sketch_revision_id, segment_id], function(){});
+	console.log(sketch_revision_id);
+	console.log(segment_id);
+	exports.getSketchFromHash(sketch_revision_id, function(sketch) {
+		client.query("DELETE FROM sketch_to_segment where sketch_id=? AND segment_id=?", [ sketch.id, segment_id]);
+	});
+    //client.query("DELETE FROM sketch_to_segment WHERE segment_id=? AND sketch_id=?",
+    //            [segment_id, sketch_revision_id]);
 }
 
