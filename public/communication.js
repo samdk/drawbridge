@@ -40,6 +40,7 @@ var CommLink = {
                 }
 	        }else if(msg.action == 'delete_segment'){
                 UI.canvas.deleteSegment(msg.segment_id);
+                UI.canvas.refresh();
                 UI.variations[getRevisionId()].deleteSegment(msg.segment_id);
                 UI.variations[getRevisionId()].refresh();
             }else if(msg.action == 'add_user'){
