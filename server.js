@@ -15,25 +15,31 @@ port = (process.argv[2]=== undefined)?80:parseInt(process.argv[2]);
 console.log("listening on port "+port);
 server.listen(port);
 
+
+var rooms = {}, clients = {};
+
 //Setup Socket.IO
 var io = io.listen(server);
-io.on('connection', function(client){
-	console.log('Client Connected');
+io.on('connection', function(client){    
+
 	client.on('message', function(message){
-		switch(message.action){
+	    message = JSON.parse(message);
+		switch(message['action']){
 			case "user_added":
-				var user = {name: message.name, email: message.email };
-				var sketch = { id: message.sketch_id };
-				app.addUser(user, sketch, function(userObj) {
-					client.send({action: "add_user", user: userObj });
-				});
-				break;
-			case "user_left":
-				var user = {id: message.user_id};
-				var sketch = {id: message.sketch_id};
-				app.leaveSketch(user, sketch, function(userObj) {
-					client.send({action: "leave_user", user: userObj});
-				});
+			    if(rooms[message.sketch_base_id] == undefined)
+			        rooms[message.sketch_base_id] = [];
+			    var c = rooms[message.sketch_base_id];
+			    c.push(client);
+			    clients[client.sessionId] = message.sketch_base_id;
+			    			    
+			    for(x in c)
+			        c[x].send(JSON.stringify({action: "add_user", name: message.name}));
+
+                // var user = {name: message.name, email: message.email };
+                // var sketch = { id: message.sketch_id };
+                // app.addUser(user, sketch, function(userObj) {
+                //  client.send({action: "add_user", user: userObj });
+                // });
 				break;
 			case "segment_added":
 				var segment = message.segment;
@@ -42,6 +48,8 @@ io.on('connection', function(client){
 					client.send({action: "add_segment", segment: segmentObj});
 				});
 				break;
+			case "segment_deleted":
+			    break;
 			default:
 				console.log(message);
 				
@@ -49,8 +57,19 @@ io.on('connection', function(client){
 		//client.broadcast(message);
 		//client.send(message);
 	});
-		client.on('disconnect', function(){
-		console.log('Client Disconnected.');
+	
+	client.on('disconnect', function(){
+	    var sketchId = clients[client.sessionId];
+	    delete clients[client.sessionId];
+	    for(var x in rooms[sketchId]){
+	        if(rooms[x].sessionId == client.sessionId){
+	            rooms[x].splice(x, 1);
+	            return;
+	        }
+	    }
+	    // app.leaveSketch(client.sessionId, message.sketch_base_id, function(userObj) {
+	   //      client.send({action: "sign_off_user", user: userObj});
+	   //  });
 	});
 });
 
