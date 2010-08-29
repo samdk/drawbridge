@@ -256,4 +256,6 @@ server.get("/rendered/:key", function(req, res){
     });
 });
 
-
+server.get("/:x", function(req, res){
+    res.redirect('/view/404');
+});
