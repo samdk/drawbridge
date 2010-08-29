@@ -171,7 +171,8 @@ io.on('connection', function(client){
 			    break;
 			case "variation_merged":
 				console.log("merge requested");
-			    app.createVariation(message.sketch_parent_id, function(leaf){
+			    app.mergeVariation(message.bottom_revision_id,message.top_revision_id, function(leaf){
+					console.log("merging");
 			        eachInSketch(clients[client.sessionId], function(cli){
 			            cli.send(JSON.stringify({
 			                action: 'add_variation',
@@ -182,6 +183,7 @@ io.on('connection', function(client){
 			            }));
 			        });
 			        app.eachSegmentId(leaf, function(sid){
+						console.log("segment");
     	                app.getPointsInSegment({segment_id:sid}, function(seg){
     	                    eachInSketch(clients[client.sessionId], function(cli){
     	                        cli.send(JSON.stringify({

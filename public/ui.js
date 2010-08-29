@@ -95,6 +95,25 @@ var UI = {
 			CommLink.requestSketchReplay();
 		} else { console.log('url: ' + getRevisionId()); console.log('rev: ' + revisionId);}
 		return false;
+	},
 
+	merge_variation : function(){
+		$(".mirror").removeClass("mirror");
+		var current = UI.variations[getRevisionId()],
+			newVariationId = sketch.sketch_revision_id;
+		$("#variations ul").prepend('<li><canvas class="mirror"' +
+									'width="120" height="90"></canvas></li>');
+		window.location.hash = newVariationId;
+		UI.canvas = new Canvas($("#canvas").get(0));
+		UI.canvas.context.lineWidth = 4;
+		UI.canvas.context.lineJoin  = "round";
+		UI.canvas.context.lineCap   = "round";
+		$("#eraser").removeClass("selected");
+        $("#pen").addClass("selected");
+		UI.currentTool = UI.canvas.pen;
+		UI.variations[newVariationId] = littleCanvas($(".mirror")[0]);
+		$(".mirror").draggable({opacity: 0.7,revert: true,revertDuration: 200})
+					.data("rev",newVariationId)
+					.click(function(){UI.switch_variation($(this));});
 	}
 }

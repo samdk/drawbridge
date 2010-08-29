@@ -186,6 +186,7 @@ exports.mergeVariation = function(bottom_rev_id, top_rev_id, callback){
 	exports.getSketchFromHash(bottom_rev_id,function(sketch_bot){
 		exports.getSketchFromHash(top_rev_id,function(sketch_top){
 			var base_bot_id = sketch_bot.id;
+			var base_top_id = sketch_top.id;
 			exports.addSketch(function(hsh){
 				segments = [];
 				exports.eachSegmentId({id:base_bot_id}, function(sid){
