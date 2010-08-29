@@ -15,9 +15,21 @@ var CommLink = {
             msg = JSON.parse(msg);
             console.log(msg);
 	        if(msg.action == 'add_segment'){
-	            if(typeof(msg.segment.points) == 'string')
+	            if(typeof(msg.segment.points) == 'string') {
 	                msg.segment.points = JSON.parse(msg.segment.points);
-	            UI.sketchCanvas(msg.sketch_revision_id).addSegment(msg.segment);
+				}
+				var cvs = UI.sketchCanvas(msg.sketch_revision_id);
+				if (cvs == undefined) {
+					$(".newvar").removeClass("newvar");
+					$("#variations ul").prepend('<li><canvas class="newvar"' +
+												'width="120" height="90"></canvas></li>');
+					UI.variations[msg.sketch_revision_id] = littleCanvas($(".newvar")[0]);
+					$(".newvar").draggable({opacity: 0.7,revert: true,revertDuration: 200})
+								.data("rev",msg.sketch_revision_id)
+								.click(function(){UI.switch_variation($(this));});
+					cvs = UI.sketchCanvas(msg.sketch_revision_id);
+				}
+				cvs.addSegment(msg.segment);
                 draw_history.addUndoTask({action: "segment_added", 
 										  segment: msg.segment, 
 										  sketch_revision_id: getRevisionId()});
@@ -51,19 +63,25 @@ var CommLink = {
         });
     },
     
-    reportSegmentDeleted : function(seg, sketchId){
-		draw_history.addUndoTask({action: "segment_deleted", segment: seg, sketch_base_id: getBaseId(), sketch_revision_id: getRevisionId()});
+    reportSegmentDeleted : function(seg, sketchId, undo){
+		console.log("reporting deleted");
+		console.log(seg);
+		if (!undo){
+			draw_history.addUndoTask({action: "segment_deleted", segment: seg, sketch_base_id: getBaseId(), sketch_revision_id: getRevisionId()});
+		}
         this.send({action             : 'segment_deleted',
                    segment_id         : seg.id,
                    sketch_base_id     : getBaseId(),
-                   sketch_revision_id : getRevisionId()});
+                   sketch_revision_id : sketchId});
     },
     
     reportSegmentDrawn : function(seg, sketchId){
+		console.log("reporting added");
+		console.log(seg);
         this.send({action             : 'segment_added',
                    segment            : seg,
                    sketch_base_id     : getBaseId(),
-                   sketch_revision_id : getRevisionId()});
+                   sketch_revision_id : sketchId});
     },
     
     reportSignOn : function(uname){
@@ -77,6 +95,11 @@ var CommLink = {
 		this.send({action			: 'variation_added',
 				   sketch_parent_id	: getRevisionId(),
 				   sketch_base_id	: getBaseId()});
+	},
+
+	requestSketchReplay : function(){
+		this.send({action				: 'sketch_replay_requested',
+				   sketch_revision_id	: getRevisionId()});
 	},
 
     send : function(data){

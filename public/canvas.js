@@ -24,15 +24,17 @@ function Canvas(ref){
     
     this.refresh = function(){
         this.unsnap(this.context.createImageData(this.width, this.height));
+		this.drawSegments();
+    };
+
+	this.drawSegments = function(){
         for(var i in this.segments)
             this.displaySegment(this.segments[i]);
-    };
+	};
     
     this.addSegment = function(seg){
-		console.log(seg);
         this.displaySegment(seg);
         this.segments.push(seg);
-		console.log(this.segments);
     };
 
     this.displaySegment = function(seg){
@@ -58,11 +60,9 @@ function Canvas(ref){
     }
     
     this.deleteSegment = function(segId){
-        for(x in this.segments){
-            if(this.segments[x].id == segId){
+        for(x in this.segments)
+            if(this.segments[x].id == segId)
                 return this.segments.splice(x, 1)[0];
-				}
-				}
     }
 
     this.xc  = function(x){ return x - $(this.canvas).offset().left; }

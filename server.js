@@ -100,10 +100,13 @@ io.on('connection', function(client){
 			case "segment_added":
 				var segment = message.segment;
 				var sketch = {base_id: message.sketch_base_id, revision_id: message.sketch_revision_id};
-				console.log(segment);
+				console.log ("segment added");
+				console.log (segment);
 				if (segment.id) {
+					
 					app.undeleteSegment(sketch.revision_id, segment, function(segmentObj) {
 						c = sketches[message.sketch_base_id];
+						console.log("segmentObj : "+ segmentObj);
 						for (x  in c ){
 							c[x].send(JSON.stringify({
 								action: "add_segment", 
@@ -142,12 +145,8 @@ io.on('connection', function(client){
 				});
 				break;
 			case "variation_added":
-				console.log("variation added");
 			    app.createVariation(message.sketch_parent_id, function(leaf){
-					console.log("callback");
 			        eachInSketch(clients[client.sessionId], function(cli){
-
-						console.log(leaf.hash);
 			            cli.send(JSON.stringify({
 			                action: 'add_variation',
 			                sketch_parent_id: message.sketch_parent_id,
@@ -168,8 +167,20 @@ io.on('connection', function(client){
     	                    });
                         });
     	            });
-			    })
+			    });
 			    break;
+			case "sketch_replay_requested":
+				console.log("\n\nreplaying: " + message.sketch_revision_id);
+				app.getFullSketch(message.sketch_revision_id, function(segmentObj){
+					console.log("inner replay: ");
+					console.log(segmentObj);
+					client.send(JSON.stringify({
+						action: "add_segment", 
+						segment: segmentObj,
+						sketch_revision_id: message.sketch_revision_id
+					}));
+				});
+				break;
 			default:
 				console.log(message);
 				
