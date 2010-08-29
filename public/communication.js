@@ -13,7 +13,6 @@ var CommLink = {
 
         this.socket.on('message', function(msg){
             msg = JSON.parse(msg);
-            logger.log(msg);
 	        if(msg.action == 'add_segment'){
 	            if(typeof(msg.segment.points) == 'string') {
 	                msg.segment.points = JSON.parse(msg.segment.points);
@@ -65,8 +64,6 @@ var CommLink = {
     },
     
     reportSegmentDeleted : function(seg, sketchId, undo){
-		logger.log("reporting deleted");
-		logger.log(seg);
 		if (!undo){
 			draw_history.addUndoTask({action: "segment_deleted", segment: seg, sketch_base_id: getBaseId(), sketch_revision_id: getRevisionId()});
 		}
@@ -77,8 +74,43 @@ var CommLink = {
     },
     
     reportSegmentDrawn : function(seg, sketchId){
-		logger.log("reporting added");
-		logger.log(seg);
+        this.send({action             : 'segment_added',
+                   segment            : seg,
+                   sketch_base_id     : getBaseId(),
+                   sketch_revision_id : sketchId});
+    },
+    
+    reportSignOn : function(uname){
+        this.send({action            : 'user_added',
+                  name               : uname,
+                  sketch_base_id     : getBaseId(),
+                  sketch_revision_id : getRevisionId()});
+    },
+
+	requestNewVariation : function(){
+		this.send({action			: 'variation_added',
+				   sketch_parent_id	: getRevisionId(),
+				   sketch_base_id	: getBaseId()});
+	},
+
+	requestSketchReplay : function(){
+		this.send({action				: 'sketch_replay_requested',
+				   sketch_revision_id	: getRevisionId()});
+	},
+
+	mergeVariation : function(topRevId){
+		this.send({action				: 'variation_merged',
+				   bottom_revision_id	: getRevisionId(),
+				   top_revision_id		: topRevId});
+	},
+
+    send : function(data){
+        this.socket.send(JSON.stringify(data));
+    }
+
+};
+CommLink.establish();
+
         this.send({action             : 'segment_added',
                    segment            : seg,
                    sketch_base_id     : getBaseId(),
