@@ -29,6 +29,7 @@ function removeFromSketch(sessionId){
     if(clients[sessionId] != undefined){
         var arr = sketches[clients[sessionId]] || [];
         delete clients[sessionId];
+        
         for(var x in arr){
             if(arr[x].sessionId == sessionId){
                 return arr.splice(x, 1);
@@ -49,6 +50,7 @@ io.on('connection', function(client){
 			    if(sketches[message.sketch_base_id] == undefined)
 			        sketches[message.sketch_base_id] = [];
 			    var c = sketches[message.sketch_base_id];
+			    removeFromSketch(client.sessionId);
 			    c.push(client);
 			    
 			    var isNew = clients[client.sessionId] == undefined;
@@ -89,6 +91,7 @@ io.on('connection', function(client){
 	});
 	
 	client.on('disconnect', function(){
+	    console.log("DISCONNECTING", client.sessionId);
 	    removeFromSketch(client.sessionId);
 	});
 });
