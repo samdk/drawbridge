@@ -185,4 +185,12 @@ server.get('/view/:hash?', function (req, res) {
 	}
 });
 
+server.get("/viewdata/:id", function(req, res){
+    app.getFullSketch(req.params.id, function(segs){
+        res.writeHead(200, {'Content-Type': 'text/plain'});
+        res.end(JSON.stringify(segs)+"\n");
+    });
+
+});
+
 
