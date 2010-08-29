@@ -77,7 +77,7 @@ var UI = {
 
 	switch_variation : function(canvas){
 		var revisionId = canvas.data("rev");
-		console.log(revisionId);
+		logger.log(revisionId);
 		if (revisionId != getRevisionId()) {
 			if (revisionId == undefined) {
 				window.location.hash = '';
@@ -96,7 +96,7 @@ var UI = {
             UI.variations[getRevisionId()].segments = [];
 			UI.canvas.context.clearRect(0,0,UI.canvas.width,UI.canvas.height);
 			CommLink.requestSketchReplay();
-		} else { console.log('url: ' + getRevisionId()); console.log('rev: ' + revisionId);}
+		} else { logger.log('url: ' + getRevisionId()); logger.log('rev: ' + revisionId);}
 		return false;
 	}
 }

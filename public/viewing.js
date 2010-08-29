@@ -9,9 +9,9 @@ $(function(){
     }).get(0));
     
     $.get('/viewdata/'+window.location.pathname.split("/").pop(), function(msg){
-        console.log(msg);
+        logger.log(msg);
         msg = JSON.parse(msg);
-                console.log(msg);
+                logger.log(msg);
         for(x in msg){
             if(typeof(msg[x].points) == 'string')
                 msg[x].points = JSON.parse(msg.points);
