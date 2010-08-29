@@ -58,7 +58,8 @@ var UI = {
 		$(".mirror").removeClass("mirror");
 		var current = UI.variations[getRevisionId()],
 			newVariationId = sketch.sketch_revision_id;
-		$("#variations ul").prepend('<li><canvas class="mirror"' +
+		$(".activefork").removeClass("activefork");
+		$("#variations ul").prepend('<li><canvas class="mirror activefork"' +
 									'width="120" height="90"></canvas></li>');
 		window.location.hash = newVariationId;
 		UI.canvas = new Canvas($("#canvas").get(0));
@@ -69,7 +70,9 @@ var UI = {
         $("#pen").addClass("selected");
 		UI.currentTool = UI.canvas.pen;
 		UI.variations[newVariationId] = littleCanvas($(".mirror")[0]);
-		$(".mirror").draggable({opacity: 0.7,revert: true,revertDuration: 200})
+		$(".mirror").draggable({opacity: 0.7,revert: true,revertDuration: 200,
+							start: function(){UI.start_dragging()},
+							stop:  function(){UI.stop_dragging()}})
 					.data("rev",newVariationId)
 					.click(function(){UI.switch_variation($(this));});
 
@@ -77,7 +80,8 @@ var UI = {
 
 	switch_variation : function(canvas){
 		var revisionId = canvas.data("rev");
-		logger.log(revisionId);
+		$(".activefork").removeClass("activefork");
+		$(canvas).addClass("activefork");
 		if (revisionId != getRevisionId()) {
 			if (revisionId == undefined) {
 				window.location.hash = '';
@@ -96,7 +100,10 @@ var UI = {
             UI.variations[getRevisionId()].segments = [];
 			UI.canvas.context.clearRect(0,0,UI.canvas.width,UI.canvas.height);
 			CommLink.requestSketchReplay();
-		} else { logger.log('url: ' + getRevisionId()); logger.log('rev: ' + revisionId);}
+		}
 		return false;
-	}
+	},
+
+	start_dragging : function() { $(".shadow").show(); },
+	stop_dragging  : function() { $(".shadow").hide(); }
 }
