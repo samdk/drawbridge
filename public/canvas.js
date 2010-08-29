@@ -1,3 +1,12 @@
+function littleCanvas(ref){
+    var lil = new Canvas(ref);
+    lil.context.lineWidth = 1;
+    lil.context.lineJoin  = "round";
+    lil.context.lineCap   = "round";
+    lil.ptRadius = 1;
+    return lil;
+}
+
 function Canvas(ref){
     ref.onselectstart = function(){ return false; }
     this.canvas   = ref;

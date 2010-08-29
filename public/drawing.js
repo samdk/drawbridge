@@ -14,6 +14,8 @@ $(function(){
     UI.canvas.context.lineWidth = 4;
     UI.canvas.context.lineJoin  = "round";
     UI.canvas.context.lineCap   = "round";
+            
+    UI.variations[getRevisionId()] = littleCanvas($("#mirror")[0]);
     
     CommLink.reportSignOn("Guest");
     CommLink.requestSegmentIds();
