@@ -86,5 +86,12 @@ $(function(){
 
 	$("#undo").click(function() {
 		draw_history.undo();
+		return false;
 	});
+	
+	$("#redo").click(function() {
+		draw_history.redo();
+		return false;
+	});
+
 });

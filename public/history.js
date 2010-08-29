@@ -20,12 +20,12 @@ var draw_history  = {
 			if (task.action == "segment_added"){
 				console.log(task.segment.id);
 				UI.canvas.deleteSegment(task.segment.id);
-				UI.canvas.refresh();
-				//var lil = UI.variations[getRevisionId()];
-                //lil.context.drawImage(UI.canvas.canvas, 0, 0, lil.width, lil.height);
+				var lil = UI.variations[getRevisionId()];
+                lil.context.drawImage(UI.canvas.canvas, 0, 0, lil.width, lil.height);
 
-				CommLink.reportSegmentDeleted(task.segment.id, task.sketch_id);
-			}
+				UI.canvas.refresh();
+				CommLink.reportSegmentDeleted(task.segment.id, task.sketch_revision_id);
+			} 
 			console.log(task);
 			this.addRedoTask(task);
 		}
@@ -34,6 +34,12 @@ var draw_history  = {
 		if (this.redoStack.length > 0) {
 			task = this.redoStack.pop();
 			console.log(task);
+			if (task.action == "segment_added") {
+				UI.sketchCanvas(task.sketch_revision_id).addSegment(task.segment);
+				var lil = UI.variations[getRevisionId()];
+                lil.context.drawImage(UI.canvas.canvas, 0, 0, lil.width, lil.height);
+
+			}
 			this.addUndoTask(task);
 		}
 	}
