@@ -15,36 +15,36 @@ client.database = database.name;
 
 client.connect();
 
-exports.getSketchFromHash = function(hash, runFunction) {
-	console.log(hash);
-	client.query('select * from sketch where hash = ?', [hash],
-		function (err, results, fields){
-			if (err) {
-				throw err;
-			}
-			if (results.length ===1) {
-				sketch = {id: results[0].id};
-				runFunction(sketch);
-			}
+function esafe(cb){
+    var callback = cb;
+    return function(err, res, f){
+        if(err) throw err;
+        callback(res);
+    };
+}
+
+exports.getSketchFromHash = function(hash, callback) {
+	client.query('SELECT id FROM sketch WHERE hash = ?', [hash], function (err, results, fields){
+		if(err) throw err;
+		
+		if(results.length == 1) {
+			callback(results[0]);
 		}
-);}
+	});
+}
 
 exports.sha1 = function(x){
     return crypto.createHash('sha1').update(x+secret_key).digest('hex');
 };
 
 exports.getSketch = function (id, runFunction){
-		client.query("select * from sketch where id = " + id, 
-			function selectCb(err, results, fields){
-				if (err){
-					throw err;
-				}
-				if (results.length ===1) {
-					runFunction(results);	
-				}
-			}
-		);
-
+    client.query("select * from sketch where id = " + id, function(err, results, fields){
+		if(err) throw err;
+	
+		if (results.length ===1) {
+			runFunction(results);	
+		}
+    });
 };
 
 exports.addSketch = function (runFunction){
@@ -54,9 +54,9 @@ exports.addSketch = function (runFunction){
 			
 		var insertId = results.insertId;
 		
-		sql = "UPDATE sketch SET hash=? WHERE id=?";
+		sql = "UPDATE sketch SET hash=?, parent_id=?, root_id=? WHERE id=?";
 		var sha1hash = exports.sha1(insertId);
-		client.query(sql, [sha1hash, insertId], function(err, results, fields){
+		client.query(sql, [sha1hash, sha1hash, sha1hash, insertId], function(err, results, fields){
 			if(err) throw err;				
 			runFunction(sha1hash);
 		});
@@ -95,35 +95,48 @@ exports.leaveSketch = function(user_id, sketch_id, runFunction) {
 exports.addSegment = function(sketch, segment, runFunction) {
 	client.query ("INSERT INTO segment (color, points) values(?,?)", [segment.color, JSON.stringify(segment.points)], 
 		function(err, result, fields){
-			if (err){
-				throw err;
-			}
+			if (err) throw err;
 			var segmentId = result.insertId;
 			exports.getSketchFromHash(sketch.base_id, function (sketch){
-				client.query("INSERT INTO sketch_to_segment (sketch_id, segment_id) values(?, ?)", [sketch.id, segmentId], 
-				function (err, result, fields){
-					if (err) {
-					throw err;
-					}
-					segmentObj = {id: segmentId, color: segment.color, points: segment.points};
-					runFunction(segmentObj);
-				}
-				);
+			    var sql = "INSERT INTO sketch_to_segment (sketch_id, segment_id) values(?, ?)";
+				client.query(sql, [sketch.id, segmentId], function (err, result, fields){
+					if(err) throw err;
+					runFunction({id: segmentId, color: segment.color, points: segment.points});
+				});
 			});
 		});
 }
 
+exports.eachLeaf = function(rootId, cb){
+    client.query("SELECT * FROM sketch WHERE root_id = ?", [rootId], function(err, res, f){
+        if(err) throw err;
+        for(var x in res){
+            cb(res[x]);
+        }
+    });
+}
+
 exports.getPointsInSegment = function(segment, runFunction) {
-	client.query("SELECT id,color, points FROM segment WHERE id = ?", [segment.segment_id], 
+	client.query("SELECT * FROM segment WHERE id = ?", [segment.segment_id], 
 		function(err, results, fields) {
-			if (err){
-				throw err;
-			}
+			if(err) throw err;
+
 			if (results.length === 1) {
 				runFunction(results[0]);
 			}
 		});
 
+}
+
+exports.eachSegmentId = function(sketch, callback){
+    sql = "SELECT segment_id FROM sketch_to_segment WHERE sketch_id = ?";
+    client.query(sql, [sketch.id], function(err, results, fields){
+	    if (err) throw err;
+		
+		for(x in results){
+		    callback(results[x].segment_id);
+		}
+	});
 }
 
 
