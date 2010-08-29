@@ -9,4 +9,13 @@ var app = require("./app");
 		console.log(userId);
 	});*/
 
-app.getSketchIdFromHash("a15e74b1d251ec868be1def9dd78c46c4ff9b85a", console.log);
+/*app.getSketchIdFromHash("a15e74b1d251ec868be1def9dd78c46c4ff9b85a", console.log);*/
+
+/*app.getSegmentIds({id: 7}, console.log);*/
+
+app.getSegmentIds({id: 7}, function(segments){
+	for (x in segments){
+		app.getPointsInSegment(segments[x], console.log);
+	}
+	}
+)

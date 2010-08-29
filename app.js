@@ -1,7 +1,7 @@
 var database = require('./config').database;
 var secret_key = "test";
 var sys = require('sys');
-var gently = new (require('gently'));
+//var gently = new (require('gently'));
 var mysql= require('./lib/mysql');
 var crypto = require ('crypto'); //node.js needs to be compiled with openssl support
 var client = new mysql.Client();
@@ -116,5 +116,28 @@ exports.addSegment = function(sketch, segment, runFunction) {
 				);
 			});
 		});
+}
+
+exports.getPointsInSegment = function(segment, runFunction) {
+	client.query("SELECT color, points FROM segment WHERE id = ?", [segment.segment_id], 
+		function(err, results, fields) {
+			if (err){
+				throw err;
+			}
+			runFunction(results);
+		});
+
+}
+
+
+exports.getSegmentIds = function(sketch, runFunction){
+	client.query("SELECT segment_id FROM sketch_to_segment WHERE sketch_id = ?", [sketch.id],
+		function(err, results, fields){
+			if (err){
+				throw err;
+			}
+			runFunction(results);
+		}
+	);
 }
 
