@@ -73,16 +73,16 @@ $(function(){
 		$("#you form input").focus();
 		return false;
 	});
-	$("#you form input").focusout(function(){
-		$("#you a").html($("#you form input").val()  + " <span class='tiny'>(click to change)</span>");
-		$("#you a").show();
-		$("#you form").hide();
-	});
-	$("#you form").submit(function(){
-        CommLink.reportSignOn($("#you form input").val());
-        $("#you form input").focusout();
-        return false;
-	});
+    $("#you form input").focusout(function(){
+        $("#you a").text($("#you form input").val()).append(" <span class='tiny'>(click to change)</span>");
+        $("#you a").show();
+        $("#you form").hide();
+    });
+    $("#you form").submit(function(){
+            CommLink.reportSignOn($("#you form input").val());
+            $("#you form input").focusout();
+            return false;
+    });
 
 	$("#undo").click(function() {
 		draw_history.undo();
