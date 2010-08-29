@@ -71,12 +71,11 @@ var UI = {
 
 	},
 
-	switch_variation : function(revisionId){
-		var canvas =  $(this).find("canvas"),
-			revisionId = canvas.data("rev");
+	switch_variation : function(canvas){
+		var revisionId = canvas.data("rev");
+		console.log(revisionId);
 		if (revisionId != getRevisionId()) {
-			console.log("huh??");
-			if (revisionId == getBaseId()) {
+			if (revisionId == undefined) {
 				window.location.hash = '';
 			} else {
 				window.location.hash = revisionId;
@@ -88,14 +87,8 @@ var UI = {
 			$("#eraser").removeClass("selected");
 			$("#pen").addClass("selected");
 			UI.currentTool = UI.canvas.pen;
-			console.log("starting...");
-			UI.variations[revisionId].segments.forEach(function(seg) {
-				console.log("segment");
-				UI.canvas.addSegment(seg);
-			});
-			console.log("done");
-			console.log(UI.canvas);
-			UI.canvas.drawSegments();
+			UI.canvas.context.clearRect(0,0,UI.canvas.width,UI.canvas.height);
+			CommLink.requestSketchReplay();
 		} else { console.log('url: ' + getRevisionId()); console.log('rev: ' + revisionId);}
 		return false;
 

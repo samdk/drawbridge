@@ -95,6 +95,11 @@ var CommLink = {
 				   sketch_base_id	: getBaseId()});
 	},
 
+	requestSketchReplay : function(){
+		this.send({action				: 'sketch_replay_requested',
+				   sketch_revision_id	: getRevisionId()});
+	},
+
     send : function(data){
         this.socket.send(JSON.stringify(data));
     }
