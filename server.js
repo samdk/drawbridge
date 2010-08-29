@@ -79,7 +79,7 @@ io.on('connection', function(client){
 				var segment = message.segment;
 				var sketch = {base_id: message.sketch_base_id, revision_id: message.sketch_revision_id};
 				app.addSegment(sketch, segment, function(segmentObj) {
-					c = rooms[message.sketch_base_id];
+					c = sketches[message.sketch_base_id];
 					for (x  in c ){
 						c[x].send(JSON.stringify({action: "add_segment", 
 									  segment: segmentObj}));
@@ -88,9 +88,11 @@ io.on('connection', function(client){
 				break;
 			case "segment_deleted":
 			    break;
-			case "get_segmentIds':
+			case "get_segmentIds":
 				app.getSketchFromHash(message.sketch_base_id, function(sketch) {
-						client.send(JSON.stringify({ action: "receive_segmentIds", segment_ids: app.getSegmentIds}));
+						app.getSegmentIds(sketch, function(segs){
+						client.send(JSON.stringify({ action: "receive_segmentIds", segment_ids: segs }));
+						});
 					});
 					
 				break;

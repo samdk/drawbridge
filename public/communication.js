@@ -16,7 +16,7 @@ var CommLink = {
             console.log(msg);
 	    if(msg.action == 'add_segment'){
                 UI.canvas.displaySegment(msg.segment);
-                UI.canvas.segments.push(seg);
+                UI.canvas.segments.push(msg.segment);
 	    }else if (msg.action == "receive_segmentIds") {
 	    	console.log(msg.segment_ids);
             }else if(msg.action == 'delete_segment'){
@@ -48,6 +48,13 @@ var CommLink = {
                   name               : uname,
                   sketch_base_id     : getBaseId(),
                   sketch_revision_id : getRevisionId()});
+    },
+
+    requestSegmentIds : function(){
+    	this.send({action	: 'get_segmentIds',
+		   sketch_base_id     : getBaseId(),
+                  sketch_revision_id : getRevisionId()});
+
     },
     
     send : function(data){
