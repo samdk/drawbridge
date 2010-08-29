@@ -169,6 +169,32 @@ io.on('connection', function(client){
     	            });
 			    });
 			    break;
+			case "variation_merged":
+				console.log("merge requested");
+			    app.createVariation(message.sketch_parent_id, function(leaf){
+			        eachInSketch(clients[client.sessionId], function(cli){
+			            cli.send(JSON.stringify({
+			                action: 'add_variation',
+			                sketch_parent_id: message.sketch_parent_id,
+			                sketch_base_id: message.sketch_base_id,
+			                real_id: leaf.id,
+			                sketch_revision_id: leaf.hash
+			            }));
+			        });
+			        app.eachSegmentId(leaf, function(sid){
+    	                app.getPointsInSegment({segment_id:sid}, function(seg){
+    	                    eachInSketch(clients[client.sessionId], function(cli){
+    	                        cli.send(JSON.stringify({
+        	                        segment: seg,
+        	                        action: 'add_segment',
+        	                        sketch_revision_id: leaf.hash,
+        	                        sketch_real_id: leaf.id
+        	                    }));
+    	                    });
+                        });
+    	            });
+			    });
+			    break;
 			case "sketch_replay_requested":
 				console.log("\n\nreplaying: " + message.sketch_revision_id);
 				app.getSketchFromHash(message.sketch_revision_id,function(sketch) {

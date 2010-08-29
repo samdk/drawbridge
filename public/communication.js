@@ -102,6 +102,12 @@ var CommLink = {
 				   sketch_revision_id	: getRevisionId()});
 	},
 
+	mergeVariation : function(topRevId){
+		this.send({action				: 'variation_merged',
+				   bottom_revision_id	: getRevisionId(),
+				   top_revision_id		: topRevId});
+	},
+
     send : function(data){
         this.socket.send(JSON.stringify(data));
     }
