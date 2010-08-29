@@ -1,16 +1,19 @@
 html,body {height: 100%;}
+body {
+}
 #container {
 	min-height: 100%;
 	position: relative;
 }
 	#page {
-		padding-bottom: 310px;
-		width: 900px;
+		padding-bottom: 200px;
+		width: 720px;
 		margin: 0 auto;
 	}	
 		h1 {
 			font-size: 60px;
-			margin: 30px 0 10px;
+			margin: 0 0 10px;
+			padding-top: 80px;
 			text-shadow: 0 1px 3px #eee;
 			text-align: center;
 		}
@@ -20,12 +23,12 @@ html,body {height: 100%;}
 		#features {
 			margin-left: -12px;
 			margin-right: -3px;
-			height: 155px;
+			height: 140px;
 		}
 			.block {
-				width: 248px;
+				width: 190px;
 				height: 75px;
-				padding: 20px 20px 20px;
+				padding: 20px;
 				margin-left: 15px;
 				background: white;
 				-webkit-box-shadow: 0 1px 5px #555;
@@ -40,7 +43,7 @@ html,body {height: 100%;}
 				.block h2 {
 					text-align: center;
 					font-family: Museo300, Arial, Helvetica, 'Helvetica Neue', sans-serif;
-					font-size: 21px;
+					font-size: 18px;
 				}
 					.block strong {
 						font-family: Museo700, Arial, Helvetica, 'Helvetica Neue', sans-serif;
@@ -48,14 +51,9 @@ html,body {height: 100%;}
 					}
 		#call {
 			clear: both;
-			padding: 20px 0;
 			width: 580px;
-			margin: 0 auto 40px;
+			margin: 0 auto 30px;
 			font-family: Museo300, Arial, Helvetica, 'Helvetica Neue', sans-serif;
-			background: white;
-			-webkit-box-shadow: 0 1px 5px #555;
-			-moz-box-shadow: 0 1px 5px #555;
-			box-shadow: 0 1px 5px #555;
 		}
 			#call div {
 				text-align: center;
@@ -71,6 +69,8 @@ html,body {height: 100%;}
 					-webkit-border-radius: 5px;
 					-moz-border-radius: 5px;
 					border-radius: 5px;
+					border: 2px solid white;
+					margin: -2px;
 				}
 				#call a#room-sketch {
 					background: #6a98ec;
@@ -87,47 +87,47 @@ html,body {height: 100%;}
 				}
 	#footer {
 		clear: both;
-		margin-top: -310px;
-		height: 310px;
+		margin-top: -200px;
+		height: 110px;
+		padding: 60px 0 30px;
 		position: relative;
 		z-index: 2;
 		width: 100%;
 	}
 		#footer-container {
-			padding: 20px 0;
 			text-align: center;
-			width: 500px;
+			width: 675px;
 			margin: 0 auto;
-			background: #444;
-			color: white;
-			border: 1px solid #333;
-			-webkit-box-shadow: 0 1px 5px black;
-			-moz-box-shadow: 0 1px 5px black;
-			box-shadow: 0 1px 5px black;
 		}
 			#footer h3 {
-				font-size: 16px;
+				font-size: 75px;
 				font-weight: normal;
-				font-family: Arial, Helvetica, 'Helvetica Neue', sans-serif;
+				font-family: Museo700, Arial, Helvetica, 'Helvetica Neue', sans-serif;
+				float: left;
+				margin-right: 10px;
+				text-shadow: 0 -1px 1px #8c8c8c;
+				line-height: 75px;
+				width: 510px;
 			}
-				#footer a {
-					color: white;
+				#footer h3 a {
+					color: #b3b3b3;
+					text-decoration: none;
 				}
-					#footer a:hover {
-						text-decoration: none;
+					#footer h3 a:hover {
+						color: #999;
+						text-shadow: 0 -1px 1px #666;
 					}
 			#footer ul {
-				height: 150px;
-				padding: 1px 1px 1px 0;
-				width: 303px;
-				margin: 10px auto;
-				background: black;
+				height: 75px;
+				width: 150px;
+				margin: -1px auto 0;
+				float: left;
+				border: 1px solid #aaa;
 			}
 				#footer li {
-					width: 100px;
-					margin-left: 1px;
+					width: 50px;
 					float: left;
-					height: 150px;
+					height: 75px;
 				}
 					#eli {
 						background: url('/images/people/eli_sm.jpg') no-repeat center center;
@@ -138,3 +138,16 @@ html,body {height: 100%;}
 					#sam {
 						background: url('/images/people/sam_sm.jpg') no-repeat center center;
 					}
+				#footer p {
+					clear: both;
+					padding-top: 10px;
+					font-size: 14px;
+				}
+					#footer p a {
+						color: #555;
+						text-decoration: none;
+						font-weight: bold;
+					}
+						#footer p a:hover {
+							color: black;
+						}
