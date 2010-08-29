@@ -24,7 +24,7 @@ function esafe(cb){
 }
 
 exports.getSketchFromHash = function(hash, callback) {
-	client.query('SELECT id FROM sketch WHERE hash = ?', [hash], function (err, results, fields){
+	client.query('SELECT * FROM sketch WHERE hash = ?', [hash], function (err, results, fields){
 		if(err) throw err;
 		
 		if(results.length == 1) {
@@ -97,7 +97,7 @@ exports.addSegment = function(sketch, segment, runFunction) {
 		function(err, result, fields){
 			if (err) throw err;
 			var segmentId = result.insertId;
-			exports.getSketchFromHash(sketch.base_id, function (sketch){
+			exports.getSketchFromHash(sketch.revision_id, function (sketch){
 			    var sql = "INSERT INTO sketch_to_segment (sketch_id, segment_id) values(?, ?)";
 				client.query(sql, [sketch.id, segmentId], function (err, result, fields){
 					if(err) throw err;
@@ -166,13 +166,27 @@ exports.createVariation = function(rev_id, callback){
 				var sql = "INSERT INTO sketch_to_segment(sketch_id, segment_id) VALUES ((select id from sketch where hash=?), ?)";
 				client.query(sql, [hsh, sid], function(e,r,f){});
 			});
-			exports.getSketchFromHash(hsh,function(leaf){
-				leaf.hash = hsh;
-				callback(leaf);
+			// update leaf to correct root/parent ids
+			sql = "UPDATE sketch SET parent_id = ?, root_id = ? WHERE hash = ?";
+			client.query(sql,[sketch.hash,sketch.root_id,hsh], function(err,results,fields) {
+				if (err)
+					throw err;
+				exports.getSketchFromHash(hsh,function(leaf){
+					leaf.hash = hsh;
+					callback(leaf);
+				});
 			});
 		});
 	});
 }
+/*
+    var sql = "INSERT INTO sketch (hash, created_at, modified_at) values ('', NULL, NULL)";
+sql = "UPDATE user_to_sketch SET is_active = 0 WHERE user_id = ? AND sketch_id = ?";
+	client.query (sql, [user_id, sketch_id], function (err, results, fields) {
+		if(err)
+			throw err;
+		runFunction(user);
+	});*/
 
 exports.deleteSegment = function(sketch_revision_id, segment_id){
 	//console.log(sketch_revision_id);
