@@ -44,15 +44,30 @@ io.on('connection', function(client){
 
 	client.on('message', function(message){
 	    message = JSON.parse(message);
+	    
+	    var isNew = clients[client.sessionId] == undefined;
+	    
+	    if(isNew){
+	        app.eachLeaf(message.sketch_base_id, function(leaf){
+	            app.eachSegmentId(leaf, function(sid){
+	                app.getPointsInSegment({segment_id:sid}, function(seg){
+	                    client.send(JSON.stringify({
+	                        segment: seg,
+	                        action: 'add_segment',
+	                        sketch_revision_id: leaf.hash
+	                    }));
+                    });
+	            });
+	        });
+	    }
 
 		switch(message['action']){
 			case "user_added":
 			    if(sketches[message.sketch_base_id] == undefined)
 			        sketches[message.sketch_base_id] = [];
 			        
-			    var c     = sketches[message.sketch_base_id],
-			        isNew = clients[client.sessionId] == undefined;
-			    
+			    var c = sketches[message.sketch_base_id];
+			        
 			    client.username = message.name;
 			    
 			    removeFromSketch(client.sessionId);
@@ -82,27 +97,36 @@ io.on('connection', function(client){
 				app.addSegment(sketch, segment, function(segmentObj) {
 					c = sketches[message.sketch_base_id];
 					for (x  in c ){
-						c[x].send(JSON.stringify({action: "add_segment", 
-									  segment: segmentObj}));
+						c[x].send(JSON.stringify({
+						    action: "add_segment", 
+						    segment: segmentObj,
+						    sketch_revision_id: message.sketch_revision_id
+					    }));
 					}
 				});
 				break;
 			case "segment_deleted":
 			    break;
-			case "get_segmentIds":
-				app.getSketchFromHash(message.sketch_base_id, function(sketch) {
-						app.getSegmentIds(sketch, function(segs){
-						client.send(JSON.stringify({ action: "receive_segmentIds", segment_ids: segs }));
-						});
-					});
-					
-				break;
 			case "get_segment":
 				var seg = {segment_id: message.segment_id};
 				app.getPointsInSegment(seg, function(segmentObj){
 					client.send(JSON.stringify({action: "add_segment", segment : segmentObj}));
 				});
 				break;
+			case "variation_added":
+			    app.createVariation(message.sketch_parent_id, function(leaf){
+			        app.eachSegmentId(leaf, function(sid){
+    	                app.getPointsInSegment({segment_id:sid}, function(seg){
+    	                    client.send(JSON.stringify({
+    	                        segment: seg,
+    	                        action: 'add_segment',
+    	                        sketch_revision_id: leaf.hash,
+    	                        sketch_real_id: leaf.id
+    	                    }));
+                        });
+    	            });
+			    })
+			    break;
 			default:
 				console.log(message);
 				

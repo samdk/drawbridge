@@ -15,12 +15,15 @@ var CommLink = {
             msg = JSON.parse(msg);
             console.log(msg);
 	        if(msg.action == 'add_segment'){
-                UI.canvas.displaySegment(msg.segment);
-                UI.canvas.segments.push(msg.segment);
-                
-				draw_history.addUndoTask({action: "segment_added", segment: msg.segment, sketch_id: 0});
-                var lil = UI.variations[getRevisionId()];
-                lil.context.drawImage(UI.canvas.canvas, 0, 0, lil.width, lil.height);
+	            if(typeof(msg.segment.points) == 'string')
+	                msg.segment.points = JSON.parse(msg.segment.points);
+	            UI.sketchCanvas(msg.sketch_revision_id).addSegment(msg.segment);
+                    draw_history.addUndoTask({action: "segment_added", segment: msg.segment, sketch_id: 0});
+
+	            if(getRevisionId() == msg.sketch_revision_id){
+                    var lil = UI.variations[getRevisionId()];
+                    lil.context.drawImage(UI.canvas.canvas, 0, 0, lil.width, lil.height);
+                }
 	        }else if(msg.action == 'delete_segment'){
                 UI.canvas.deleteSegment(msg.segment_id);
                 
@@ -53,20 +56,6 @@ var CommLink = {
                   name               : uname,
                   sketch_base_id     : getBaseId(),
                   sketch_revision_id : getRevisionId()});
-    },
-
-    requestSegmentIds : function(){
-    	this.send({action	: 'get_segmentIds',
-		   sketch_base_id     : getBaseId(),
-                  sketch_revision_id : getRevisionId()});
-
-    },
-    
-    requestSegment : function(segment) {
-    	this.send({action	: "get_segment",
-		   segment_id   : segment.segment_id,
-		   sketch_base_id     : getBaseId(),
-                   sketch_revision_id : getRevisionId()});
     },
 
     send : function(data){

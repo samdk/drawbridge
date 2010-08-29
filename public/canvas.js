@@ -27,27 +27,32 @@ function Canvas(ref){
         this.unsnap(this.context.createImageData(this.width, this.height));
         for(var i in this.segments)
             this.displaySegment(this.segments[i]);
-    }
+    };
+    
+    this.addSegment = function(seg){
+        this.displaySegment(seg);
+        this.segments.push(seg);
+    };
 
     this.displaySegment = function(seg){
         if(!seg || !seg.points || seg.points.length == 0){
             return;
         }else if(seg.points.length == 1){
-            ctx.save();
-            ctx.beginPath();
-            ctx.arc(this.cx(seg.points[0][0]), this.cy(seg.points[0][1]), this.ptRadius, 0, Math.PI * 2, true);
-            ctx.closePath();
-            ctx.strokeStyle = ctx.fillStyle = seg.color;
-            ctx.fill();
-            ctx.restore();
+            this.context.save();
+            this.context.beginPath();
+            this.context.arc(this.cx(seg.points[0][0]), this.cy(seg.points[0][1]), this.ptRadius, 0, Math.PI * 2, true);
+            this.context.closePath();
+            this.context.strokeStyle = this.context.fillStyle = seg.color;
+            this.context.fill();
+            this.context.restore();
         }else{
-            ctx.moveTo(this.cx(seg.points[0][0]), this.cy(seg.points[0][1]));
-            ctx.beginPath();
+            this.context.moveTo(this.cx(seg.points[0][0]), this.cy(seg.points[0][1]));
+            this.context.beginPath();
             for(x in seg.points){
-                ctx.lineTo(this.cx(seg.points[x][0]), this.cy(seg.points[x][1]));
+                this.context.lineTo(this.cx(seg.points[x][0]), this.cy(seg.points[x][1]));
             }
-            ctx.strokeStyle = ctx.fillStyle = seg.color;
-            ctx.stroke();
+            this.context.strokeStyle = this.context.fillStyle = seg.color;
+            this.context.stroke();
         }
     }
     
