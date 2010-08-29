@@ -28,18 +28,5 @@ var UI = {
                 $(this).addClass("offline");
             }
         });
-    },
-    
-    doFade : false,
-	
-	fadeInShadow : function(){
-		this.doFade = true;
-        var me = this;
-		setTimeout(function(){me.doFade && $("#shadow").fadeIn(200)}, 200);
-	},
-	
-	fadeOutShadow : function(){
-		this.doFade = false;    
-		$("#shadow").fadeOut(150);
-	}
+    }
 }

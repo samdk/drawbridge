@@ -21,18 +21,13 @@ $(function(){
         
     $(UI.canvas.canvas).mousedown(function(e){
         currentTool.down(UI.canvas.xcr(e.pageX), UI.canvas.ycr(e.pageY));
-		UI.fadeInShadow();
     }).mousemove(function(e){        
         currentTool.moved(UI.canvas.xcr(e.pageX), UI.canvas.ycr(e.pageY));
     }).mouseout(function(e){
         currentTool.up(UI.canvas.xcr(e.pageX), UI.canvas.ycr(e.pageY));
     }).mouseup(function(e){
         currentTool.up(UI.canvas.xcr(e.pageX), UI.canvas.ycr(e.pageY));
-    }).mouseover(function(e){
-		UI.fadeInShadow(e);
-	}).mouseleave(function(){
-		UI.fadeOutShadow();
-	});
+    };
 		  
     $("#eraser").click(function(){
         currentTool = UI.canvas.eraser;
