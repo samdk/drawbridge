@@ -4,7 +4,11 @@ var CommLink = {
     establish : function(){
         io.setPath("/socket.io/");
 		this.socket = new io.Socket(null, {port : window.location.port || 80,
-		                                   rememberTransport : false});
+		                                   rememberTransport : false,
+										   // flash sockets disabled
+										   transports : ['websocket', 'server-events',
+														 'htmlfile', 'xhr-multipart',
+														 'xhr-polling']});
         this.socket.connect();
 
         this.socket.on('message', function(msg){
