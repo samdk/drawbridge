@@ -272,9 +272,9 @@
 			display: none;
 			font-size: 13px;
 			position: absolute;
+			z-index: 50;
 			background: white;
 			border: 1px solid #aaa;
-			opacity: 0.9;
 			padding: 10px;
 			width: 400px;
 			top: -10px;
