@@ -17,18 +17,18 @@ var UI = {
         $("#people ul li").each(function(){
             if($(this).data("uuid") == user.id){
                 found = true;
-                $(this).removeClass("offline");
                 $(this).text(user.name);
             }
         });
+        
         if(!found){
             $("#people ul").append("<li>"+user.name+"</li>");
             $("#people ul li:last").data("uuid", user.id);
         }
                     
         $("#people h2").text(
-            ($("#people li").length-1) +
-            ($("#people li").length == 2 ? ' person ' : ' people ') +
+            $("#people ul li").length +
+            ($("#people li").length == 1 ? ' person ' : ' people ') +
             'drawing'
         );
     },
@@ -36,7 +36,7 @@ var UI = {
     sign_off_user : function(user){
         $("#people li").each(function(){
             if($(this).data("uuid") == user.id){
-                $(this).addClass("offline");
+                $(this).remove();
             }
         });
     }
