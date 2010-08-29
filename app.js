@@ -180,3 +180,14 @@ exports.deleteSegment = function(sketch_revision_id, segment_id){
     //            [segment_id, sketch_revision_id]);
 }
 
+exports.saveImage = function(data, callback){
+    client.query("INSERT INTO saved_sketch(`key`, data) VALUES(?, ?)", [exports.sha1(data), data], function(e,r,f){
+        callback(exports.sha1(data));
+    });
+}
+
+exports.getImage = function(key, callback){
+    client.query("SELECT data FROM saved_sketch WHERE `key`=?", [key], function(e,r,f){
+        callback(r[0].data); 
+    });
+}

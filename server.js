@@ -62,6 +62,12 @@ io.on('connection', function(client){
 	    }
 
 		switch(message['action']){
+		    case "save_sketch":
+		        app.saveImage(message.payload, function(k){
+		            client.send(JSON.stringify({action: "share_key", key: k}));
+		        });
+		        break;
+		        
 			case "user_added":
 			    if(sketches[message.sketch_base_id] == undefined)
 			        sketches[message.sketch_base_id] = [];
@@ -185,12 +191,11 @@ server.get('/view/:hash?', function (req, res) {
 	}
 });
 
-server.get("/viewdata/:id", function(req, res){
-    app.getFullSketch(req.params.id, function(segs){
+server.get("/rendered/:key", function(req, res){
+    app.getImage(req.params.key, function(data){
         res.writeHead(200, {'Content-Type': 'text/plain'});
-        res.end(JSON.stringify(segs)+"\n");
+        res.end(data);
     });
-
 });
 
 

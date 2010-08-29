@@ -46,6 +46,19 @@ CREATE TABLE `sketch` (
   KEY `hash` (`hash`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
 
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `saved_sketch`
+--
+DROP TABLE IF EXISTS `saved_sketch`;
+CREATE TABLE `saved_sketch` (
+    `key` VARCHAR( 40 ) NOT NULL ,
+    `data` TEXT NOT NULL ,
+    PRIMARY KEY (  `key` )
+) ENGINE = MYISAM;
+
 -- --------------------------------------------------------
 
 --

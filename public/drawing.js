@@ -48,7 +48,7 @@ $(function(){
 	$("#share").click(function(){
 		if ($("#share-box").css("display") === "none") {
 			$("#share-box").show();
-			$("#share-box input").val("http://" + document.location.host + "/view/" + UI.canvas.realId);
+			CommLink.saveImage();
 		} else {
 			$("#share-box").hide();
 		}
