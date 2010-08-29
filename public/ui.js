@@ -1,24 +1,28 @@
 var UI = {
     canvas : false,
-    sign_on_user : function(username){
+    sign_on_user : function(user){
         var found = false;
-        $("#people li").each(function(){
-            if($(this).html() == username){
+        console.log("Sign on user", user);
+        $("#people ul li").each(function(){
+            console.log("uuid", $(this).data("uuid"));
+            if($(this).data("uuid") == user.id){
                 found = true;
                 $(this).removeClass("offline");
             }
         });
-        if(!found && username != $("#you form input").val())
-            $("#people").append("<li>"+username+"</li>");
+        if(!found){
+            $("#people ul").append("<li>"+user.name+"</li>");
+            $("#people ul li:last").data("uuid", user.id);            
+        }
             
         $("#people h2").text(
-            $("#people li").length +
-            ($("#people li").length == 1 ? ' person ' : ' people ') +
+            ($("#people li").length-1) +
+            ($("#people li").length == 2 ? ' person ' : ' people ') +
             'drawing'
         );
     },
     
-    sign_off_user : function(username){
+    sign_off_user : function(user){
         $("#people li").each(function(){
             if($(this).html() == username){
                 $(this).addClass("offline");

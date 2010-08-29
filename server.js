@@ -31,9 +31,11 @@ io.on('connection', function(client){
 			    var c = rooms[message.sketch_base_id];
 			    c.push(client);
 			    clients[client.sessionId] = message.sketch_base_id;
-			    			    
+			    			    			    
 			    for(x in c)
-			        c[x].send(JSON.stringify({action: "add_user", name: message.name}));
+			        c[x].send(JSON.stringify({action: "add_user",
+			                                  name  : message.name,
+			                                  id    : app.sha1(client.sessionId)}));
 
                 // var user = {name: message.name, email: message.email };
                 // var sketch = { id: message.sketch_id };
@@ -62,8 +64,8 @@ io.on('connection', function(client){
 	    var sketchId = clients[client.sessionId];
 	    delete clients[client.sessionId];
 	    for(var x in rooms[sketchId]){
-	        if(rooms[x].sessionId == client.sessionId){
-	            rooms[x].splice(x, 1);
+	        if(rooms[sketchId][x].sessionId == client.sessionId){
+	            rooms[sketchId].splice(x, 1);
 	            return;
 	        }
 	    }

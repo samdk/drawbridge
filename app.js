@@ -15,6 +15,10 @@ client.database = database.name;
 
 client.connect();
 
+exports.sha1 = function(x){
+    return crypto.createHash('sha1').update(x+secret_key).digest('hex');
+};
+
 exports.getSketch = function (id, runFunction){
 		client.query("select * from sketch where id = " + id, 
 			function selectCb(err, results, fields){

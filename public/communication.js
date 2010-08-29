@@ -8,16 +8,15 @@ var CommLink = {
 
         this.socket.on('message', function(msg){
             msg = JSON.parse(msg);
-            console.log(msg);
-	    if(msg.action == 'add_segment'){
+	        if(msg.action == 'add_segment'){
                 UI.canvas.displaySegment(msg.segment);
                 UI.canvas.segments.push(seg);
             }else if(msg.action == 'delete_segment'){
                 UI.canvas.deleteSegment(msg.segment_id);
             }else if(msg.action == 'add_user'){
-                UI.sign_on_user(msg.name);
+                UI.sign_on_user(msg);
             }else if(msg.action == 'sign_off_user'){
-                UI.sign_off_user(msg.name);
+                UI.sign_off_user(msg);
             }
         });
     },
