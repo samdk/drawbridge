@@ -26,8 +26,7 @@ var UI = {
         });
         
         if(!found){
-            $("#people ul").append("<li>"+user.name+"</li>");
-            $("#people ul li:last").data("uuid", user.id);
+            $("<li></li>").appendTo($("#people ul")).text(user.name).data("uuid", user.id);
         }
                     
         $("#people h2").text(
@@ -46,7 +45,6 @@ var UI = {
     },
 
 	add_variation : function(sketch){
-		console.log("adding");
 		$(".mirror").removeClass("mirror");
 		var current = UI.variations[getRevisionId()],
 			newVariationId = sketch.sketch_revision_id;

@@ -18,7 +18,6 @@ function Canvas(ref){
     this.eraser   = new Eraser(this);
     this.ptRadius = 4;
     this.sketchId = getRevisionId();
-    this.realId   = "MONKEYS"+this.sketchId;
     
     this.snap   = function(){ return this.context.getImageData(0, 0, this.width, this.height); };
     this.unsnap = function(img){     this.context.putImageData(img, 0, 0); };
