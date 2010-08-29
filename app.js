@@ -114,12 +114,14 @@ exports.addSegment = function(sketch, segment, runFunction) {
 }
 
 exports.getPointsInSegment = function(segment, runFunction) {
-	client.query("SELECT color, points FROM segment WHERE id = ?", [segment.segment_id], 
+	client.query("SELECT id,color, points FROM segment WHERE id = ?", [segment.segment_id], 
 		function(err, results, fields) {
 			if (err){
 				throw err;
 			}
-			runFunction(results);
+			if (results.length === 1) {
+				runFunction(results[0]);
+			}
 		});
 
 }

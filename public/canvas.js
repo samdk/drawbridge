@@ -15,9 +15,9 @@ function Canvas(ref){
     this.unsnap = function(img){     this.context.putImageData(img, 0, 0); };
     
     this.refresh = function(){
-        this.unsnap(context.createImageData(this.width, this.height));
+        this.unsnap(this.context.createImageData(this.width, this.height));
         for(var i in this.segments)
-            this.displaySegment(segments[i]);
+            this.displaySegment(this.segments[i]);
     }
 
     this.displaySegment = function(seg){
@@ -120,8 +120,8 @@ function Eraser(canvas){
                     var a = seg.points[j],
                         b = lastPt || [a[0]+0.00001, a[1]+0.00001],
                         px = b[0] - a[0], py = b[1] - a[1],
-                        u = ((xcr(e.pageX) - a[0]) * px +
-                             (ycr(e.pageY) - a[1]) * py) / (px*px + py*py);
+                        u = ((x - a[0]) * px +
+                             (y - a[1]) * py) / (px*px + py*py);
 
                     if(u > 1)       u = 1;
                     else if(u < 0)  u = 0;
@@ -142,7 +142,7 @@ function Eraser(canvas){
         }            
         
         if(this.saved)
-            unsnap(this.saved);
+            this.canvas.unsnap(this.saved);
         
         if(!this.closest || dist > 0.0005){
             this.closest = false;
@@ -151,7 +151,7 @@ function Eraser(canvas){
         
         
         if(!this.saved)
-            this.saved = snap();
+            this.saved = this.canvas.snap();
         
         var oldColor = this.closest.color;
         this.closest.color = this.highlightColor;
@@ -161,7 +161,7 @@ function Eraser(canvas){
     
     this.up = function(x, y){
         if(this.closest){
-            CommLink.reportSegmentDeleted(deleteSegment(this.closest.id), this.canvas.sketchId);
+            CommLink.reportSegmentDeleted(this.canvas.deleteSegment(this.closest.id), this.canvas.sketchId);
             this.closest = false;
             this.saved = false;
             this.canvas.refresh();

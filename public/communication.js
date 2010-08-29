@@ -18,7 +18,13 @@ var CommLink = {
                 UI.canvas.displaySegment(msg.segment);
                 UI.canvas.segments.push(msg.segment);
 	    }else if (msg.action == "receive_segmentIds") {
-	    	console.log(msg.segment_ids);
+	    	if (msg.segment_ids.length > 0) {
+			for (x in msg.segment_ids) {
+				//console.log(msg.segment_ids[x]);
+				this.requestSegment(msg.segment_ids[x]);
+			}
+		}
+	    	//console.log(msg.segment_ids);
             }else if(msg.action == 'delete_segment'){
                 UI.canvas.deleteSegment(msg.segment_id);
             }else if(msg.action == 'add_user'){
@@ -57,8 +63,16 @@ var CommLink = {
 
     },
     
+    requestSegment : function(segment) {
+    	this.send({action	: "get_segment",
+		   segment_id   : segment.segment_id,
+		   sketch_base_id     : getBaseId(),
+                   sketch_revision_id : getRevisionId()});
+    },
+
     send : function(data){
         this.socket.send(JSON.stringify(data));
     }
+
 };
 CommLink.establish();
