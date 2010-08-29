@@ -151,3 +151,14 @@ exports.getSegmentIds = function(sketch, runFunction){
 	);
 }
 
+exports.createVariation = function(base_id, callback){
+    exports.addSketch(function(hsh){
+        exports.eachSegmentId({id:base_id}, function(sid){
+            var sql = "INSERT INTO sketch_to_segment(sketch_id, segment_id) VALUES ((select id from sketch where hash=?), ?)";
+            client.query(sql, [hsh, sid], function(e,r,f){
+                callback(exports.getPointsInSegment({segment_id:sid}));
+            });
+        });
+    });
+}
+

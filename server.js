@@ -113,6 +113,20 @@ io.on('connection', function(client){
 					client.send(JSON.stringify({action: "add_segment", segment : segmentObj}));
 				});
 				break;
+			case "variation_added":
+			    app.createVariation(message.sketch_parent_id, function(leaf){
+			        app.eachSegmentId(leaf, function(sid){
+    	                app.getPointsInSegment({segment_id:sid}, function(seg){
+    	                    client.send(JSON.stringify({
+    	                        segment: seg,
+    	                        action: 'add_segment',
+    	                        sketch_revision_id: leaf.hash,
+    	                        sketch_real_id: leaf.id
+    	                    }));
+                        });
+    	            });
+			    })
+			    break;
 			default:
 				console.log(message);
 				
