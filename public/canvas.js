@@ -179,10 +179,9 @@ function Eraser(canvas){
     this.up = function(x, y){
         if(this.closest){
 			var seg = this.canvas.deleteSegment(this.closest.id);
-			
-            CommLink.reportSegmentDeleted(seg, this.canvas.sketchId);
             this.closest = false;
             this.saved = false;
+            CommLink.reportSegmentDeleted(seg, this.canvas.sketchId);
             this.canvas.refresh();
         }
     };

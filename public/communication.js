@@ -36,14 +36,12 @@ var CommLink = {
 
 
 	            if(getRevisionId() == msg.sketch_revision_id){
-                    var lil = UI.variations[getRevisionId()];
-                    lil.context.drawImage(UI.canvas.canvas, 0, 0, lil.width, lil.height);
+                    UI.variations[getRevisionId()].addSegment(msg.segment);
                 }
 	        }else if(msg.action == 'delete_segment'){
-                seg = UI.canvas.deleteSegment(msg.segment_id);
-                console.log(seg);
-                var lil = UI.variations[getRevisionId()];
-                lil.context.drawImage(UI.canvas.canvas, 0, 0, lil.width, lil.height);
+                UI.canvas.deleteSegment(msg.segment_id);
+                UI.variations[getRevisionId()].deleteSegment(msg.segment_id);
+                UI.variations[getRevisionId()].refresh();
             }else if(msg.action == 'add_user'){
                 UI.sign_on_user(msg);
             }else if(msg.action == 'sign_off_user'){
@@ -72,7 +70,7 @@ var CommLink = {
         this.send({action             : 'segment_deleted',
                    segment_id         : seg.id,
                    sketch_base_id     : getBaseId(),
-                   sketch_revision_id : sketchId});
+                   sketch_revision_id : sketchId});        
     },
     
     reportSegmentDrawn : function(seg, sketchId){
