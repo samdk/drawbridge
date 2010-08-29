@@ -97,7 +97,12 @@ io.on('connection', function(client){
 					});
 					
 				break;
-
+			case "get_segment":
+				var seg = {segment_id: message.segment_id};
+				app.getPointsInSegment(seg, function(segmentObj){
+					client.send(JSON.stringify({action: "add_segment", segment : segmentObj}));
+				});
+				break;
 			default:
 				console.log(message);
 				
