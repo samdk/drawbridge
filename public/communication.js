@@ -14,9 +14,11 @@ var CommLink = {
         this.socket.on('message', function(msg){
             msg = JSON.parse(msg);
             console.log(msg);
-	        if(msg.action == 'add_segment'){
+	    if(msg.action == 'add_segment'){
                 UI.canvas.displaySegment(msg.segment);
                 UI.canvas.segments.push(seg);
+	    }else if (msg.action == "receive_segmentIds") {
+	    	console.log(msg.segment_ids);
             }else if(msg.action == 'delete_segment'){
                 UI.canvas.deleteSegment(msg.segment_id);
             }else if(msg.action == 'add_user'){

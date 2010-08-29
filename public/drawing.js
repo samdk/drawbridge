@@ -16,6 +16,7 @@ $(function(){
     UI.canvas.context.lineCap   = "round";
     
     CommLink.reportSignOn("Guest");
+
         
     var currentTool = UI.canvas.pen;
         

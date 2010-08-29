@@ -82,6 +82,13 @@ io.on('connection', function(client){
 				break;
 			case "segment_deleted":
 			    break;
+			case "get_segmentIds':
+				app.getSketchFromHash(message.sketch_base_id, function(sketch) {
+						client.send(JSON.stringify({ action: "receive_segmentIds", segment_ids: app.getSegmentIds}));
+					});
+					
+				break;
+
 			default:
 				console.log(message);
 				
