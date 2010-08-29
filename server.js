@@ -190,8 +190,6 @@ server.get('/', function(req,res) {
 	res.sendfile(__dirname+'/public/index.html');
 });
 
-
-
 server.get('/sketch/:hash?', function(req,res){
 	if(req.params.hash){
 		res.sendfile(__dirname+'/public/drawing.html');

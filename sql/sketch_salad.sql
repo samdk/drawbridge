@@ -45,7 +45,8 @@ CREATE TABLE `sketch` (
   PRIMARY KEY (`id`),
   KEY `hash` (`hash`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
-
+INSERT INTO sketch(hash, parent_id, root_id) VALUES ("public","public","public");
+INSERT INTO sketch(hash, parent_id, root_id) VALUES ("404","404","404");
 
 -- --------------------------------------------------------
 
