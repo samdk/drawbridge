@@ -25,9 +25,13 @@ function Canvas(ref){
     
     this.refresh = function(){
         this.unsnap(this.context.createImageData(this.width, this.height));
+		this.drawSegments();
+    };
+
+	this.drawSegments = function(){
         for(var i in this.segments)
             this.displaySegment(this.segments[i]);
-    };
+	};
     
     this.addSegment = function(seg){
 		console.log(seg);

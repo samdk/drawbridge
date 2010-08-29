@@ -21,11 +21,12 @@ var CommLink = {
 				var cvs = UI.sketchCanvas(msg.sketch_revision_id);
 				if (cvs == undefined) {
 					$(".newvar").removeClass("newvar");
-					$("#variations ul").prepend('<li><a href="#"><canvas class="newvar"' +
-												'width="120" height="90"></canvas></a></li>');
+					$("#variations ul").prepend('<li><canvas class="newvar"' +
+												'width="120" height="90"></canvas></li>');
 					UI.variations[msg.sketch_revision_id] = littleCanvas($(".newvar")[0]);
 					$(".newvar").draggable({opacity: 0.7,revert: true,revertDuration: 200})
-								.data("rev",msg.sketch_revision_id);
+								.data("rev",msg.sketch_revision_id)
+								.click(function(){UI.switch_variation($(this));});
 					cvs = UI.sketchCanvas(msg.sketch_revision_id);
 				}
 				cvs.addSegment(msg.segment);
