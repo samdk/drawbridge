@@ -27,7 +27,7 @@ $(function(){
         currentTool.up(UI.canvas.xcr(e.pageX), UI.canvas.ycr(e.pageY));
     }).mouseup(function(e){
         currentTool.up(UI.canvas.xcr(e.pageX), UI.canvas.ycr(e.pageY));
-    };
+    });
 		  
     $("#eraser").click(function(){
         currentTool = UI.canvas.eraser;
