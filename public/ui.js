@@ -12,7 +12,7 @@ var UI = {
         });
         if(!found){
             $("#people ul").append("<li>"+user.name+"</li>");
-            $("#people ul li:last").data("uuid", user.id);            
+            $("#people ul li:last").data("uuid", user.id);
         }
                     
         $("#people h2").text(
