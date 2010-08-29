@@ -13,7 +13,6 @@ var CommLink = {
 
         this.socket.on('message', function(msg){
             msg = JSON.parse(msg);
-            console.log(msg);
 	        if(msg.action == 'add_segment'){
 	            if(typeof(msg.segment.points) == 'string') {
 	                msg.segment.points = JSON.parse(msg.segment.points);
@@ -65,8 +64,6 @@ var CommLink = {
     },
     
     reportSegmentDeleted : function(seg, sketchId, undo){
-		console.log("reporting deleted");
-		console.log(seg);
 		if (!undo){
 			draw_history.addUndoTask({action: "segment_deleted", segment: seg, sketch_base_id: getBaseId(), sketch_revision_id: getRevisionId()});
 		}
@@ -77,8 +74,6 @@ var CommLink = {
     },
     
     reportSegmentDrawn : function(seg, sketchId){
-		console.log("reporting added");
-		console.log(seg);
         this.send({action             : 'segment_added',
                    segment            : seg,
                    sketch_base_id     : getBaseId(),

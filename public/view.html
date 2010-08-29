@@ -9,7 +9,6 @@
 		<script type="text/javascript" charset="utf-8">
 		  $(function(){
 		    $.get("/rendered/" + window.location.pathname.split("/").pop(), function(data){
-		      console.log(data);
 		      $("#canvas-view").attr('src', data);
 		    });
 		  });

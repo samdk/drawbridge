@@ -168,6 +168,15 @@
 			opacity: 0.9;
 			display: none;
 		}
+		#footer .shadow {
+			background: black;
+			color: white;
+			font-size: 30px;
+			height: 30px;
+			width: 300px;
+			padding: 60px 0;
+			text-align: center;
+		}
 		#canvas {
 			width: 640px;
 			position: absolute;

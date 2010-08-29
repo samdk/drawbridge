@@ -17,8 +17,6 @@ var draw_history  = {
 	undo: function(runFunction) {
 		if (this.undoStack.length > 0) {
 			task = this.undoStack.pop();
-			console.log("undo");
-			console.log(task.segment);
 			if (task.action == "segment_added"){
 				UI.canvas.deleteSegment(task.segment.id);
 				var lil = UI.variations[getRevisionId()];
@@ -39,7 +37,6 @@ var draw_history  = {
 	redo: function() {
 		if (this.redoStack.length > 0) {
 			task = this.redoStack.pop();
-			console.log(task);
 			if (task.action == "segment_added") {
 				UI.sketchCanvas(task.sketch_revision_id).addSegment(task.segment);
 				var lil = UI.variations[getRevisionId()];
@@ -47,7 +44,6 @@ var draw_history  = {
 				UI.canvas.refresh();
 				CommLink.reportSegmentDrawn(task.segment, task.sketch_revision_id);
 			}else if (task.action == "segment_deleted") {
-				console.log(task.segment.id);
 				UI.canvas.deleteSegment(task.segment.id);
 				var lil = UI.variations[getRevisionId()];
                 lil.context.drawImage(UI.canvas.canvas, 0, 0, lil.width, lil.height);
@@ -56,7 +52,6 @@ var draw_history  = {
 				CommLink.reportSegmentDeleted(task.segment, task.sketch_revision_id);
 
 			}
-			console.log("redo");
 			this.addUndoTask(task);
 		}
 	}
