@@ -64,6 +64,8 @@ var CommLink = {
     },
     
     reportSegmentDeleted : function(seg, sketchId){
+		console.log("reporting deleted");
+		console.log(seg);
 		draw_history.addUndoTask({action: "segment_deleted", segment: seg, sketch_base_id: getBaseId(), sketch_revision_id: getRevisionId()});
         this.send({action             : 'segment_deleted',
                    segment_id         : seg.id,
@@ -72,6 +74,8 @@ var CommLink = {
     },
     
     reportSegmentDrawn : function(seg, sketchId){
+		console.log("reporting added");
+		console.log(seg);
         this.send({action             : 'segment_added',
                    segment            : seg,
                    sketch_base_id     : getBaseId(),

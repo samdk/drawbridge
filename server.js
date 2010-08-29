@@ -100,9 +100,13 @@ io.on('connection', function(client){
 			case "segment_added":
 				var segment = message.segment;
 				var sketch = {base_id: message.sketch_base_id, revision_id: message.sketch_revision_id};
+				console.log ("segment added");
+				console.log (segment);
 				if (segment.id) {
+					
 					app.undeleteSegment(sketch.revision_id, segment, function(segmentObj) {
 						c = sketches[message.sketch_base_id];
+						console.log("segmentObj : "+ segmentObj);
 						for (x  in c ){
 							c[x].send(JSON.stringify({
 								action: "add_segment", 
