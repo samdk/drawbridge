@@ -162,3 +162,8 @@ exports.createVariation = function(base_id, callback){
     });
 }
 
+exports.deleteSegment = function(sketch_revision_id, segment_id){
+    client.query("REMOVE FROM sketch_to_segment WHERE segment_id=? AND sketch_id=?",
+                [sketch_revision_id, segment_id], function(){});
+}
+
