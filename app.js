@@ -180,14 +180,42 @@ exports.createVariation = function(rev_id, callback){
 		});
 	});
 }
-/*
-    var sql = "INSERT INTO sketch (hash, created_at, modified_at) values ('', NULL, NULL)";
-sql = "UPDATE user_to_sketch SET is_active = 0 WHERE user_id = ? AND sketch_id = ?";
-	client.query (sql, [user_id, sketch_id], function (err, results, fields) {
-		if(err)
-			throw err;
-		runFunction(user);
-	});*/
+
+exports.mergeVariation = function(bottom_rev_id, top_rev_id, callback){
+	exports.getSketchFromHash(bottom_rev_id,function(sketch_bot){
+		exports.getSketchFromHash(top_rev_id,function(sketch_top){
+			var base_bot_id = sketch_bot.id;
+			exports.addSketch(function(hsh){
+				segments = [];
+				exports.eachSegmentId({id:base_bot_id}, function(sid){
+					segments.push(sid);
+				});
+				exports.eachSegmentId({id:base_top_id}, function(sid){
+					segments.push(sid);
+				});
+				var sorted = segments.sort(function(a,b){return a-b});
+				var prev = -1;
+				sorted.forEach(function(sid) {
+					if (sid != prev) {
+						prev = sid;
+						var sql = "INSERT INTO sketch_to_segment(sketch_id, segment_id) VALUES ((select id from sketch where hash=?), ?)";
+						client.query(sql, [hsh, sid], function(e,r,f){});
+					}
+				});
+				// update leaf to correct root/parent ids
+				sql = "UPDATE sketch SET parent_id = ?, root_id = ? WHERE hash = ?";
+				client.query(sql,[sketch_top.hash,sketch_top.root_id,hsh], function(err,results,fields) {
+					if (err)
+						throw err;
+					exports.getSketchFromHash(hsh,function(leaf){
+						leaf.hash = hsh;
+						callback(leaf);
+					});
+				});
+			});
+		});
+	});
+}
 
 exports.deleteSegment = function(sketch_revision_id, segment_id){
 	//console.log(sketch_revision_id);
