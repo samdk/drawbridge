@@ -4,8 +4,7 @@ html,body {height: 100%;}
 	position: relative;
 }
 	#page {
-		overflow: auto;
-		padding-bottom: 320px;
+		padding-bottom: 310px;
 		width: 900px;
 		margin: 0 auto;
 	}	
@@ -18,50 +17,101 @@ html,body {height: 100%;}
 		#features {
 			margin-left: -12px;
 			margin-right: -3px;
+			height: 295px;
 		}
-		.block {
-			width: 248px;
-			padding: 20px;
-			margin-left: 15px;
+			.block {
+				width: 248px;
+				height: 215px;
+				padding: 20px 20px 20px;
+				margin-left: 15px;
+				background: white;
+				-webkit-box-shadow: 0 1px 5px #555;
+				-moz-box-shadow: 0 1px 5px #555;
+				box-shadow: 0 1px 5px #555;
+				float: left;
+			}
+				.block img {
+					border: 1px solid #aaa;
+					margin-left: -1px;
+				}
+				.block h2 {
+					text-align: center;
+					font-family: Museo300, Arial, Helvetica, 'Helvetica Neue', sans-serif;
+					font-size: 21px;
+				}
+					.block strong {
+						font-family: Museo700, Arial, Helvetica, 'Helvetica Neue', sans-serif;
+						font-weight: normal;
+					}
+		#call {
+			clear: both;
+			padding: 20px 0;
+			width: 580px;
+			margin: 0 auto 40px;
+			font-family: Museo300, Arial, Helvetica, 'Helvetica Neue', sans-serif;
 			background: white;
 			-webkit-box-shadow: 0 1px 5px #555;
 			-moz-box-shadow: 0 1px 5px #555;
 			box-shadow: 0 1px 5px #555;
-			float: left;
 		}
-			.block h2 {
+			#call h2 {
 				text-align: center;
 				font-family: Museo300, Arial, Helvetica, 'Helvetica Neue', sans-serif;
-				font-size: 21px;
+				font-size: 40px;
+				margin: 0 0 20px;
 			}
-				.block strong {
-					font-family: Museo700, Arial, Helvetica, 'Helvetica Neue', sans-serif;
-					font-weight: normal;
+			#call div {
+				text-align: center;
+			}
+				#call a {
+					display: inline-block;
+					background: #e65239;
+					width: 240px;
+					font-size: 24px;
+					padding: 10px 0;
+					text-decoration: none;
+					color: black;
+					-webkit-border-radius: 5px;
+					-moz-border-radius: 5px;
+					border-radius: 5px;
 				}
-		#call {
-			clear: both;
-			padding: 40px 0;
-		}
+				#call a#room-sketch {
+					background: #6a98ec;
+				}
+					#call a:hover {
+						border: 5px solid #555;
+						margin: -5px;
+					}
+				#call div span {
+					display: inline-block;
+					width: 50px;
+					font-size: 30px;
+					color: #656565;
+				}
 	#footer {
 		clear: both;
-		margin-top: -320px;
-		height: 240px;
-		padding: 40px 0;
+		margin-top: -310px;
+		height: 310px;
 		position: relative;
 		z-index: 2;
-		background: black;
-		color: white;
 		width: 100%;
 	}
 		#footer-container {
+			padding: 20px 0;
 			text-align: center;
-			width: 600px;
+			width: 500px;
 			margin: 0 auto;
+			background: #444;
+			color: white;
+			border: 1px solid #333;
+			-webkit-box-shadow: 0 1px 5px black;
+			-moz-box-shadow: 0 1px 5px black;
+			box-shadow: 0 1px 5px black;
 		}
 			#footer h3 {
 				font-size: 16px;
 				font-weight: normal;
-				font-family: Museo500, Arial, Helvetica, 'Helvetica Neue', sans-serif;
+				font-family: Arial, Helvetica, 'Helvetica Neue', sans-serif;
 			}
 				#footer a {
 					color: white;
@@ -70,28 +120,24 @@ html,body {height: 100%;}
 						text-decoration: none;
 					}
 			#footer ul {
-				height: 100px;
-				width: 303px;
-				margin-left: -1px;
-				margin: 20px auto;
-			}
-			#footer li {
-				width: 100px;
-				margin-left: 1px;
-				float: left;
 				height: 150px;
+				padding: 1px 1px 1px 0;
+				width: 303px;
+				margin: 10px auto;
+				background: black;
 			}
-				#eli {
-					background: url('/images/people/eli_sm.jpg') no-repeat center center;
+				#footer li {
+					width: 100px;
+					margin-left: 1px;
+					float: left;
+					height: 150px;
 				}
-				#pras {
-					background: url('/images/people/prasanna_sm.jpg') no-repeat center center;
-				}
-				#sam {
-					background: url('/images/people/sam_sm.jpg') no-repeat center center;
-				}
-			#footer p {
-				clear: both;
-				display: block;
-				padding: 20px 0;
-			}
+					#eli {
+						background: url('/images/people/eli_sm.jpg') no-repeat center center;
+					}
+					#pras {
+						background: url('/images/people/prasanna_sm.jpg') no-repeat center center;
+					}
+					#sam {
+						background: url('/images/people/sam_sm.jpg') no-repeat center center;
+					}
