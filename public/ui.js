@@ -2,7 +2,11 @@ var UI = {
     canvas : false,
     sign_on_user : function(user){
         var found = false;
-
+        
+        if(user.me){
+            return;
+        }
+        
         $("#people ul li").each(function(){
             if($(this).data("uuid") == user.id){
                 found = true;
@@ -24,7 +28,7 @@ var UI = {
     
     sign_off_user : function(user){
         $("#people li").each(function(){
-            if($(this).html() == username){
+            if($(this).data("uuid") == user.id){
                 $(this).addClass("offline");
             }
         });

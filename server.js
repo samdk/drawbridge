@@ -63,7 +63,8 @@ io.on('connection', function(client){
 			    for(x in c){
 			        c[x].send(JSON.stringify({action: "add_user",
 			                                  name  : client.username,
-			                                  id    : app.sha1(client.sessionId)}));
+			                                  id    : app.sha1(client.sessionId),
+			                                  me    : c[x].sessionId == client.sessionId }));
 			        
 			        if(isNew && x != c.length-1){
 			            client.send(JSON.stringify({
@@ -95,7 +96,9 @@ io.on('connection', function(client){
 	});
 	
 	client.on('disconnect', function(){
-	    console.log("DISCONNECTING", client.sessionId);
+	    eachInSketch(clients[client.sessionId], function(cli){
+	        cli.send(JSON.stringify({action:"sign_off_user", id:app.sha1(client.sessionId)}));
+	    });
 	    removeFromSketch(client.sessionId);
 	});
 });
