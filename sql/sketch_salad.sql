@@ -38,8 +38,8 @@ DROP TABLE IF EXISTS `sketch`;
 CREATE TABLE `sketch` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `hash` varchar(40) NOT NULL,
-  `parent_id` bigint(20) DEFAULT NULL,
-  `root_id` bigint(20) DEFAULT NULL,
+  `parent_id` varchar(40) DEFAULT NULL,
+  `root_id` varchar(40) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `modified_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`),

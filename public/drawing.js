@@ -18,7 +18,6 @@ $(function(){
     UI.variations[getRevisionId()] = littleCanvas($("#mirror")[0]);
     
     CommLink.reportSignOn("Guest");
-    CommLink.requestSegmentIds();
         
     var currentTool = UI.canvas.pen;
         
