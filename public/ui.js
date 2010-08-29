@@ -70,7 +70,9 @@ var UI = {
         $("#pen").addClass("selected");
 		UI.currentTool = UI.canvas.pen;
 		UI.variations[newVariationId] = littleCanvas($(".mirror")[0]);
-		$(".mirror").draggable({opacity: 0.7,revert: true,revertDuration: 200})
+		$(".mirror").draggable({opacity: 0.7,revert: true,revertDuration: 200,
+							start: function(){UI.start_dragging()},
+							stop:  function(){UI.stop_dragging()}})
 					.data("rev",newVariationId)
 					.click(function(){UI.switch_variation($(this));});
 
@@ -100,5 +102,8 @@ var UI = {
 			CommLink.requestSketchReplay();
 		}
 		return false;
-	}
+	},
+
+	start_dragging : function() { $(".shadow").show(); },
+	stop_dragging  : function() { $(".shadow").hide(); }
 }
