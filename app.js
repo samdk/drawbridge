@@ -190,19 +190,12 @@ exports.mergeVariation = function(bottom_rev_id, top_rev_id, callback){
 			exports.addSketch(function(hsh){
 				segments = [];
 				exports.eachSegmentId({id:base_bot_id}, function(sid){
-					segments.push(sid);
-				});
-				exports.eachSegmentId({id:base_top_id}, function(sid){
-					segments.push(sid);
-				});
-				var sorted = segments.sort(function(a,b){return a-b});
-				var prev = -1;
-				sorted.forEach(function(sid) {
-					if (sid != prev) {
-						prev = sid;
 						var sql = "INSERT INTO sketch_to_segment(sketch_id, segment_id) VALUES ((select id from sketch where hash=?), ?)";
 						client.query(sql, [hsh, sid], function(e,r,f){});
-					}
+				});
+				exports.eachSegmentId({id:base_top_id}, function(sid){
+						var sql = "INSERT INTO sketch_to_segment(sketch_id, segment_id) VALUES ((select id from sketch where hash=?), ?)";
+						client.query(sql, [hsh, sid], function(e,r,f){});
 				});
 				// update leaf to correct root/parent ids
 				sql = "UPDATE sketch SET parent_id = ?, root_id = ? WHERE hash = ?";
