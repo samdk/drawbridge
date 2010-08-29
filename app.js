@@ -158,16 +158,19 @@ exports.getSegmentIds = function(sketch, runFunction){
 	);
 }
 
-exports.createVariation = function(base_id, callback){
-    exports.addSketch(function(hsh){
-        exports.eachSegmentId({id:base_id}, function(sid){
-            var sql = "INSERT INTO sketch_to_segment(sketch_id, segment_id) VALUES ((select id from sketch where hash=?), ?)";
-            client.query(sql, [hsh, sid], function(e,r,f){});
-            exports.getPointsInSegment({segment_id:sid}, function(seg){
-                callback(seg);
-            })
-        });
-    });
+exports.createVariation = function(rev_id, callback){
+	exports.getSketchFromHash(rev_id,function(sketch){
+		var base_id = sketch.id;
+		exports.addSketch(function(hsh){
+			exports.eachSegmentId({id:base_id}, function(sid){
+				var sql = "INSERT INTO sketch_to_segment(sketch_id, segment_id) VALUES ((select id from sketch where hash=?), ?)";
+				client.query(sql, [hsh, sid], function(e,r,f){});
+				exports.getPointsInSegment({segment_id:sid}, function(seg){
+					callback(seg);
+				})
+			});
+		});
+	});
 }
 
 exports.deleteSegment = function(sketch_revision_id, segment_id){

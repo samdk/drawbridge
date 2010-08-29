@@ -25,7 +25,13 @@ var draw_history  = {
 
 				UI.canvas.refresh();
 				CommLink.reportSegmentDeleted(task.segment.id, task.sketch_revision_id);
-			} 
+			}else if (task.action == "segment_deleted") {
+				UI.sketchCanvas(task.sketch_revision_id).addSegment(task.segment);
+				var lil = UI.variations[getRevisionId()];
+                lil.context.drawImage(UI.canvas.canvas, 0, 0, lil.width, lil.height);
+				UI.canvas.refresh();
+				CommLink.reportSegmentDrawn(task.segment, task.sketch_revision_id);
+			}
 			console.log(task);
 			this.addRedoTask(task);
 		}
@@ -38,7 +44,9 @@ var draw_history  = {
 				UI.sketchCanvas(task.sketch_revision_id).addSegment(task.segment);
 				var lil = UI.variations[getRevisionId()];
                 lil.context.drawImage(UI.canvas.canvas, 0, 0, lil.width, lil.height);
-
+				UI.canvas.refresh();
+			}else if (task.action == "segment_deleted") {
+				
 			}
 			this.addUndoTask(task);
 		}

@@ -22,13 +22,15 @@ var CommLink = {
 										  segment: msg.segment, 
 										  sketch_revision_id: getRevisionId()});
 
+
 	            if(getRevisionId() == msg.sketch_revision_id){
                     var lil = UI.variations[getRevisionId()];
                     lil.context.drawImage(UI.canvas.canvas, 0, 0, lil.width, lil.height);
                 }
 	        }else if(msg.action == 'delete_segment'){
-                UI.canvas.deleteSegment(msg.segment_id);
-                
+                seg = UI.canvas.deleteSegment(msg.segment_id);
+                console.log(seg);
+				draw_history.addUndoTask({action: "segment_deleted", segment: seg, sketch_base_id: getBaseId(), sketch_revision_id: getRevisionId()});
                 var lil = UI.variations[getRevisionId()];
                 lil.context.drawImage(UI.canvas.canvas, 0, 0, lil.width, lil.height);
             }else if(msg.action == 'add_user'){
@@ -37,7 +39,9 @@ var CommLink = {
                 UI.sign_off_user(msg);
             }else if(msg.action == 'share_key'){
                 UI.updateSharedKey(msg.key);
-            }
+            }else if(msg.action == 'add_variation'){
+				UI.add_variation(msg);
+			}
         });
     },
     
@@ -68,6 +72,12 @@ var CommLink = {
                   sketch_base_id     : getBaseId(),
                   sketch_revision_id : getRevisionId()});
     },
+
+	requestNewVariation : function(){
+		this.send({action			: 'variation_added',
+				   sketch_parent_id	: getRevisionId(),
+				   sketch_base_id	: getBaseId()});
+	},
 
     send : function(data){
         this.socket.send(JSON.stringify(data));
