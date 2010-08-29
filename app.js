@@ -27,6 +27,9 @@ getSketchIdFromHash = function(hash, runFunction) {
 			}
 		}
 );}
+exports.sha1 = function(x){
+    return crypto.createHash('sha1').update(x+secret_key).digest('hex');
+};
 
 exports.getSketch = function (id, runFunction){
 		client.query("select * from sketch where id = " + id, 

@@ -172,6 +172,17 @@
 			#canvas:active {
 				cursor: crosshair;
 			}
+		#canvas-wrap img#canvas-view {
+			width: 640px;
+			position: absolute;
+			top: 0; left: 0; right: 0;
+			display: block;
+			background: white;
+			z-index: 10;
+			-webkit-box-shadow: 0 1px 5px #555;
+			-moz-box-shadow: 0 1px 5px #555;
+			box-shadow: 0 1px 5px #555;
+		}
 	#shadow {
 		display: none;
 		position: fixed;
