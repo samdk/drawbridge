@@ -174,12 +174,25 @@ exports.createVariation = function(rev_id, callback){
 }
 
 exports.deleteSegment = function(sketch_revision_id, segment_id){
-	console.log(sketch_revision_id);
-	console.log(segment_id);
+	//console.log(sketch_revision_id);
+	//console.log(segment_id);
 	exports.getSketchFromHash(sketch_revision_id, function(sketch) {
 		client.query("DELETE FROM sketch_to_segment where sketch_id=? AND segment_id=?", [ sketch.id, segment_id]);
 	});
     //client.query("DELETE FROM sketch_to_segment WHERE segment_id=? AND sketch_id=?",
     //            [segment_id, sketch_revision_id]);
+}
+
+
+exports.undeleteSegment = function (sketch_revision_id, segment, callback) {
+		console.log(sketch_revision_id);
+		console.log(segment);
+		exports.getSketchFromHash(sketch_revision_id, function(sketch) {
+			console.log(sketch);
+			client.query("INSERT INTO sketch_to_segment(sketch_id, segment_id) values(?,?) ", [sketch.id, segment.id], function (err, result, fields) {
+				if (err) throw err;
+				callback(segment)
+			});
+		});
 }
 

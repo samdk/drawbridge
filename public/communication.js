@@ -30,7 +30,6 @@ var CommLink = {
 	        }else if(msg.action == 'delete_segment'){
                 seg = UI.canvas.deleteSegment(msg.segment_id);
                 console.log(seg);
-				draw_history.addUndoTask({action: "segment_deleted", segment: seg, sketch_base_id: getBaseId(), sketch_revision_id: getRevisionId()});
                 var lil = UI.variations[getRevisionId()];
                 lil.context.drawImage(UI.canvas.canvas, 0, 0, lil.width, lil.height);
             }else if(msg.action == 'add_user'){
@@ -43,9 +42,10 @@ var CommLink = {
         });
     },
     
-    reportSegmentDeleted : function(seg_id, sketchId){
+    reportSegmentDeleted : function(seg, sketchId){
+		draw_history.addUndoTask({action: "segment_deleted", segment: seg, sketch_base_id: getBaseId(), sketch_revision_id: getRevisionId()});
         this.send({action             : 'segment_deleted',
-                   segment_id         : seg_id,
+                   segment_id         : seg.id,
                    sketch_base_id     : getBaseId(),
                    sketch_revision_id : getRevisionId()});
     },
