@@ -1,4 +1,3 @@
-console.log("start of commjs");
 var CommLink = {
     socket : null, // io.setPath must be called before socket creation for flashsockets
 
@@ -48,6 +47,4 @@ var CommLink = {
         this.socket.send(JSON.stringify(data));
     }
 };
-console.log("talk");
 CommLink.establish();
-console.log("talk more");
