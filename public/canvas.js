@@ -57,6 +57,7 @@ function Canvas(ref){
     }
     
     this.deleteSegment = function(segId){
+		console.log(this.segments);
         for(x in this.segments)
             if(this.segments[x].id == segId)
                 return this.segments.splice(x, 1)[0];
