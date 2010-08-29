@@ -121,8 +121,12 @@ io.on('connection', function(client){
 				});
 				break;
 			case "variation_added":
+				console.log("variation added");
 			    app.createVariation(message.sketch_parent_id, function(leaf){
+					console.log("callback");
 			        eachInSketch(clients[client.sessionId], function(cli){
+
+						console.log(leaf.hash);
 			            cli.send(JSON.stringify({
 			                action: 'add_variation',
 			                sketch_parent_id: message.sketch_parent_id,

@@ -4,23 +4,32 @@ $(function(){
 	}
 	$("#variations ul a").click(function(){
 		//switch to the variation clicked on
-		console.log("clicked");
+		var canvas =  $(this).find("canvas"),
+			revisionId = canvas.data("rev");
+		if (revisionId !== getRevisionId()) {
+			window.location.hash = revisionId;
+			drawOnCanvas(getRevisionId());
+		}
 		return false;
 	});
 	$("#add").click(function(){
+		console.log("clicking");
+		CommLink.requestNewVariation();
+		/*$(".mirror").removeClass("mirror");
+		var current = UI.variations[getRevisionId()],
+			newVariationId = 10000000;//cloneCurrent(getRevisionId());
 		$("#variations ul").prepend(function(){
-			var id = getNewId();
-			return '<li><a href="#" id="link'+id+'">'+'<canvas id="var'+id+'" width="120" height="90"></canvas></a></li>'
+			return '<li><a href="#"><canvas class="mirror" width="120" height="90"></canvas></a></li>'
 		});
-		$("#variations canvas").draggable({opacity: 0.7,
-										   revert: true,
-										   revertDuration: 200});
-		return false;
+		window.location.hash = newVariationId;
+		UI.variations[newVariationId] = littleCanvas($(".mirror")[0]);
+		$(".mirror").draggable({opacity: 0.7,revert: true,revertDuration: 200})
+					.data("rev",newVariationId);
+		return false;*/
 	});
 
-	$("#variations canvas").draggable({opacity: 0.7,
-									   revert: true,
-									   revertDuration: 200});
+	$(".mirror").draggable({opacity: 0.7,revert: true,revertDuration: 200})
+				.data("rev",getRevisionId());
 	$("#canvas-wrap").droppable({
 		drop: function(e,ui){ console.log("dropped #"+ui.draggable.attr("id"))}
 	});
