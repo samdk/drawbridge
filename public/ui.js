@@ -58,7 +58,8 @@ var UI = {
 		$(".mirror").removeClass("mirror");
 		var current = UI.variations[getRevisionId()],
 			newVariationId = sketch.sketch_revision_id;
-		$("#variations ul").prepend('<li><canvas class="mirror"' +
+		$(".activefork").removeClass("activefork");
+		$("#variations ul").prepend('<li><canvas class="mirror activefork"' +
 									'width="120" height="90"></canvas></li>');
 		window.location.hash = newVariationId;
 		UI.canvas = new Canvas($("#canvas").get(0));
@@ -77,7 +78,8 @@ var UI = {
 
 	switch_variation : function(canvas){
 		var revisionId = canvas.data("rev");
-		console.log(revisionId);
+		$(".activefork").removeClass("activefork");
+		$(canvas).addClass("activefork");
 		if (revisionId != getRevisionId()) {
 			if (revisionId == undefined) {
 				window.location.hash = '';
@@ -96,7 +98,7 @@ var UI = {
             UI.variations[getRevisionId()].segments = [];
 			UI.canvas.context.clearRect(0,0,UI.canvas.width,UI.canvas.height);
 			CommLink.requestSketchReplay();
-		} else { console.log('url: ' + getRevisionId()); console.log('rev: ' + revisionId);}
+		}
 		return false;
 	}
 }

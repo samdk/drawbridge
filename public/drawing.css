@@ -340,9 +340,20 @@
 				-moz-box-shadow: 0 0 3px #555;
 				box-shadow: 0 0 3px #555;
 			}
+				#variations canvas.activefork {
+					-webkit-box-shadow: 0 0 9px #004;
+					-moz-box-shadow: 0 0 9px #004;
+					box-shadow: 0 0 9px #004;
+				}
 				#variations canvas.ui-draggable-dragging {
 					position: absolute;
 					z-index: 30;
+				}
+				#variations canvas:hover {
+					-webkit-box-shadow: 0 0 9px #004;
+					-moz-box-shadow: 0 0 9px #004;
+					box-shadow: 0 0 9px #004;
+					cursor: pointer;
 				}
 #footer {
 	padding: 30px 0;

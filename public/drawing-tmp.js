@@ -1,5 +1,7 @@
 $(function(){
-	$("#variations canvas").click(function(){ UI.switch_variation($(this)); });
+	$("#variations canvas").click(function(){
+		UI.switch_variation($(this));
+	});
 	$("#add").click(function(){
 		CommLink.requestNewVariation();
 	});
