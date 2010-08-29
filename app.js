@@ -15,7 +15,7 @@ client.database = database.name;
 
 client.connect();
 
-getSketchIdFromHash = function(hash, runFunction) {
+exports.getSketchFromHash = function(hash, runFunction) {
 	console.log(hash);
 	client.query('select * from sketch where hash = ?', [hash],
 		function (err, results, fields){
@@ -23,10 +23,12 @@ getSketchIdFromHash = function(hash, runFunction) {
 				throw err;
 			}
 			if (results.length ===1) {
-				runFunction(results[0].id);
+				sketch = {id: results[0].id};
+				runFunction(sketch);
 			}
 		}
 );}
+
 exports.sha1 = function(x){
     return crypto.createHash('sha1').update(x+secret_key).digest('hex');
 };
@@ -97,9 +99,8 @@ exports.addSegment = function(sketch, segment, runFunction) {
 				throw err;
 			}
 			var segmentId = result.insertId;
-			getSketchIdFromHash(sketch.base_id, function (sketchId){
-				console.log(sketchId);
-				client.query("INSERT INTO sketch_to_segment (sketch_id, segment_id) values(?, ?)", [sketchId, segmentId], 
+			exports.getSketchFromHash(sketch.base_id, function (sketch){
+				client.query("INSERT INTO sketch_to_segment (sketch_id, segment_id) values(?, ?)", [sketch.id, segmentId], 
 				function (err, result, fields){
 					if (err) {
 					throw err;

@@ -63,7 +63,8 @@ io.on('connection', function(client){
 			    for(x in c){
 			        c[x].send(JSON.stringify({action: "add_user",
 			                                  name  : client.username,
-			                                  id    : app.sha1(client.sessionId)}));
+			                                  id    : app.sha1(client.sessionId),
+			                                  me    : c[x].sessionId == client.sessionId }));
 			        
 			        if(isNew && x != c.length-1){
 			            client.send(JSON.stringify({
@@ -79,7 +80,7 @@ io.on('connection', function(client){
 				var segment = message.segment;
 				var sketch = {base_id: message.sketch_base_id, revision_id: message.sketch_revision_id};
 				app.addSegment(sketch, segment, function(segmentObj) {
-					c = rooms[message.sketch_base_id];
+					c = sketches[message.sketch_base_id];
 					for (x  in c ){
 						c[x].send(JSON.stringify({action: "add_segment", 
 									  segment: segmentObj}));
@@ -88,6 +89,15 @@ io.on('connection', function(client){
 				break;
 			case "segment_deleted":
 			    break;
+			case "get_segmentIds":
+				app.getSketchFromHash(message.sketch_base_id, function(sketch) {
+						app.getSegmentIds(sketch, function(segs){
+						client.send(JSON.stringify({ action: "receive_segmentIds", segment_ids: segs }));
+						});
+					});
+					
+				break;
+
 			default:
 				console.log(message);
 				
@@ -95,7 +105,9 @@ io.on('connection', function(client){
 	});
 	
 	client.on('disconnect', function(){
-	    console.log("DISCONNECTING", client.sessionId);
+	    eachInSketch(clients[client.sessionId], function(cli){
+	        cli.send(JSON.stringify({action:"sign_off_user", id:app.sha1(client.sessionId)}));
+	    });
 	    removeFromSketch(client.sessionId);
 	});
 });
