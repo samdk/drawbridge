@@ -59,7 +59,7 @@ function Canvas(ref){
     this.deleteSegment = function(segId){
         for(x in this.segments)
             if(this.segments[x].id == segId)
-                return this.segments.splice(x, 1);
+                return this.segments.splice(x, 1)[0];
     }
 
     this.xc  = function(x){ return x - $(this.canvas).offset().left; }
@@ -175,7 +175,7 @@ function Eraser(canvas){
     
     this.up = function(x, y){
         if(this.closest){
-            CommLink.reportSegmentDeleted(this.canvas.deleteSegment(this.closest.id), this.canvas.sketchId);
+            CommLink.reportSegmentDeleted(this.canvas.deleteSegment(this.closest.id).id, this.canvas.sketchId);
             this.closest = false;
             this.saved = false;
             this.canvas.refresh();
