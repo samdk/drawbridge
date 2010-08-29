@@ -4,12 +4,45 @@ var sys = require('sys'),
     express = require('express'), 
     server = express.createServer(
     	express.logger(),
-	express.bodyDecoder()
+		express.bodyDecoder()
     ),
     app = require('./app'),
     io = require('socket.io');
 
-server.use(express.staticProvider(__dirname+'/public'));
+
+
+
+server.configure(function(){
+	/*server.use(express.methodOverride());
+	server.use(express.bodyDecoder());*/
+	server.use(server.router);
+	server.use(express.staticProvider(__dirname+'/public'));
+});
+
+function NotFound(msg){
+    this.name = 'NotFound';
+    Error.call(this, msg);
+    Error.captureStackTrace(this, arguments.callee);
+}
+
+sys.inherits(NotFound, Error);
+
+server.get('/404', function(req, res){
+    throw new NotFound;
+});
+
+server.get('/500', function(req, res){
+    throw new Error('Server error!');
+});
+
+server.error(function (err, req, res, next){
+	if (err instanceof NotFound){
+		res.redirect("/view/404")
+	}else {
+		next(err);
+	}
+});
+
 
 port = parseInt(process.argv[2] || 80);
 console.log("Listening on port", port);
@@ -231,5 +264,5 @@ server.get("/rendered/:key", function(req, res){
 });
 
 server.get("/:x", function(req, res){
-    res.redirect('/view/404');
+    res.redirect('/404');
 });
