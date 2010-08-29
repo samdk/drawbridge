@@ -69,11 +69,11 @@ exports.addUser = function(user,sketch,runFunction) {
 }
 
 
-exports.leaveSketch = function(user, sketch, runFunction) {
-	client.query ("UPDATE user_to_sketch SET is_active = 0 WHERE user_id = ? AND sketch_id = ?", [user.id, sketch.id], function (err, results, fields) {
-		if (err){
+exports.leaveSketch = function(user_id, sketch_id, runFunction) {
+    sql = "UPDATE user_to_sketch SET is_active = 0 WHERE user_id = ? AND sketch_id = ?";
+	client.query (sql, [user_id, sketch_id], function (err, results, fields) {
+		if(err)
 			throw err;
-		}
 		runFunction(user);
 	});
 }
