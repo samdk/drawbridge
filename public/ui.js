@@ -55,7 +55,6 @@ var UI = {
 		$(".mirror").removeClass("mirror");
 		var current = UI.variations[getRevisionId()],
 			newVariationId = sketch.sketch_revision_id;
-		console.log(sketch.__proto__);
 		$("#variations ul").prepend('<li><a href="#"><canvas class="mirror"' +
 									'width="120" height="90"></canvas></a></li>');
 		window.location.hash = newVariationId;

@@ -15,9 +15,20 @@ var CommLink = {
             msg = JSON.parse(msg);
             console.log(msg);
 	        if(msg.action == 'add_segment'){
-	            if(typeof(msg.segment.points) == 'string')
+	            if(typeof(msg.segment.points) == 'string') {
 	                msg.segment.points = JSON.parse(msg.segment.points);
-	            UI.sketchCanvas(msg.sketch_revision_id).addSegment(msg.segment);
+				}
+				var cvs = UI.sketchCanvas(msg.sketch_revision_id);
+				if (cvs == undefined) {
+					$(".newvar").removeClass("newvar");
+					$("#variations ul").prepend('<li><a href="#"><canvas class="newvar"' +
+												'width="120" height="90"></canvas></a></li>');
+					UI.variations[msg.sketch_revision_id] = littleCanvas($(".newvar")[0]);
+					$(".newvar").draggable({opacity: 0.7,revert: true,revertDuration: 200})
+								.data("rev",msg.sketch_revision_id);
+					cvs = UI.sketchCanvas(msg.sketch_revision_id);
+				}
+				cvs.addSegment(msg.segment);
                 draw_history.addUndoTask({action: "segment_added", 
 										  segment: msg.segment, 
 										  sketch_revision_id: getRevisionId()});
