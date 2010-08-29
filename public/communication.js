@@ -1,9 +1,11 @@
+console.log("start of commjs");
 var CommLink = {
-    socket : new io.Socket(null, {port              : window.location.port || 80,
-                                  rememberTransport : false}),
+    socket : null, // io.setPath must be called before socket creation for flashsockets
 
     establish : function(){
         io.setPath("/socket.io/");
+		this.socket = new io.Socket(null, {port : window.location.port || 80,
+		                                   rememberTransport : false});
         this.socket.connect();
 
         this.socket.on('message', function(msg){
@@ -46,5 +48,6 @@ var CommLink = {
         this.socket.send(JSON.stringify(data));
     }
 };
-
+console.log("talk");
 CommLink.establish();
+console.log("talk more");
