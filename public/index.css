@@ -9,19 +9,22 @@ html,body {height: 100%;}
 		margin: 0 auto;
 	}	
 		h1 {
-			font-size: 48px;
+			font-size: 60px;
 			margin: 30px 0 10px;
 			text-shadow: 0 1px 3px #eee;
 			text-align: center;
 		}
+		#tagline {
+		
+		}
 		#features {
 			margin-left: -12px;
 			margin-right: -3px;
-			height: 295px;
+			height: 155px;
 		}
 			.block {
 				width: 248px;
-				height: 215px;
+				height: 75px;
 				padding: 20px 20px 20px;
 				margin-left: 15px;
 				background: white;
@@ -54,12 +57,6 @@ html,body {height: 100%;}
 			-moz-box-shadow: 0 1px 5px #555;
 			box-shadow: 0 1px 5px #555;
 		}
-			#call h2 {
-				text-align: center;
-				font-family: Museo300, Arial, Helvetica, 'Helvetica Neue', sans-serif;
-				font-size: 40px;
-				margin: 0 0 20px;
-			}
 			#call div {
 				text-align: center;
 			}
