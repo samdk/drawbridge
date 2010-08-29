@@ -166,7 +166,10 @@ exports.createVariation = function(rev_id, callback){
 				var sql = "INSERT INTO sketch_to_segment(sketch_id, segment_id) VALUES ((select id from sketch where hash=?), ?)";
 				client.query(sql, [hsh, sid], function(e,r,f){});
 			});
-			callback(hsh);
+			exports.getSketchFromHash(hsh,function(leaf){
+				leaf.hash = hsh;
+				callback(leaf);
+			});
 		});
 	});
 }
