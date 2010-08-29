@@ -171,14 +171,18 @@ io.on('connection', function(client){
 			    break;
 			case "sketch_replay_requested":
 				console.log("\n\nreplaying: " + message.sketch_revision_id);
-				app.getFullSketch(message.sketch_revision_id, function(segmentObj){
-					console.log("inner replay: ");
-					console.log(segmentObj);
-					client.send(JSON.stringify({
-						action: "add_segment", 
-						segment: segmentObj,
-						sketch_revision_id: message.sketch_revision_id
-					}));
+				app.getSketchFromHash(message.sketch_revision_id,function(sketch) {
+					app.getFullSketch(sketch.id, function(segmentObj){
+						console.log("inner replay: ");
+						console.log(segmentObj);
+						segmentObj.forEach(function(segment) {
+							client.send(JSON.stringify({
+								action: "add_segment", 
+								segment: segment,
+								sketch_revision_id: message.sketch_revision_id
+							}));
+						});
+					});
 				});
 				break;
 			default:
