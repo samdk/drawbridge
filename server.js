@@ -265,7 +265,12 @@ server.get('/', function(req,res) {
 
 server.get('/sketch/:hash?', function(req,res){
 	if(req.params.hash){
-		res.sendfile(__dirname+'/public/drawing.html');
+		    if (req.params.hash.length != 40){
+				res.redirect("/view/404");
+			}else {
+
+				res.sendfile(__dirname+'/public/drawing.html');
+			}
 	}else{
 		app.addSketch(function(hsh) {
 			res.redirect('/sketch/'+hsh, 302);
@@ -275,7 +280,11 @@ server.get('/sketch/:hash?', function(req,res){
 
 server.get('/view/:hash?', function (req, res) {
 	if(req.params.hash){
-		res.sendfile(__dirname+'/public/view.html');
+		if (req.params.hash != "404" && req.params.hash.length != 40){
+				res.redirect("/view/404");
+		}
+
+			res.sendfile(__dirname+'/public/view.html');
 	} else {
 		res.redirect('/sketch',302);
 	}
