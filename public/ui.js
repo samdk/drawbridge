@@ -47,6 +47,11 @@ var UI = {
                 $(this).remove();
             }
         });
+        $("#people h2").text(
+            $("#people ul li").length +
+            ($("#people li").length == 1 ? ' person ' : ' people ') +
+            'drawing'
+        );
     },
 
 	add_variation : function(sketch){

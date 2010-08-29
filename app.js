@@ -38,7 +38,7 @@ exports.sha1 = function(x){
 };
 
 exports.getSketch = function (id, runFunction){
-    client.query("select * from sketch where id = " + id, function(err, results, fields){
+    client.query("select * from sketch where id = ?", [id], function(err, results, fields){
 		if(err) throw err;
 	
 		if (results.length ===1) {
@@ -46,6 +46,7 @@ exports.getSketch = function (id, runFunction){
 		}
     });
 };
+
 
 exports.addSketch = function (runFunction){
     var sql = "INSERT INTO sketch (hash, created_at, modified_at) values ('', NULL, NULL)";
