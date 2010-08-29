@@ -29,6 +29,7 @@ function removeFromSketch(sessionId){
     if(clients[sessionId] != undefined){
         var arr = sketches[clients[sessionId]] || [];
         delete clients[sessionId];
+        
         for(var x in arr){
             if(arr[x].sessionId == sessionId){
                 return arr.splice(x, 1);
@@ -48,21 +49,26 @@ io.on('connection', function(client){
 			case "user_added":
 			    if(sketches[message.sketch_base_id] == undefined)
 			        sketches[message.sketch_base_id] = [];
-			    var c = sketches[message.sketch_base_id];
-			    c.push(client);
-			    
-			    var isNew = clients[client.sessionId] == undefined;
 			        
+			    var c     = sketches[message.sketch_base_id],
+			        isNew = clients[client.sessionId] == undefined;
+			    
+			    client.username = message.name;
+			    
+			    removeFromSketch(client.sessionId);
 			    clients[client.sessionId] = message.sketch_base_id;
+		
+			    c.push(client);	    
 			    			    			    
 			    for(x in c){
 			        c[x].send(JSON.stringify({action: "add_user",
-			                                  name  : message.name,
+			                                  name  : client.username,
 			                                  id    : app.sha1(client.sessionId)}));
+			        
 			        if(isNew && x != c.length-1){
-			            c[c.length-1].send(JSON.stringify({
+			            client.send(JSON.stringify({
 			                action  : "add_user",
-			                name    : message.name,
+			                name    : c[x].username,
 			                id      : app.sha1(c[x].sessionId)
 			            }));
 			        }
@@ -96,6 +102,7 @@ io.on('connection', function(client){
 	});
 	
 	client.on('disconnect', function(){
+	    console.log("DISCONNECTING", client.sessionId);
 	    removeFromSketch(client.sessionId);
 	});
 });
