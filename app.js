@@ -46,25 +46,19 @@ exports.getSketch = function (id, runFunction){
 };
 
 exports.addSketch = function (runFunction){
-	client.query ("INSERT INTO sketch (hash,created_at,modified_at) values ('', NULL, NULL)",function selectCb(err, results, fields){
-		if (err){
-			throw err;
-		}
+    var sql = "INSERT INTO sketch (hash, created_at, modified_at) values ('', NULL, NULL)";
+	client.query (sql, function(err, results, fields){
+		if(err) throw err;
+			
 		var insertId = results.insertId;
-		var sha1hash = crypto.createHash("sha1").update(insertId+secret_key).digest("hex");
-		client.query("UPDATE sketch SET hash=? WHERE id=?", [sha1hash, insertId], 
-		function selectCb(err, results, fields){
-			if (err){
-				throw err;
-			}
-			console.log(results);
-			var sketch = {hash:sha1hash};
-			runFunction(sketch);
-			//console.log(results);
-		}
-		);
-
-});
+		
+		sql = "UPDATE sketch SET hash=? WHERE id=?";
+		var sha1hash = exports.sha1(insertId);
+		client.query(sql, [sha1hash, insertId], function(err, results, fields){
+			if(err) throw err;				
+			runFunction(sha1hash);
+		});
+    });
 }
 
 

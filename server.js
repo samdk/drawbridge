@@ -98,19 +98,17 @@ server.get('/', function(req,res) {
 
 
 server.get('/sketch/:hash?', function(req,res){
-	var hash = req.params.hash;
-	if (hash){
+	if(req.params.hash){
 		res.sendfile(__dirname+'/public/drawing.html');
-	}else {
-		app.addSketch(function (sketch) {
-			res.redirect('/sketch/'+sketch.hash, 302);
+	}else{
+		app.addSketch(function(hsh) {
+			res.redirect('/sketch/'+hsh, 302);
 		});
 	}
 });
 
 server.get('/view/:hash?', function (req, res) {
-	var hash = req.params.hash;
-	if (hash){
+	if(req.params.hash){
 		res.sendfile(__dirname+'/public/view.html');
 	} else {
 		res.redirect('/sketch',302);
