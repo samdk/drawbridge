@@ -2,52 +2,48 @@ require.paths.push('/home/node/.node_libraries');
 var sys = require('sys'),
     exec = require('child_process').exec,
     express = require('express'), 
-    server = express.createServer(
-    	express.logger(),
-		express.bodyDecoder()
-    ),
+    server = express.createServer(express.logger()),
     app = require('./app'),
     io = require('socket.io');
 
-
-
-
 server.configure(function(){
-	/*server.use(express.methodOverride());
-	server.use(express.bodyDecoder());*/
 	server.use(server.router);
-	server.use(express.staticProvider(__dirname+'/public'));
+	server.use(express.static(__dirname+'/public'));
 });
 
-function NotFound(msg){
-    this.name = 'NotFound';
-    Error.call(this, msg);
-    Error.captureStackTrace(this, arguments.callee);
-}
-
-sys.inherits(NotFound, Error);
-
-server.get('/404', function(req, res){
-    throw new NotFound;
-});
-
-server.get('/500', function(req, res){
-    throw new Error('Server error!');
-});
-
-server.error(function (err, req, res, next){
-	if (err instanceof NotFound){
-		res.redirect("/view/404")
-	}else {
-		next(err);
+/* errors! */
+	function NotFound(msg){
+		this.name = 'NotFound';
+		Error.call(this, msg);
+		Error.captureStackTrace(this, arguments.callee);
 	}
-});
+
+	sys.inherits(NotFound, Error);
+
+	server.get('/404', function(req, res){
+		throw new NotFound;
+	});
+
+	server.get('/500', function(req, res){
+		throw new Error('Server error!');
+	});
+
+	server.error(function (err, req, res, next){
+		if (err instanceof NotFound){
+			res.redirect("/view/404")
+		}else {
+			next(err);
+		}
+	});
 
 
-port = parseInt(process.argv[2] || 80);
-console.log("Listening on port", port);
+/* starts the server */
+port = parseInt(process.argv[2] || 80,10);
+console.log("Trying to listen on port", port);
 server.listen(port);
+console.log("Listening on port", port);
 
+/* websocket stuff */
 var sketches = {}, clients = {};
 
 function eachInSketch(sketchBaseId, callback){
@@ -295,6 +291,7 @@ server.get("/rendered/:key", function(req, res){
     });
 });
 
-server.get("/:x", function(req, res){
+/*server.get("/:x", function(req, res){
     res.redirect('/404');
-});
+});*/
+

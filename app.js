@@ -1,8 +1,7 @@
 var database = require('./config').database;
 var secret_key = "test";
 var sys = require('sys');
-//var gently = new (require('gently'));
-var mysql= require('./lib/mysql');
+var mysql= require('mysql');
 var crypto = require ('crypto'); //node.js needs to be compiled with openssl support
 var client = new mysql.Client();
 
@@ -11,7 +10,6 @@ client.user = database.username;
 client.port = database.port;
 client.password = database.password;
 client.database = database.name;
-
 
 client.connect();
 
@@ -251,3 +249,4 @@ exports.getImage = function(key, callback){
         callback(r[0].data); 
     });
 }
+

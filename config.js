@@ -1,8 +1,8 @@
 exports.database =  {
 	host: 'localhost',
-	name: 'sketch_salad',
-	username: 'sketch-salad',
-	password: 'tri44x',
-	port: 3306
+	name: 'drawbridge_test',
+	username: 'draw',
+	password: 'test',
+	port: '/var/run/mysqld/mysqld.sock'
 };
 	
