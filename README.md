@@ -10,7 +10,7 @@ Platform requirements: node, mysqld
 Install from npm: express, socket.io, mysql
 
 You'll need to create a database. Once that's done, put username/password
-info in config.js, and load in the scheme from the included db dump:
+info in config.js, and load in the schema from the included db dump:
 
     mysql -u USERNAME -p DBNAME < sql/drawbridge_base.sql
 
